@@ -3,269 +3,336 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GreenOps - 建設業界のGXインフラ</title>
-<meta name="description" content="GreenOps は建設業の安全書類自動生成・CO2排出量算定・多言語安全教育を統合した唯一のプラットフォームです。">
+<title>GreenOps | SSBJ義務化対応 AIカーボン会計SaaS</title>
+<meta name="description" content="GreenOpsは建設業向けSSBJ義務化対応のAIカーボン会計SaaS。Scope 1-3排出量を自動算定し、報告書を自動生成します。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--green:#0D9668;--green-dark:#087A54;--green-light:#E6F7F1;--dark:#1A1A2E;--gray:#6B7280;--light:#F9FAFB;--white:#FFFFFF}
-body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;color:var(--dark);line-height:1.7}
+:root{
+  --bg:#030C07;
+  --surface:#081A0F;
+  --surface-2:#0F261A;
+  --surface-3:#153322;
+  --border:#1E4D32;
+  --border-light:#2A6B44;
+  --green:#22C55E;
+  --green-bright:#4ADE80;
+  --green-dim:#16A34A;
+  --text:#F0FDF4;
+  --text-secondary:#A7C4B5;
+  --text-muted:#5E8A72;
+  --white:#FFFFFF;
+  --accent:#34D399;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans JP','Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.8;-webkit-font-smoothing:antialiased}
 a{text-decoration:none;color:inherit}
+.container{max-width:1120px;margin:0 auto;padding:0 24px}
 
-/* Header */
-header{position:fixed;top:0;width:100%;background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);z-index:100;border-bottom:1px solid #E5E7EB}
-.header-inner{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:24px;font-weight:800;color:var(--green)}
-.logo span{color:var(--dark)}
-nav{display:flex;gap:32px;align-items:center}
-nav a{font-size:14px;color:var(--gray);font-weight:500;transition:color 0.2s}
+header{position:fixed;top:0;width:100%;z-index:100;background:rgba(3,12,7,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.header-inner{max-width:1120px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:22px;font-weight:900;letter-spacing:-0.03em}
+.logo-green{color:var(--green)}
+.logo-white{color:var(--text)}
+nav{display:flex;align-items:center;gap:32px}
+nav a{font-size:13px;font-weight:500;color:var(--text-secondary);transition:color 0.2s;letter-spacing:0.02em}
 nav a:hover{color:var(--green)}
-.btn{display:inline-block;padding:10px 24px;border-radius:8px;font-weight:600;font-size:14px;transition:all 0.2s;cursor:pointer;border:none}
-.btn-primary{background:var(--green);color:var(--white)}
-.btn-primary:hover{background:var(--green-dark);transform:translateY(-1px);box-shadow:0 4px 12px rgba(13,150,104,0.3)}
-.btn-outline{border:2px solid var(--green);color:var(--green);background:transparent}
-.btn-outline:hover{background:var(--green);color:var(--white)}
-.btn-large{padding:16px 40px;font-size:16px;border-radius:12px}
+.nav-cta{display:inline-block;padding:8px 20px;background:var(--green);color:var(--bg);font-size:13px;font-weight:700;border-radius:6px;transition:all 0.2s}
+.nav-cta:hover{background:var(--green-bright);color:var(--bg);transform:translateY(-1px)}
 
-/* Hero */
-.hero{padding:140px 24px 80px;background:linear-gradient(135deg,#F0FDF9 0%,#E0F7EF 50%,#D1FAE5 100%);text-align:center;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-50%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(13,150,104,0.08) 0%,transparent 70%);border-radius:50%}
-.hero-badge{display:inline-block;background:var(--white);border:1px solid var(--green);color:var(--green);padding:6px 16px;border-radius:20px;font-size:13px;font-weight:600;margin-bottom:24px}
-.hero h1{font-size:clamp(32px,5vw,56px);font-weight:900;line-height:1.3;margin-bottom:24px;letter-spacing:-0.02em}
-.hero h1 em{font-style:normal;color:var(--green);position:relative}
-.hero p{font-size:18px;color:var(--gray);max-width:680px;margin:0 auto 40px}
+.hero{padding:160px 0 120px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(34,197,94,0.06) 0%,transparent 70%);pointer-events:none}
+.hero-content{position:relative;text-align:center;max-width:800px;margin:0 auto}
+.hero-badge{display:inline-block;border:1px solid var(--border);background:var(--surface);padding:6px 16px;border-radius:100px;font-size:12px;font-weight:600;color:var(--green);letter-spacing:0.04em;margin-bottom:32px}
+.hero h1{font-size:clamp(36px,5.5vw,64px);font-weight:900;line-height:1.2;letter-spacing:-0.03em;margin-bottom:24px}
+.hero h1 .accent{color:var(--green)}
+.hero-desc{font-size:17px;color:var(--text-secondary);max-width:600px;margin:0 auto 48px;line-height:1.9}
 .hero-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-.hero-stats{display:flex;justify-content:center;gap:48px;margin-top:60px;flex-wrap:wrap}
-.stat{text-align:center}
-.stat-value{font-size:36px;font-weight:800;color:var(--green)}
-.stat-label{font-size:13px;color:var(--gray);margin-top:4px}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 32px;border-radius:8px;font-size:15px;font-weight:700;transition:all 0.25s;cursor:pointer;border:none;letter-spacing:0.01em}
+.btn-primary{background:var(--green);color:var(--bg)}
+.btn-primary:hover{background:var(--green-bright);transform:translateY(-2px);box-shadow:0 8px 32px rgba(34,197,94,0.25)}
+.btn-secondary{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn-secondary:hover{border-color:var(--green);color:var(--green)}
+.btn-large{padding:16px 40px;font-size:16px}
 
-/* Section */
-section{padding:80px 24px}
-.section-inner{max-width:1200px;margin:0 auto}
-.section-label{display:inline-block;color:var(--green);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px}
-.section-title{font-size:clamp(28px,3.5vw,40px);font-weight:800;margin-bottom:16px}
-.section-desc{font-size:16px;color:var(--gray);max-width:640px;margin-bottom:48px}
+.stats{padding:0 0 80px}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.stat-item{background:var(--surface);padding:32px 24px;text-align:center}
+.stat-value{font-size:32px;font-weight:900;color:var(--green);font-family:'Inter','Noto Sans JP',sans-serif;letter-spacing:-0.02em}
+.stat-label{font-size:13px;color:var(--text-muted);margin-top:4px;font-weight:500}
 
-/* Problems */
-.problems{background:var(--dark);color:var(--white)}
-.problems .section-label{color:#6EE7B7}
-.problems .section-desc{color:#9CA3AF}
-.problem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
-.problem-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:32px}
-.problem-icon{font-size:40px;margin-bottom:16px}
-.problem-card h3{font-size:18px;font-weight:700;margin-bottom:8px}
-.problem-card p{font-size:14px;color:#9CA3AF;line-height:1.8}
-.problem-card .highlight{color:#F87171;font-weight:700}
+.section{padding:100px 0}
+.section-label{font-size:12px;font-weight:700;color:var(--green);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px}
+.section-title{font-size:clamp(28px,3.5vw,42px);font-weight:900;letter-spacing:-0.02em;margin-bottom:16px;line-height:1.3}
+.section-desc{font-size:16px;color:var(--text-secondary);max-width:560px;line-height:1.9;margin-bottom:56px}
 
-/* Modules */
-.module-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:24px}
-.module-card{background:var(--white);border:1px solid #E5E7EB;border-radius:16px;padding:32px;transition:all 0.3s}
-.module-card:hover{border-color:var(--green);box-shadow:0 8px 30px rgba(13,150,104,0.1);transform:translateY(-4px)}
-.module-num{display:inline-block;background:var(--green-light);color:var(--green);font-size:12px;font-weight:800;padding:4px 10px;border-radius:6px;margin-bottom:16px}
-.module-card h3{font-size:20px;font-weight:700;margin-bottom:8px}
-.module-card .tagline{font-size:14px;color:var(--green);font-weight:600;margin-bottom:12px}
-.module-card p{font-size:14px;color:var(--gray);line-height:1.8}
-.module-card .metric{margin-top:16px;padding-top:16px;border-top:1px solid #E5E7EB;font-size:14px}
-.module-card .metric strong{color:var(--green)}
+.problem-section{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.problem-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:32px}
+.problem-number{font-size:48px;font-weight:900;color:var(--surface-3);font-family:'Inter',sans-serif;line-height:1;margin-bottom:16px}
+.problem-card h3{font-size:17px;font-weight:700;margin-bottom:10px}
+.problem-card p{font-size:14px;color:var(--text-secondary);line-height:1.9}
+.problem-highlight{color:var(--green);font-weight:700}
 
-/* Pricing */
-.pricing-bg{background:var(--light)}
-.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
-.price-card{background:var(--white);border:1px solid #E5E7EB;border-radius:16px;padding:36px;position:relative}
-.price-card.featured{border:2px solid var(--green);box-shadow:0 8px 30px rgba(13,150,104,0.12)}
-.price-card.featured::before{content:'人気';position:absolute;top:-12px;right:24px;background:var(--green);color:var(--white);font-size:12px;font-weight:700;padding:4px 12px;border-radius:6px}
-.price-segment{font-size:13px;color:var(--gray);font-weight:600;margin-bottom:4px}
-.price-name{font-size:22px;font-weight:800;margin-bottom:16px}
-.price-value{font-size:36px;font-weight:800;color:var(--green)}
-.price-value span{font-size:16px;color:var(--gray);font-weight:400}
-.price-features{list-style:none;margin:24px 0;padding:0}
-.price-features li{padding:8px 0;font-size:14px;color:var(--gray);display:flex;align-items:flex-start;gap:8px}
-.price-features li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0}
+.feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.feature-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:36px;transition:all 0.3s}
+.feature-card:hover{border-color:var(--border-light);transform:translateY(-2px)}
+.feature-card.wide{grid-column:span 2}
+.feature-tag{display:inline-block;padding:4px 10px;border-radius:4px;font-size:11px;font-weight:700;letter-spacing:0.04em;margin-bottom:16px;border:1px solid var(--border);color:var(--green)}
+.feature-card h3{font-size:20px;font-weight:800;margin-bottom:10px;letter-spacing:-0.01em}
+.feature-card p{font-size:14px;color:var(--text-secondary);line-height:1.9}
+.feature-list{list-style:none;margin-top:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}
+.feature-list li{font-size:13px;color:var(--text-secondary);padding:8px 0;padding-left:20px;position:relative}
+.feature-list li::before{content:'';position:absolute;left:0;top:14px;width:8px;height:8px;border-radius:2px;background:var(--green);opacity:0.6}
 
-/* CTA */
-.cta{background:linear-gradient(135deg,var(--green) 0%,#059669 100%);color:var(--white);text-align:center;padding:80px 24px;border-radius:0}
-.cta h2{font-size:clamp(28px,3.5vw,40px);font-weight:800;margin-bottom:16px}
-.cta p{font-size:18px;opacity:0.9;margin-bottom:32px}
-.btn-white{background:var(--white);color:var(--green);font-weight:700}
-.btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.15)}
+.ssbj-section{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.ssbj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.ssbj-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:32px}
+.ssbj-card h3{font-size:17px;font-weight:700;margin-bottom:10px;color:var(--green)}
+.ssbj-card p{font-size:14px;color:var(--text-secondary);line-height:1.9}
 
-/* Footer */
-footer{background:var(--dark);color:#9CA3AF;padding:48px 24px;text-align:center}
-footer .logo{color:#6EE7B7;margin-bottom:16px;display:inline-block}
-footer p{font-size:13px}
+.pricing-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:840px;margin:0 auto}
+.price-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:40px;position:relative;transition:all 0.3s}
+.price-card:hover{border-color:var(--border-light)}
+.price-card.featured{border-color:var(--green);background:linear-gradient(180deg,var(--surface-2) 0%,var(--surface) 100%)}
+.price-card.featured::before{content:'推奨';position:absolute;top:-12px;left:32px;background:var(--green);color:var(--bg);font-size:11px;font-weight:800;padding:4px 12px;border-radius:4px;letter-spacing:0.04em}
+.price-plan{font-size:14px;font-weight:600;color:var(--text-muted);margin-bottom:4px}
+.price-name{font-size:24px;font-weight:900;margin-bottom:20px;letter-spacing:-0.02em}
+.price-amount{font-size:44px;font-weight:900;color:var(--green);font-family:'Inter','Noto Sans JP',sans-serif;letter-spacing:-0.03em}
+.price-period{font-size:15px;color:var(--text-muted);font-weight:400}
+.price-desc{font-size:14px;color:var(--text-secondary);margin:16px 0 24px;line-height:1.8}
+.price-features{list-style:none;margin:0 0 32px;padding:0;border-top:1px solid var(--border);padding-top:24px}
+.price-features li{padding:6px 0;font-size:14px;color:var(--text-secondary);padding-left:20px;position:relative;line-height:1.7}
+.price-features li::before{content:'';position:absolute;left:0;top:13px;width:8px;height:8px;border-radius:2px;background:var(--green);opacity:0.6}
+.price-btn{display:block;width:100%;padding:14px;border-radius:8px;text-align:center;font-size:15px;font-weight:700;transition:all 0.25s;border:none;cursor:pointer}
+.price-btn-primary{background:var(--green);color:var(--bg)}
+.price-btn-primary:hover{background:var(--green-bright);transform:translateY(-1px);box-shadow:0 4px 20px rgba(34,197,94,0.25)}
+.price-btn-secondary{background:transparent;color:var(--text);border:1px solid var(--border)}
+.price-btn-secondary:hover{border-color:var(--green);color:var(--green)}
 
-/* GX Law Banner */
-.gx-banner{background:linear-gradient(90deg,#065F46,#047857);color:var(--white);text-align:center;padding:12px 24px;font-size:14px;font-weight:600}
-.gx-banner strong{color:#6EE7B7}
+.cta-section{padding:120px 0;text-align:center;position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(34,197,94,0.08) 0%,transparent 70%);pointer-events:none}
+.cta-section h2{font-size:clamp(28px,3.5vw,42px);font-weight:900;letter-spacing:-0.02em;margin-bottom:16px;position:relative}
+.cta-section p{font-size:16px;color:var(--text-secondary);margin-bottom:40px;position:relative}
 
-@media(max-width:768px){
-  nav{display:none}
-  .hero-stats{gap:24px}
-  .stat-value{font-size:28px}
+footer{border-top:1px solid var(--border);padding:40px 0;text-align:center}
+.footer-logo{font-size:18px;font-weight:900;margin-bottom:12px}
+footer p{font-size:12px;color:var(--text-muted)}
+
+@media(max-width:900px){
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .problem-grid,.ssbj-grid{grid-template-columns:1fr}
+  .feature-grid{grid-template-columns:1fr}
+  .feature-card.wide{grid-column:span 1}
+  .pricing-grid{grid-template-columns:1fr;max-width:480px}
+}
+@media(max-width:600px){
+  .stats-grid{grid-template-columns:1fr}
+  .hero-buttons{flex-direction:column;align-items:center}
+  nav a:not(.nav-cta){display:none}
 }
 </style>
 </head>
 <body>
 
-<div class="gx-banner">
-  <strong>GX推進法 2026年4月施行</strong> - 建設業のCO2報告義務化に完全対応
-</div>
-
 <header>
   <div class="header-inner">
-    <a href="/" class="logo">Green<span>Ops</span></a>
+    <a href="/" class="logo"><span class="logo-green">Green</span><span class="logo-white">Ops</span></a>
     <nav>
-      <a href="#problems">課題</a>
-      <a href="#modules">機能</a>
+      <a href="#problem">課題</a>
+      <a href="#features">機能</a>
+      <a href="#ssbj">SSBJ対応</a>
       <a href="#pricing">料金</a>
-      <a href="service.html" class="btn btn-primary">AI排出量算定を試す</a>
+      <a href="service.html" class="nav-cta">AI算定を試す</a>
     </nav>
   </div>
 </header>
 
 <section class="hero">
-  <div class="hero-badge">建設業GXインフラ No.1</div>
-  <h1>建設現場の<em>安全</em>と<em>脱炭素</em>を<br>ひとつのプラットフォームで</h1>
-  <p>安全書類の自動生成、CO2排出量の自動算定、多言語安全教育。<br>GreenOps は建設業の3大課題を同時に解決する唯一の統合SaaSです。</p>
-  <div class="hero-buttons">
-    <a href="service.html" class="btn btn-primary btn-large">無料でAI算定を試す</a>
-    <a href="#modules" class="btn btn-outline btn-large">機能を見る</a>
-  </div>
-  <div class="hero-stats">
-    <div class="stat"><div class="stat-value">40h</div><div class="stat-label">月間書類作業の削減</div></div>
-    <div class="stat"><div class="stat-value">75%</div><div class="stat-label">CO2算定コスト削減</div></div>
-    <div class="stat"><div class="stat-value">5言語</div><div class="stat-label">多言語安全教育対応</div></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge">SSBJ義務化対応 AIカーボン会計</div>
+      <h1>CO2排出量の算定を<br><span class="accent">完全に自動化</span>する</h1>
+      <p class="hero-desc">GreenOpsは建設業のScope 1-3排出量をAIで自動算定するカーボン会計SaaS。SSBJ開示基準に完全準拠した報告書を、人手をかけずに生成します。</p>
+      <div class="hero-buttons">
+        <a href="#pricing" class="btn btn-primary btn-large">導入プランを見る</a>
+        <a href="service.html" class="btn btn-secondary btn-large">AI排出量算定を試す</a>
+      </div>
+    </div>
   </div>
 </section>
 
-<section class="problems" id="problems">
-  <div class="section-inner">
-    <div class="section-label">Why GreenOps</div>
-    <h2 class="section-title">建設業が直面する3つの構造的課題</h2>
-    <p class="section-desc">2026年GX推進法の施行により、CO2排出量の報告が義務化。対応できない企業は入札から排除されるリスクがあります。</p>
+<div class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-value">95%</div>
+        <div class="stat-label">算定工数の削減率</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">Scope 1-3</div>
+        <div class="stat-label">全スコープ自動算定</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">SSBJ</div>
+        <div class="stat-label">開示基準完全準拠</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">5min</div>
+        <div class="stat-label">報告書生成時間</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="section problem-section" id="problem">
+  <div class="container">
+    <div class="section-label">Problem</div>
+    <h2 class="section-title">なぜ今、カーボン会計が急務なのか</h2>
+    <p class="section-desc">SSBJ開示基準の義務化により、CO2排出量の正確な算定と報告は経営課題になりました。</p>
     <div class="problem-grid">
       <div class="problem-card">
-        <div class="problem-icon">&#x1F4CB;</div>
-        <h3>安全書類地獄</h3>
-        <p>グリーンサイト対応の安全書類30種類。現場監督は毎月<span class="highlight">30時間以上</span>を紙の書類作業に費やしています。本来の施工管理に集中できない状況が常態化。</p>
+        <div class="problem-number">01</div>
+        <h3>SSBJ義務化の到来</h3>
+        <p>サステナビリティ基準委員会（SSBJ）による開示基準が義務化。上場企業およびサプライチェーン全体にScope 1-3の<span class="problem-highlight">排出量報告が必須</span>になります。</p>
       </div>
       <div class="problem-card">
-        <div class="problem-icon">&#x1F32D;</div>
-        <h3>CO2報告義務化の波</h3>
-        <p>GX推進法により、Scope 1-3のCO2排出量報告が義務化。外部コンサルに依頼すると<span class="highlight">月8〜42万円</span>。中小建設業にとっては存続を脅かすコスト負担。</p>
+        <div class="problem-number">02</div>
+        <h3>外部コンサルの限界</h3>
+        <p>CO2算定を外部に委託すると<span class="problem-highlight">月額8万〜42万円</span>のコストが発生。算定プロセスがブラックボックス化し、自社でのデータ管理が困難に。</p>
       </div>
       <div class="problem-card">
-        <div class="problem-icon">&#x1F30F;</div>
-        <h3>外国人労働者の安全</h3>
-        <p>建設業の外国人労働者は<span class="highlight">約11万人</span>。言語の壁による安全教育の不徹底が労災リスクを高め、企業の賠償責任問題に直結しています。</p>
+        <div class="problem-number">03</div>
+        <h3>建設業特有の複雑性</h3>
+        <p>多様な燃料・資材・重機の使用データ、複数現場の並行管理。建設業のScope 3算定は<span class="problem-highlight">他業種の数倍複雑</span>で、汎用ツールでは対応不可能です。</p>
       </div>
     </div>
   </div>
 </section>
 
-<section id="modules">
-  <div class="section-inner">
-    <div class="section-label">Modules</div>
-    <h2 class="section-title">5つのモジュールで建設DXを実現</h2>
-    <p class="section-desc">必要なモジュールだけを選んで導入可能。段階的にDXを進められます。</p>
-    <div class="module-grid">
-      <div class="module-card">
-        <div class="module-num">MODULE 1</div>
-        <h3>安全書類自動生成</h3>
-        <div class="tagline">グリーンサイト互換 30種類完全対応</div>
-        <p>作業員名簿・施工体制台帳・安全教育報告書をタップ操作で5分生成。QRコードチェックイン機能付き。</p>
-        <div class="metric">削減効果: <strong>月25時間 / 企業</strong></div>
+<section class="section" id="features">
+  <div class="container">
+    <div class="section-label">Features</div>
+    <h2 class="section-title">AIがカーボン会計の全てを自動化</h2>
+    <p class="section-desc">データ入力から報告書生成まで。GreenOpsはCO2排出量の算定プロセスを端から端まで自動化します。</p>
+    <div class="feature-grid">
+      <div class="feature-card wide">
+        <div class="feature-tag">CORE ENGINE</div>
+        <h3>AI排出量自動算定エンジン</h3>
+        <p>燃料・電力・資材データを入力するだけで、環境省排出係数に基づきScope 1-3のCO2排出量を自動算定。AIが計算根拠を明示し、監査対応可能なトレーサビリティを確保します。</p>
+        <ul class="feature-list">
+          <li>Scope 1: 直接排出（軽油・ガソリン・LPG等）</li>
+          <li>Scope 2: 間接排出（電力使用量）</li>
+          <li>Scope 3: サプライチェーン排出（資材・輸送）</li>
+          <li>環境省排出係数に自動対応</li>
+          <li>異常値のAI自動検知とアラート</li>
+          <li>算定根拠の完全トレーサビリティ</li>
+        </ul>
       </div>
-      <div class="module-card">
-        <div class="module-num">MODULE 2</div>
-        <h3>CO2排出量自動算定</h3>
-        <div class="tagline">AI搭載 Scope 1-3 完全自動計算</div>
-        <p>燃料・電力データを入力するだけで環境省基準に準拠した排出量を自動算定。報告書PDFもワンクリック出力。</p>
-        <div class="metric">コスト削減: <strong>月8〜42万円のコンサル費用 → 月額2万円</strong></div>
+      <div class="feature-card">
+        <div class="feature-tag">REPORTING</div>
+        <h3>SSBJ準拠報告書の自動生成</h3>
+        <p>SSBJ開示基準に完全準拠した報告書をワンクリックで出力。SBT・CDP・環境省フォーマットにも対応し、複数基準への同時報告を実現します。</p>
       </div>
-      <div class="module-card">
-        <div class="module-num">MODULE 3</div>
-        <h3>多言語安全教育</h3>
-        <div class="tagline">5言語対応 ネイティブナレーション</div>
-        <p>日本語・ベトナム語・インドネシア語・フィリピノ語・英語。200本のビデオライブラリーとクイズによる理解度確認。</p>
-        <div class="metric">対応言語: <strong>5言語 / ビデオ200本収録</strong></div>
+      <div class="feature-card">
+        <div class="feature-tag">ANALYTICS</div>
+        <h3>月次推移管理とダッシュボード</h3>
+        <p>排出量の月次推移をリアルタイムで可視化。現場別・工種別のブレークダウンにより、削減ポイントを特定。前月比異常値を自動検知します。</p>
       </div>
-      <div class="module-card">
-        <div class="module-num">MODULE 4</div>
-        <h3>現場管理モバイルアプリ</h3>
-        <div class="tagline">コンプライアンス特化の現場管理</div>
-        <p>チェックイン・安全巡視・インシデント報告・現場日誌の自動生成。隠蔽を物理的に不可能にする仕組み。</p>
-        <div class="metric">削減効果: <strong>月15時間 / 現場</strong></div>
+      <div class="feature-card">
+        <div class="feature-tag">MULTI-SITE</div>
+        <h3>複数現場の一元管理</h3>
+        <p>現場ごとに排出量を分離管理。元請への現場別CO2報告にも対応。全社集計と個別現場の双方をカバーします。</p>
       </div>
-      <div class="module-card">
-        <div class="module-num">MODULE 5</div>
-        <h3>元請連携API</h3>
-        <div class="tagline">SPIDERPLUS / ANDPAD 自動連携</div>
-        <p>施工データからCO2自動計算。低炭素工法の自動レコメンデーション。SBT/CDP報告書130ページを自動生成。</p>
-        <div class="metric">連携先: <strong>SPIDERPLUS / ANDPAD / カスタムAPI</strong></div>
+      <div class="feature-card">
+        <div class="feature-tag">AI RECOMMENDATION</div>
+        <h3>低炭素工法レコメンデーション</h3>
+        <p>AIが施工データを分析し、CO2排出量の削減が見込める代替工法を自動提案。工法変更による削減量をシミュレーションで定量化します。</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="pricing-bg" id="pricing">
-  <div class="section-inner">
+<section class="section ssbj-section" id="ssbj">
+  <div class="container">
+    <div class="section-label">SSBJ Compliance</div>
+    <h2 class="section-title">SSBJ開示基準への完全対応</h2>
+    <p class="section-desc">GreenOpsはSSBJ基準が要求する全ての開示項目をカバーし、監査法人の検証にも耐えるデータ品質を提供します。</p>
+    <div class="ssbj-grid">
+      <div class="ssbj-card">
+        <h3>ガバナンス開示</h3>
+        <p>気候関連リスク・機会に対する取締役会の監視体制、経営者の役割に関する開示データを体系的に整理・出力します。</p>
+      </div>
+      <div class="ssbj-card">
+        <h3>戦略開示</h3>
+        <p>事業・戦略・財務計画に対する気候関連リスク・機会の影響を定量データとともに報告書形式で自動生成します。</p>
+      </div>
+      <div class="ssbj-card">
+        <h3>指標・目標開示</h3>
+        <p>Scope 1-3排出量の算定結果、排出原単位、削減目標に対する進捗を環境省基準に準拠した形式で出力します。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="pricing">
+  <div class="container" style="text-align:center">
     <div class="section-label">Pricing</div>
-    <h2 class="section-title">規模に合わせた3つのプラン</h2>
-    <p class="section-desc">小規模事業者から大手ゼネコン協力会社まで、最適なプランを選択できます。</p>
+    <h2 class="section-title" style="max-width:100%">シンプルな料金体系</h2>
+    <p class="section-desc" style="margin-left:auto;margin-right:auto">外部コンサルの数分の一のコストで、より正確なカーボン会計を実現します。</p>
     <div class="pricing-grid">
       <div class="price-card">
-        <div class="price-segment">Segment C</div>
-        <div class="price-name">スタータープラン</div>
-        <div class="price-value">&yen;2,000<span>/月〜</span></div>
+        <div class="price-plan">PLAN 01</div>
+        <div class="price-name">Starter</div>
+        <div class="price-amount">&yen;9,800<span class="price-period"> /月</span></div>
+        <p class="price-desc">単一現場の排出量管理に最適。まずはここから始めて、カーボン会計の基盤を構築できます。</p>
         <ul class="price-features">
-          <li>安全書類テンプレート 20種類</li>
-          <li>CO2簡易計算（手入力）</li>
-          <li>安全教育ビデオ 20本</li>
-          <li>メールサポート</li>
+          <li>Scope 1-2 自動算定</li>
+          <li>Scope 3 簡易算定（主要資材）</li>
+          <li>月次排出量レポート</li>
+          <li>SSBJ準拠報告書出力</li>
+          <li>現場数 最大3件</li>
+          <li>チャットサポート</li>
         </ul>
-        <a href="service.html" class="btn btn-outline" style="width:100%;text-align:center">無料で試す</a>
+        <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" class="price-btn price-btn-secondary">Starterを始める</a>
       </div>
       <div class="price-card featured">
-        <div class="price-segment">Segment B</div>
-        <div class="price-name">スタンダードプラン</div>
-        <div class="price-value">&yen;10,000<span>/月〜</span></div>
+        <div class="price-plan">PLAN 02</div>
+        <div class="price-name">Professional</div>
+        <div class="price-amount">&yen;29,800<span class="price-period"> /月</span></div>
+        <p class="price-desc">複数現場を抱える中堅〜大手向け。AI異常検知と低炭素工法レコメンドで積極的な排出削減を推進します。</p>
         <ul class="price-features">
-          <li>安全書類簡易版</li>
-          <li>CO2自動計算（Tier 1）</li>
-          <li>多言語教育コンテンツ</li>
-          <li>モバイルアプリ簡易版</li>
-          <li>チャットサポート（24h対応）</li>
+          <li>Scope 1-3 完全自動算定</li>
+          <li>AI異常検知・アラート</li>
+          <li>低炭素工法レコメンデーション</li>
+          <li>SBT・CDP報告書自動生成</li>
+          <li>現場数 無制限</li>
+          <li>API連携（SPIDERPLUS / ANDPAD）</li>
+          <li>優先サポート（2時間以内応答）</li>
         </ul>
-        <a href="service.html" class="btn btn-primary" style="width:100%;text-align:center">無料で試す</a>
-      </div>
-      <div class="price-card">
-        <div class="price-segment">Segment A</div>
-        <div class="price-name">エンタープライズ</div>
-        <div class="price-value">&yen;25,000<span>/月〜</span></div>
-        <ul class="price-features">
-          <li>全モジュール完全版</li>
-          <li>Scope 1-3 自動算定</li>
-          <li>SPIDERPLUS / ANDPAD連携</li>
-          <li>AI異常検知・レコメンド</li>
-          <li>SBT/CDP報告書自動生成</li>
-          <li>優先サポート（2h対応）</li>
-        </ul>
-        <a href="service.html" class="btn btn-outline" style="width:100%;text-align:center">お問い合わせ</a>
+        <a href="https://buy.stripe.com/00wcN55hg8fgb399UHfQI05" class="price-btn price-btn-primary">Professionalを始める</a>
       </div>
     </div>
   </div>
 </section>
 
-<section class="cta">
-  <h2>建設業のGXを、今日から始めよう</h2>
-  <p>GX推進法の施行に向けて、まずはAI排出量算定を無料でお試しください。</p>
-  <a href="service.html" class="btn btn-white btn-large">AI排出量算定を無料で試す</a>
+<section class="cta-section">
+  <div class="container">
+    <h2>カーボン会計の自動化を、<span class="accent">今日から</span></h2>
+    <p>SSBJ義務化を見据え、まずはAI排出量算定を無料でお試しください。</p>
+    <div class="hero-buttons" style="justify-content:center">
+      <a href="service.html" class="btn btn-primary btn-large">AI排出量算定を試す</a>
+      <a href="#pricing" class="btn btn-secondary btn-large">料金プランを見る</a>
+    </div>
+  </div>
 </section>
 
 <footer>
-  <div class="logo">Green<span style="color:#fff">Ops</span></div>
-  <p>&copy; 2026 GreenOps Inc. All rights reserved. | 建設業界のGXインフラ</p>
+  <div class="container">
+    <div class="footer-logo"><span class="logo-green">Green</span><span class="logo-white">Ops</span></div>
+    <p>&copy; 2026 GreenOps Inc. All rights reserved.</p>
+  </div>
 </footer>
 
 </body>
