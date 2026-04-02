@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI排出量算定 - GreenOps</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--green:#0D9668;--green-dark:#087A54;--green-light:#E6F7F1;--dark:#1A1A2E;--gray:#6B7280;--light:#F9FAFB;--white:#FFFFFF;--red:#EF4444}
+body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;color:var(--dark);line-height:1.7;background:var(--light)}
+a{text-decoration:none;color:inherit}
+
+header{background:var(--white);border-bottom:1px solid #E5E7EB;padding:16px 24px}
+.header-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:24px;font-weight:800;color:var(--green)}
+.logo span{color:var(--dark)}
+.back-link{font-size:14px;color:var(--gray);font-weight:500;display:flex;align-items:center;gap:6px}
+.back-link:hover{color:var(--green)}
+
+.page-hero{background:linear-gradient(135deg,#F0FDF9,#D1FAE5);padding:48px 24px;text-align:center}
+.page-hero h1{font-size:clamp(24px,3.5vw,36px);font-weight:800;margin-bottom:8px}
+.page-hero p{font-size:16px;color:var(--gray)}
+
+.main{max-width:960px;margin:0 auto;padding:40px 24px}
+.card{background:var(--white);border:1px solid #E5E7EB;border-radius:16px;padding:32px;margin-bottom:24px}
+.card h2{font-size:20px;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.card h2 .icon{width:32px;height:32px;background:var(--green-light);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group label{font-size:13px;font-weight:600;color:var(--dark)}
+.form-group .hint{font-size:12px;color:var(--gray)}
+input,select,textarea{padding:12px 16px;border:1px solid #D1D5DB;border-radius:10px;font-size:15px;font-family:inherit;transition:border-color 0.2s;background:var(--white)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(13,150,104,0.1)}
+textarea{resize:vertical;min-height:100px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 32px;border-radius:12px;font-weight:700;font-size:15px;cursor:pointer;border:none;transition:all 0.2s}
+.btn-primary{background:var(--green);color:var(--white);width:100%}
+.btn-primary:hover{background:var(--green-dark);transform:translateY(-1px);box-shadow:0 4px 12px rgba(13,150,104,0.3)}
+.btn-primary:disabled{background:#9CA3AF;cursor:not-allowed;transform:none;box-shadow:none}
+
+/* Results */
+.results{display:none}
+.results.show{display:block}
+
+.scope-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+.scope-card{background:var(--light);border-radius:12px;padding:20px;text-align:center;border:1px solid #E5E7EB}
+.scope-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--gray);margin-bottom:4px}
+.scope-value{font-size:32px;font-weight:800;color:var(--green)}
+.scope-unit{font-size:14px;color:var(--gray)}
+.scope-card.total{background:var(--green);border-color:var(--green)}
+.scope-card.total .scope-label{color:rgba(255,255,255,0.8)}
+.scope-card.total .scope-value{color:var(--white)}
+.scope-card.total .scope-unit{color:rgba(255,255,255,0.8)}
+
+.breakdown{margin-bottom:24px}
+.breakdown h3{font-size:16px;font-weight:700;margin-bottom:12px}
+.breakdown-item{padding:12px 16px;background:var(--light);border-radius:8px;margin-bottom:8px;font-size:14px;color:var(--gray);line-height:1.6}
+.breakdown-item strong{color:var(--dark);display:block;margin-bottom:2px}
+
+.recommendations{margin-bottom:24px}
+.recommendations h3{font-size:16px;font-weight:700;margin-bottom:12px}
+.rec-item{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;background:#FFF7ED;border:1px solid #FED7AA;border-radius:8px;margin-bottom:8px;font-size:14px}
+.rec-icon{flex-shrink:0;width:24px;height:24px;background:#F97316;border-radius:6px;color:var(--white);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
+
+.summary-box{background:var(--green-light);border:1px solid #A7F3D0;border-radius:12px;padding:20px;font-size:15px;line-height:1.8}
+
+.loading{display:none;text-align:center;padding:40px}
+.loading.show{display:block}
+.spinner{width:40px;height:40px;border:4px solid #E5E7EB;border-top-color:var(--green);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading p{color:var(--gray);font-size:14px}
+
+.error-box{display:none;background:#FEF2F2;border:1px solid #FECACA;border-radius:12px;padding:20px;color:#991B1B;font-size:14px;margin-top:16px}
+.error-box.show{display:block}
+
+footer{text-align:center;padding:32px 24px;color:var(--gray);font-size:13px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="/" class="logo">Green<span>Ops</span></a>
+    <a href="/" class="back-link">&larr; トップに戻る</a>
+  </div>
+</header>
+
+<div class="page-hero">
+  <h1>AI CO2排出量算定サービス</h1>
+  <p>燃料・電力・資材データを入力するだけで、Scope 1-3 のCO2排出量をAIが自動算定</p>
+</div>
+
+<div class="main">
+
+  <form id="calcForm">
+    <div class="card">
+      <h2><span class="icon">&#x26FD;</span> Scope 1: 燃料使用量（直接排出）</h2>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>燃料種別</label>
+          <select id="fuelType">
+            <option value="軽油">軽油（バックホウ・ダンプ等）</option>
+            <option value="ガソリン">ガソリン（発電機・車両等）</option>
+            <option value="LPG">LPG（暖房・溶接等）</option>
+            <option value="A重油">A重油（ボイラー等）</option>
+            <option value="灯油">灯油（暖房等）</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>使用量</label>
+          <div class="hint">月間の使用量を入力してください</div>
+          <input type="number" id="amount" placeholder="例: 500" min="0" step="0.1">
+        </div>
+        <div class="form-group">
+          <label>単位</label>
+          <select id="unit">
+            <option value="L">リットル (L)</option>
+            <option value="kg">キログラム (kg)</option>
+            <option value="m3">立方メートル (m3)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">&#x26A1;</span> Scope 2: 電力使用量（間接排出）</h2>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>月間電力使用量 (kWh)</label>
+          <div class="hint">現場事務所・仮設電力等の合計</div>
+          <input type="number" id="electricityKwh" placeholder="例: 1200" min="0" step="0.1">
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">&#x1F9F1;</span> Scope 3: 資材・サプライチェーン</h2>
+      <div class="form-group">
+        <label>使用資材の情報</label>
+        <div class="hint">資材名と数量を記入してください（例: コンクリート 200m3, 鉄筋 50t）</div>
+        <textarea id="materials" placeholder="コンクリート 200m3&#10;鉄筋 50t&#10;型枠合板 300枚"></textarea>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" id="submitBtn">
+      <span>&#x1F916;</span> AIで排出量を算定する
+    </button>
+
+    <div class="error-box" id="errorBox"></div>
+  </form>
+
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <p>Claude AI が環境省基準に基づいて排出量を算定中...</p>
+  </div>
+
+  <div class="results" id="results">
+    <div class="card">
+      <h2><span class="icon">&#x1F4CA;</span> 算定結果</h2>
+      <div class="scope-grid">
+        <div class="scope-card">
+          <div class="scope-label">Scope 1</div>
+          <div class="scope-value" id="scope1Val">-</div>
+          <div class="scope-unit">tCO2</div>
+        </div>
+        <div class="scope-card">
+          <div class="scope-label">Scope 2</div>
+          <div class="scope-value" id="scope2Val">-</div>
+          <div class="scope-unit">tCO2</div>
+        </div>
+        <div class="scope-card">
+          <div class="scope-label">Scope 3</div>
+          <div class="scope-value" id="scope3Val">-</div>
+          <div class="scope-unit">tCO2</div>
+        </div>
+        <div class="scope-card total">
+          <div class="scope-label">合計排出量</div>
+          <div class="scope-value" id="totalVal">-</div>
+          <div class="scope-unit">tCO2</div>
+        </div>
+      </div>
+
+      <div class="breakdown" id="breakdownSection">
+        <h3>算定根拠</h3>
+        <div id="breakdownContent"></div>
+      </div>
+
+      <div class="recommendations" id="recSection">
+        <h3>AI削減提案</h3>
+        <div id="recContent"></div>
+      </div>
+
+      <div class="summary-box" id="summaryBox"></div>
+    </div>
+
+    <button class="btn btn-primary" onclick="resetForm()" style="margin-top:8px">
+      新しい算定を開始する
+    </button>
+  </div>
+
+</div>
+
+<footer>
+  &copy; 2026 GreenOps Inc. | AI排出量算定サービス - 環境省基準準拠
+</footer>
+
+<script>
+const form = document.getElementById('calcForm');
+const loading = document.getElementById('loading');
+const results = document.getElementById('results');
+const errorBox = document.getElementById('errorBox');
+const submitBtn = document.getElementById('submitBtn');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const fuelType = document.getElementById('fuelType').value;
+  const amount = document.getElementById('amount').value;
+  const unit = document.getElementById('unit').value;
+  const electricityKwh = document.getElementById('electricityKwh').value;
+  const materials = document.getElementById('materials').value;
+
+  if (!amount && !electricityKwh && !materials) {
+    errorBox.textContent = '少なくとも1つの項目にデータを入力してください。';
+    errorBox.classList.add('show');
+    return;
+  }
+
+  form.style.display = 'none';
+  loading.classList.add('show');
+  results.classList.remove('show');
+  errorBox.classList.remove('show');
+
+  try {
+    const res = await fetch('/api/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fuelType, amount, unit, electricityKwh, materials }),
+    });
+
+    const data = await res.json();
+
+    if (data.error) {
+      throw new Error(data.error);
+    }
+
+    if (data.raw) {
+      // Fallback for non-JSON response
+      document.getElementById('summaryBox').textContent = data.raw;
+      loading.classList.remove('show');
+      results.classList.add('show');
+      return;
+    }
+
+    // Populate scope values
+    document.getElementById('scope1Val').textContent = data.scope1?.value?.toFixed(2) ?? '-';
+    document.getElementById('scope2Val').textContent = data.scope2?.value?.toFixed(2) ?? '-';
+    document.getElementById('scope3Val').textContent = data.scope3?.value?.toFixed(2) ?? '-';
+    document.getElementById('totalVal').textContent = data.total?.toFixed(2) ?? '-';
+
+    // Breakdown
+    const breakdownContent = document.getElementById('breakdownContent');
+    breakdownContent.innerHTML = '';
+    if (data.scope1?.breakdown) {
+      breakdownContent.innerHTML += `<div class="breakdown-item"><strong>Scope 1（直接排出）</strong>${data.scope1.breakdown}</div>`;
+    }
+    if (data.scope2?.breakdown) {
+      breakdownContent.innerHTML += `<div class="breakdown-item"><strong>Scope 2（間接排出）</strong>${data.scope2.breakdown}</div>`;
+    }
+    if (data.scope3?.breakdown) {
+      breakdownContent.innerHTML += `<div class="breakdown-item"><strong>Scope 3（サプライチェーン）</strong>${data.scope3.breakdown}</div>`;
+    }
+
+    // Recommendations
+    const recContent = document.getElementById('recContent');
+    recContent.innerHTML = '';
+    if (data.recommendations?.length) {
+      data.recommendations.forEach((rec, i) => {
+        recContent.innerHTML += `<div class="rec-item"><div class="rec-icon">${i + 1}</div><div>${rec}</div></div>`;
+      });
+    }
+
+    // Summary
+    document.getElementById('summaryBox').textContent = data.summary || '';
+
+    loading.classList.remove('show');
+    results.classList.add('show');
+
+  } catch (err) {
+    loading.classList.remove('show');
+    form.style.display = 'block';
+    errorBox.textContent = 'エラーが発生しました: ' + err.message;
+    errorBox.classList.add('show');
+  }
+});
+
+function resetForm() {
+  form.style.display = 'block';
+  results.classList.remove('show');
+  form.reset();
+}
+</script>
+
+</body>
+</html>
