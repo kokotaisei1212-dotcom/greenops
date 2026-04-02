@@ -248,6 +248,22 @@ footer p{font-size:12px;color:var(--text-muted)}
 </footer>
 
 <script>
+// Access guard: only allow access from Stripe checkout success redirect
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const hasSession = params.has('session_id');
+  const fromStripe = document.referrer.includes('checkout.stripe.com');
+  const stored = sessionStorage.getItem('greenops_authorized');
+
+  if (hasSession || fromStripe) {
+    sessionStorage.setItem('greenops_authorized', '1');
+  } else if (!stored) {
+    document.body.innerHTML = '';
+    window.location.href = '/';
+    throw new Error('Unauthorized');
+  }
+})();
+
 const form = document.getElementById('calcForm');
 const loading = document.getElementById('loading');
 const results = document.getElementById('results');
