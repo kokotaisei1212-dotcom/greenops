@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GreenOps | SSBJ義務化対応 AIカーボン会計SaaS</title>
-<meta name="description" content="2027年3月SSBJ義務化。GreenOpsはAIでScope 1-3排出量算定からSSBJ開示文章生成まで自動化するカーボン会計SaaSです。">
+<meta name="description" content="2027年3月SSBJ義務化。違反すれば懲役10年・法人罰金7億円。GreenOpsはAIでScope 1-3排出量算定からSSBJ開示文章生成まで完全自動化。業界相場の1/4以下。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -12,186 +12,213 @@
 :root{
   --bg:#020A06;--surface:#071710;--surface-2:#0C2118;--surface-3:#122E21;
   --border:#1A3D2B;--border-light:#24573A;--green:#22C55E;--green-bright:#4ADE80;
-  --green-dim:#16A34A;--text:#F0FDF4;--text-secondary:#A7C4B5;--text-muted:#5E8A72;
-  --red:#EF4444;--red-surface:rgba(239,68,68,0.06);--red-border:rgba(239,68,68,0.18);
-  --amber:#F59E0B;--amber-surface:rgba(245,158,11,0.06);--amber-border:rgba(245,158,11,0.18);
+  --text:#F0FDF4;--text-secondary:#A7C4B5;--text-muted:#5E8A72;
+  --red:#EF4444;--red-bright:#F87171;--red-surface:rgba(239,68,68,0.07);--red-border:rgba(239,68,68,0.2);
+  --amber:#F59E0B;--amber-surface:rgba(245,158,11,0.07);--amber-border:rgba(245,158,11,0.2);
 }
 html{scroll-behavior:smooth}
 body{font-family:'Noto Sans JP','Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.8;-webkit-font-smoothing:antialiased}
 a{text-decoration:none;color:inherit}
 .container{max-width:1080px;margin:0 auto;padding:0 24px}
-img{max-width:100%}
 
 /* Header */
-header{position:fixed;top:0;width:100%;z-index:100;background:rgba(2,10,6,0.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-.header-inner{max-width:1080px;margin:0 auto;padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
+header{position:fixed;top:0;width:100%;z-index:100;background:rgba(2,10,6,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.hdr{max-width:1080px;margin:0 auto;padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between}
 .logo{font-size:20px;font-weight:900;letter-spacing:-0.03em}
-.logo .g{color:var(--green)}.logo .o{color:var(--text)}
-nav{display:flex;align-items:center;gap:28px}
-nav a{font-size:12px;font-weight:600;color:var(--text-muted);transition:color 0.2s;letter-spacing:0.03em}
+.lg{color:var(--green)}.lo{color:var(--text)}
+nav{display:flex;align-items:center;gap:24px}
+nav a{font-size:12px;font-weight:600;color:var(--text-muted);transition:color 0.2s}
 nav a:hover{color:var(--green)}
-.nav-cta{padding:7px 18px;background:var(--green);color:var(--bg);border-radius:6px;font-weight:700}
+.nav-cta{padding:7px 16px;background:var(--green);color:var(--bg);border-radius:6px;font-weight:700}
 .nav-cta:hover{background:var(--green-bright);color:var(--bg)}
 
 /* Shared */
-.section{padding:100px 0}
-.section-label{font-size:11px;font-weight:700;color:var(--green);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:14px}
-.section-title{font-size:clamp(24px,3.2vw,38px);font-weight:900;letter-spacing:-0.02em;margin-bottom:14px;line-height:1.35}
-.section-desc{font-size:15px;color:var(--text-secondary);max-width:560px;line-height:1.9;margin-bottom:48px}
-.btn{display:inline-flex;align-items:center;justify-content:center;padding:13px 28px;border-radius:8px;font-size:14px;font-weight:700;transition:all 0.25s;cursor:pointer;border:none;letter-spacing:0.01em}
-.btn-primary{background:var(--green);color:var(--bg)}
-.btn-primary:hover{background:var(--green-bright);transform:translateY(-1px);box-shadow:0 6px 24px rgba(34,197,94,0.22)}
-.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
-.btn-ghost:hover{border-color:var(--green);color:var(--green)}
-.btn-lg{padding:16px 36px;font-size:15px}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:32px}
+.sec{padding:100px 0}
+.sl{font-size:11px;font-weight:700;color:var(--green);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:12px}
+.st{font-size:clamp(24px,3.2vw,38px);font-weight:900;letter-spacing:-0.02em;margin-bottom:12px;line-height:1.3}
+.sd{font-size:15px;color:var(--text-secondary);max-width:560px;line-height:1.9;margin-bottom:48px}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 28px;border-radius:8px;font-size:14px;font-weight:700;transition:all 0.25s;cursor:pointer;border:none}
+.bp{background:var(--green);color:var(--bg)}
+.bp:hover{background:var(--green-bright);transform:translateY(-1px);box-shadow:0 6px 24px rgba(34,197,94,0.22)}
+.bg{background:transparent;color:var(--text);border:1px solid var(--border)}
+.bg:hover{border-color:var(--green);color:var(--green)}
+.bl{padding:16px 36px;font-size:15px}
 
-/* ─── HERO ─── */
-.hero{padding:150px 0 80px;text-align:center;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:900px;height:900px;background:radial-gradient(circle,rgba(34,197,94,0.05) 0%,transparent 65%);pointer-events:none}
-.hero-content{position:relative;max-width:780px;margin:0 auto}
-.hero-urgency{display:inline-block;background:var(--red-surface);border:1px solid var(--red-border);color:var(--red);padding:5px 14px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:0.04em;margin-bottom:28px}
-.hero h1{font-size:clamp(28px,4.8vw,52px);font-weight:900;line-height:1.25;letter-spacing:-0.03em;margin-bottom:28px}
+/* ═══ HERO ═══ */
+.hero{padding:130px 0 60px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:1000px;height:1000px;background:radial-gradient(circle,rgba(239,68,68,0.04) 0%,rgba(34,197,94,0.03) 40%,transparent 65%);pointer-events:none}
+.hero-inner{position:relative;max-width:820px;margin:0 auto}
+
+/* Penalty shock strip */
+.penalty-strip{display:flex;justify-content:center;gap:32px;margin-bottom:32px;flex-wrap:wrap}
+.ps-item{text-align:center}
+.ps-val{font-size:clamp(28px,4vw,44px);font-weight:900;color:var(--red);font-family:'Inter','Noto Sans JP',sans-serif;letter-spacing:-0.03em;line-height:1}
+.ps-lbl{font-size:11px;color:var(--red-bright);font-weight:600;margin-top:4px;letter-spacing:0.03em}
+
+.hero h1{font-size:clamp(26px,4.5vw,48px);font-weight:900;line-height:1.25;letter-spacing:-0.03em;margin-bottom:20px}
 .hero h1 .hl{color:var(--green)}
-.hero-sub{font-size:16px;color:var(--text-secondary);max-width:580px;margin:0 auto 44px;line-height:1.9}
-.hero-buttons{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 
-/* ─── COUNTDOWN ─── */
-.countdown-bar{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:36px 0}
-.countdown-inner{display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap}
-.countdown-label{font-size:13px;color:var(--text-muted);font-weight:600}
-.countdown-label strong{color:var(--red);font-weight:800}
-.countdown-digits{display:flex;gap:8px}
-.cd-unit{text-align:center}
-.cd-val{display:block;font-size:36px;font-weight:900;color:var(--green);font-family:'Inter','Noto Sans JP',sans-serif;letter-spacing:-0.03em;line-height:1.1}
-.cd-lbl{display:block;font-size:10px;color:var(--text-muted);font-weight:600;letter-spacing:0.06em;text-transform:uppercase;margin-top:2px}
-.cd-sep{font-size:28px;color:var(--border-light);font-weight:300;line-height:1.3}
+/* Countdown in hero */
+.hero-cd{display:flex;justify-content:center;gap:6px;margin-bottom:28px}
+.hcd-unit{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 18px;text-align:center;min-width:76px}
+.hcd-val{display:block;font-size:clamp(32px,5vw,52px);font-weight:900;color:var(--green);font-family:'Inter',sans-serif;letter-spacing:-0.03em;line-height:1}
+.hcd-lbl{display:block;font-size:10px;color:var(--text-muted);font-weight:600;letter-spacing:0.06em;margin-top:6px}
+.hcd-sep{font-size:36px;color:var(--border-light);font-weight:200;display:flex;align-items:center}
 
-/* ─── CHECKER ─── */
-.checker-section{background:var(--surface)}
-.checker-box{max-width:600px;margin:0 auto;background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:36px}
-.checker-box h3{font-size:18px;font-weight:800;margin-bottom:6px}
-.checker-box p{font-size:13px;color:var(--text-muted);margin-bottom:20px}
-.checker-input-row{display:flex;gap:10px;margin-bottom:16px}
-.checker-input{flex:1;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:15px;font-family:inherit;color:var(--text)}
-.checker-input:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(34,197,94,0.1)}
-.checker-input::placeholder{color:var(--text-muted)}
-.checker-btn{padding:12px 24px;background:var(--green);color:var(--bg);border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;white-space:nowrap}
-.checker-btn:hover{background:var(--green-bright)}
-.checker-result{display:none;padding:20px;border-radius:10px;font-size:14px;line-height:1.8}
-.checker-result.show{display:block}
-.checker-result.urgent{background:var(--red-surface);border:1px solid var(--red-border);color:#FCA5A5}
-.checker-result.warning{background:var(--amber-surface);border:1px solid var(--amber-border);color:#FCD34D}
-.checker-result.safe{background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.18);color:var(--green-bright)}
-.checker-result strong{display:block;font-size:16px;margin-bottom:4px}
+.hero-sub{font-size:15px;color:var(--text-secondary);max-width:600px;margin:0 auto 36px;line-height:1.9}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 
-/* ─── BEFORE/AFTER ─── */
+/* Urgency bar */
+.urgency-bar{background:linear-gradient(90deg,rgba(239,68,68,0.12),rgba(239,68,68,0.04));border-top:1px solid var(--red-border);border-bottom:1px solid var(--red-border);padding:14px 0;text-align:center}
+.urgency-bar p{font-size:13px;color:var(--red-bright);font-weight:600}
+.urgency-bar strong{color:var(--red);font-weight:800}
+
+/* ═══ PENALTY DETAIL ═══ */
+.penalty-sec{background:var(--surface);border-bottom:1px solid var(--border)}
+.pen-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.pen-card{background:var(--bg);border:1px solid var(--red-border);border-radius:12px;padding:28px;text-align:center}
+.pen-val{font-size:clamp(32px,4.5vw,48px);font-weight:900;color:var(--red);font-family:'Inter','Noto Sans JP',sans-serif;letter-spacing:-0.02em;line-height:1;margin-bottom:6px}
+.pen-lbl{font-size:14px;color:var(--text);font-weight:700;margin-bottom:6px}
+.pen-det{font-size:12px;color:var(--text-muted);line-height:1.7}
+.pen-note{margin-top:24px;font-size:12px;color:var(--text-muted);line-height:1.8;max-width:720px}
+
+/* ═══ TIMELINE ═══ */
+.tl-visual{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.tl-col{text-align:center}
+.tl-year-label{font-size:13px;font-weight:800;margin-bottom:10px}
+.tl-col:first-child .tl-year-label{color:var(--red)}
+.tl-col:not(:first-child) .tl-year-label{color:var(--text-muted)}
+.tl-bar-wrap{height:220px;display:flex;align-items:flex-end;justify-content:center;margin-bottom:10px}
+.tl-bar{width:100%;max-width:80px;border-radius:8px 8px 0 0;transition:height 0.8s ease;position:relative}
+.tl-bar-num{position:absolute;top:-28px;left:50%;transform:translateX(-50%);font-size:22px;font-weight:900;font-family:'Inter',sans-serif}
+.tl-col:first-child .tl-bar{background:linear-gradient(180deg,var(--red),rgba(239,68,68,0.4));height:24%}
+.tl-col:first-child .tl-bar-num{color:var(--red)}
+.tl-col:nth-child(2) .tl-bar{background:linear-gradient(180deg,var(--amber),rgba(245,158,11,0.3));height:47%}
+.tl-col:nth-child(2) .tl-bar-num{color:var(--amber)}
+.tl-col:nth-child(3) .tl-bar{background:linear-gradient(180deg,var(--green),rgba(34,197,94,0.3));height:78%}
+.tl-col:nth-child(3) .tl-bar-num{color:var(--green)}
+.tl-col:nth-child(4) .tl-bar{background:linear-gradient(180deg,var(--green-bright),rgba(74,222,128,0.2));height:100%}
+.tl-col:nth-child(4) .tl-bar-num{color:var(--green-bright)}
+.tl-desc2{font-size:12px;color:var(--text-muted);line-height:1.6}
+.tl-cap{font-size:11px;color:var(--text-muted);font-weight:600;margin-top:4px}
+
+/* ═══ CHECKER ═══ */
+.checker-sec{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.ck-box{max-width:580px;margin:0 auto;background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:32px}
+.ck-box h3{font-size:18px;font-weight:800;margin-bottom:4px}
+.ck-box>p{font-size:13px;color:var(--text-muted);margin-bottom:18px}
+.ck-row{display:flex;gap:10px;margin-bottom:14px}
+.ck-input{flex:1;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:15px;font-family:inherit;color:var(--text)}
+.ck-input:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(34,197,94,0.1)}
+.ck-input::placeholder{color:var(--text-muted)}
+.ck-btn{padding:12px 22px;background:var(--green);color:var(--bg);border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap}
+.ck-btn:hover{background:var(--green-bright)}
+.ck-result{display:none;padding:18px;border-radius:10px;font-size:14px;line-height:1.8}
+.ck-result.show{display:block}
+.ck-result.urgent{background:var(--red-surface);border:1px solid var(--red-border);color:#FCA5A5}
+.ck-result.warning{background:var(--amber-surface);border:1px solid var(--amber-border);color:#FCD34D}
+.ck-result.safe{background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.18);color:var(--green-bright)}
+.ck-result strong{display:block;font-size:16px;font-weight:800;margin-bottom:4px}
+.ck-result .ck-cta{display:inline-block;margin-top:12px;padding:10px 20px;background:var(--green);color:var(--bg);border-radius:6px;font-size:13px;font-weight:700}
+
+/* ═══ BEFORE/AFTER ═══ */
+.ba-hero-nums{display:grid;grid-template-columns:1fr auto 1fr;gap:20px;align-items:center;margin-bottom:36px;text-align:center}
+.ba-box{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px}
+.ba-box-label{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px}
+.ba-before .ba-box-label{color:var(--red)}
+.ba-after .ba-box-label{color:var(--green)}
+.ba-box-val{font-size:clamp(28px,4vw,44px);font-weight:900;font-family:'Inter','Noto Sans JP',sans-serif;letter-spacing:-0.03em;line-height:1.1}
+.ba-before .ba-box-val{color:var(--red)}
+.ba-after .ba-box-val{color:var(--green)}
+.ba-box-sub{font-size:13px;color:var(--text-muted);margin-top:6px}
+.ba-arrow{font-size:36px;color:var(--green);font-weight:200}
 .ba-table{width:100%;border-collapse:collapse}
-.ba-table th,.ba-table td{padding:16px 20px;text-align:left;font-size:14px;border-bottom:1px solid var(--border)}
-.ba-table th{font-size:12px;font-weight:700;color:var(--text-muted);letter-spacing:0.06em;text-transform:uppercase;background:var(--surface)}
+.ba-table th,.ba-table td{padding:14px 18px;text-align:left;font-size:13px;border-bottom:1px solid var(--border)}
+.ba-table th{font-size:11px;font-weight:700;color:var(--text-muted);letter-spacing:0.06em;text-transform:uppercase;background:var(--surface)}
 .ba-table thead th:first-child{border-radius:10px 0 0 0}.ba-table thead th:last-child{border-radius:0 10px 0 0}
-.ba-table td{color:var(--text-secondary)}
-.ba-table .col-item{font-weight:600;color:var(--text)}
-.ba-table .col-before{color:var(--red)}
-.ba-table .col-after{color:var(--green);font-weight:700}
-.ba-table .col-reduction{color:var(--green-bright);font-weight:800}
+.ba-table .ci{font-weight:600;color:var(--text)}
+.ba-table .cb{color:var(--red)}
+.ba-table .ca{color:var(--green);font-weight:700}
+.ba-table .cr{color:var(--green-bright);font-weight:800;font-size:14px}
 .ba-wrap{border:1px solid var(--border);border-radius:12px;overflow:hidden}
 
-/* ─── PENALTY ─── */
-.penalty-section{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.penalty-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.penalty-card{background:var(--bg);border:1px solid var(--red-border);border-radius:12px;padding:28px;text-align:center}
-.penalty-value{font-size:clamp(28px,4vw,40px);font-weight:900;color:var(--red);font-family:'Inter','Noto Sans JP',sans-serif;letter-spacing:-0.02em;margin-bottom:4px}
-.penalty-label{font-size:13px;color:var(--text-secondary);font-weight:600}
-.penalty-detail{font-size:12px;color:var(--text-muted);margin-top:8px;line-height:1.7}
-.penalty-note{margin-top:28px;font-size:13px;color:var(--text-muted);line-height:1.8;max-width:700px}
-
-/* ─── TIMELINE ─── */
-.tl-track{position:relative;max-width:720px;margin:0 auto}
-.tl-line{position:absolute;top:0;bottom:0;left:32px;width:2px;background:var(--border)}
-.tl-item{position:relative;padding-left:80px;padding-bottom:48px}
-.tl-item:last-child{padding-bottom:0}
-.tl-dot{position:absolute;left:24px;top:4px;width:18px;height:18px;border-radius:50%;background:var(--green);border:3px solid var(--bg);z-index:1}
-.tl-item.future .tl-dot{background:var(--border-light)}
-.tl-year{font-size:13px;font-weight:800;color:var(--green);letter-spacing:0.04em;margin-bottom:4px}
-.tl-item.future .tl-year{color:var(--text-muted)}
-.tl-title{font-size:17px;font-weight:800;margin-bottom:4px}
-.tl-desc{font-size:13px;color:var(--text-secondary);line-height:1.8}
-.tl-companies{display:inline-block;margin-top:6px;padding:3px 10px;border-radius:4px;font-size:12px;font-weight:700;letter-spacing:0.02em}
-.tl-item:not(.future) .tl-companies{background:rgba(34,197,94,0.1);color:var(--green)}
-.tl-item.future .tl-companies{background:rgba(255,255,255,0.04);color:var(--text-muted)}
-
-/* ─── COMPARISON ─── */
+/* ═══ COMPARISON ═══ */
+.comp-sec{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.comp-callout{display:inline-block;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:8px;padding:10px 20px;font-size:15px;font-weight:800;color:var(--green);margin-bottom:32px}
 .comp-table{width:100%;border-collapse:collapse}
-.comp-table th,.comp-table td{padding:14px 18px;text-align:center;font-size:13px;border-bottom:1px solid var(--border)}
-.comp-table th{font-size:11px;font-weight:700;color:var(--text-muted);letter-spacing:0.06em;text-transform:uppercase;background:var(--surface)}
+.comp-table th,.comp-table td{padding:14px 16px;text-align:center;font-size:13px;border-bottom:1px solid var(--border)}
+.comp-table th{font-size:11px;font-weight:700;color:var(--text-muted);letter-spacing:0.06em;text-transform:uppercase;background:var(--surface-2)}
 .comp-table thead th:first-child{border-radius:10px 0 0 0;text-align:left}.comp-table thead th:last-child{border-radius:0 10px 0 0}
 .comp-table td:first-child{text-align:left;font-weight:600;color:var(--text)}
-.comp-table .greenops-col{color:var(--green);font-weight:800}
-.comp-table .competitor-col{color:var(--text-muted)}
-.comp-wrap{border:1px solid var(--border);border-radius:12px;overflow:hidden;max-width:800px}
+.comp-table .gc{color:var(--green);font-weight:800}
+.comp-table .cc{color:var(--text-muted)}
+.comp-wrap{border:1px solid var(--border);border-radius:12px;overflow:hidden;max-width:820px}
 
-/* ─── PRICING ─── */
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.price-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:32px;position:relative;transition:all 0.3s;display:flex;flex-direction:column}
-.price-card:hover{border-color:var(--border-light)}
-.price-card.featured{border-color:var(--green);background:linear-gradient(180deg,var(--surface-2) 0%,var(--surface) 100%)}
-.price-card.featured::before{content:'最も選ばれています';position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--green);color:var(--bg);font-size:11px;font-weight:800;padding:4px 14px;border-radius:4px;white-space:nowrap}
-.price-tag{font-size:12px;font-weight:700;color:var(--text-muted);margin-bottom:4px;letter-spacing:0.04em}
-.price-name{font-size:22px;font-weight:900;margin-bottom:16px;letter-spacing:-0.01em}
-.price-amount{font-size:38px;font-weight:900;color:var(--green);font-family:'Inter','Noto Sans JP',sans-serif;letter-spacing:-0.03em}
-.price-period{font-size:14px;color:var(--text-muted);font-weight:400}
-.price-desc{font-size:13px;color:var(--text-secondary);margin:14px 0 20px;line-height:1.8}
-.price-features{list-style:none;margin:0 0 28px;padding:0;border-top:1px solid var(--border);padding-top:20px;flex:1}
-.price-features li{padding:5px 0;font-size:13px;color:var(--text-secondary);padding-left:18px;position:relative;line-height:1.7}
-.price-features li::before{content:'';position:absolute;left:0;top:12px;width:7px;height:7px;border-radius:2px;background:var(--green);opacity:0.5}
-.price-btn{display:block;width:100%;padding:13px;border-radius:8px;text-align:center;font-size:14px;font-weight:700;transition:all 0.25s;border:none;cursor:pointer}
-.price-btn-primary{background:var(--green);color:var(--bg)}
-.price-btn-primary:hover{background:var(--green-bright);transform:translateY(-1px);box-shadow:0 4px 16px rgba(34,197,94,0.22)}
-.price-btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
-.price-btn-ghost:hover{border-color:var(--green);color:var(--green)}
+/* ═══ PRICING ═══ */
+.pr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.pc{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:30px;position:relative;display:flex;flex-direction:column;transition:all 0.3s}
+.pc:hover{border-color:var(--border-light)}
+.pc.feat{border-color:var(--green);background:linear-gradient(180deg,var(--surface-2),var(--surface))}
+.pc.feat::before{content:'最も選ばれています';position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--green);color:var(--bg);font-size:11px;font-weight:800;padding:4px 14px;border-radius:4px;white-space:nowrap}
+.pc-tag{font-size:11px;font-weight:700;color:var(--text-muted);letter-spacing:0.04em;margin-bottom:2px}
+.pc-name{font-size:20px;font-weight:900;margin-bottom:14px}
+.pc-price{font-size:36px;font-weight:900;color:var(--green);font-family:'Inter','Noto Sans JP',sans-serif;letter-spacing:-0.03em}
+.pc-period{font-size:13px;color:var(--text-muted);font-weight:400}
+.pc-annual{font-size:12px;color:var(--text-muted);margin-top:4px}
+.pc-desc{font-size:13px;color:var(--text-secondary);margin:12px 0 18px;line-height:1.8}
+.pc-features{list-style:none;margin:0 0 24px;padding:0;border-top:1px solid var(--border);padding-top:18px;flex:1}
+.pc-features li{padding:4px 0;font-size:13px;color:var(--text-secondary);padding-left:16px;position:relative;line-height:1.7}
+.pc-features li::before{content:'';position:absolute;left:0;top:12px;width:6px;height:6px;border-radius:2px;background:var(--green);opacity:0.5}
+.pc-btn{display:block;width:100%;padding:13px;border-radius:8px;text-align:center;font-size:14px;font-weight:700;transition:all 0.25s;border:none;cursor:pointer}
+.pc-btn-p{background:var(--green);color:var(--bg)}
+.pc-btn-p:hover{background:var(--green-bright);transform:translateY(-1px);box-shadow:0 4px 16px rgba(34,197,94,0.22)}
+.pc-btn-g{background:transparent;color:var(--text);border:1px solid var(--border)}
+.pc-btn-g:hover{border-color:var(--green);color:var(--green)}
 
-/* ─── CONTACT ─── */
-.contact-form{max-width:560px;margin:0 auto}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-.form-group{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
-.form-group.full{grid-column:span 2}
-.form-group label{font-size:12px;font-weight:700;color:var(--text-secondary);letter-spacing:0.02em}
-.form-input{padding:11px 14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;color:var(--text);transition:border-color 0.2s}
-.form-input:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(34,197,94,0.08)}
-.form-input::placeholder{color:var(--text-muted)}
-textarea.form-input{resize:vertical;min-height:90px}
-.form-submit{width:100%;padding:13px;background:var(--green);color:var(--bg);border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;margin-top:4px}
-.form-submit:hover{background:var(--green-bright)}
-.form-success{display:none;text-align:center;padding:32px;color:var(--green);font-weight:700;font-size:15px}
-.form-success.show{display:block}
+/* ═══ CONTACT ═══ */
+.contact-sec{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.cf{max-width:540px;margin:0 auto;background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:32px}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.fg{display:flex;flex-direction:column;gap:4px;margin-bottom:12px}
+.fg label{font-size:11px;font-weight:700;color:var(--text-secondary);letter-spacing:0.02em}
+.fi{padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;color:var(--text)}
+.fi:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(34,197,94,0.08)}
+.fi::placeholder{color:var(--text-muted)}
+textarea.fi{resize:vertical;min-height:80px}
+.fs{width:100%;padding:12px;background:var(--green);color:var(--bg);border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;margin-top:4px}
+.fs:hover{background:var(--green-bright)}
+.fok{display:none;text-align:center;padding:28px;color:var(--green);font-weight:700;font-size:15px}
+.fok.show{display:block}
 
-/* ─── CTA ─── */
-.cta-section{padding:100px 0;text-align:center;position:relative;overflow:hidden}
-.cta-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(34,197,94,0.06) 0%,transparent 65%);pointer-events:none}
-.cta-section h2{font-size:clamp(24px,3.2vw,38px);font-weight:900;letter-spacing:-0.02em;margin-bottom:14px;position:relative}
-.cta-section .hl{color:var(--green)}
-.cta-section p{font-size:15px;color:var(--text-secondary);margin-bottom:36px;position:relative}
-.cta-buttons{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative}
+/* ═══ CTA ═══ */
+.cta-sec{padding:100px 0;text-align:center;position:relative;overflow:hidden}
+.cta-sec::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(34,197,94,0.06) 0%,transparent 65%);pointer-events:none}
+.cta-sec h2{font-size:clamp(24px,3.2vw,38px);font-weight:900;letter-spacing:-0.02em;margin-bottom:12px;position:relative}
+.cta-sec .hl{color:var(--green)}
+.cta-sec .rl{color:var(--red)}
+.cta-sec p{font-size:15px;color:var(--text-secondary);margin-bottom:32px;position:relative}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative}
 
-/* Footer */
-footer{border-top:1px solid var(--border);padding:36px 0;text-align:center}
-.footer-logo{font-size:16px;font-weight:900;margin-bottom:8px}
+footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
 footer p{font-size:11px;color:var(--text-muted)}
 
 /* Responsive */
 @media(max-width:900px){
-  .penalty-grid{grid-template-columns:1fr}
-  .pricing-grid{grid-template-columns:1fr;max-width:400px;margin:0 auto}
-  .form-row{grid-template-columns:1fr}.form-group.full{grid-column:span 1}
+  .pen-grid,.tl-visual{grid-template-columns:repeat(2,1fr)}
+  .pr-grid{grid-template-columns:1fr;max-width:400px;margin-left:auto;margin-right:auto}
+  .fr{grid-template-columns:1fr}
   .comp-wrap{overflow-x:auto}
+  .ba-hero-nums{grid-template-columns:1fr;gap:12px}
+  .ba-arrow{transform:rotate(90deg)}
 }
 @media(max-width:640px){
   nav a:not(.nav-cta){display:none}
-  .hero-buttons{flex-direction:column;align-items:center}
-  .countdown-inner{flex-direction:column;gap:16px}
-  .cta-buttons{flex-direction:column;align-items:center}
-  .checker-input-row{flex-direction:column}
+  .hero-btns,.cta-btns{flex-direction:column;align-items:center}
+  .penalty-strip{gap:20px}
+  .hero-cd{gap:4px}
+  .hcd-unit{min-width:60px;padding:10px 12px}
+  .ck-row{flex-direction:column}
+  .pen-grid,.tl-visual{grid-template-columns:1fr}
   .ba-wrap{overflow-x:auto}
 }
 </style>
@@ -199,192 +226,211 @@ footer p{font-size:11px;color:var(--text-muted)}
 <body>
 
 <header>
-  <div class="header-inner">
-    <a href="/" class="logo"><span class="g">Green</span><span class="o">Ops</span></a>
+  <div class="hdr">
+    <a href="/" class="logo"><span class="lg">Green</span><span class="lo">Ops</span></a>
     <nav>
-      <a href="#checker">対象診断</a>
+      <a href="#penalty">罰則</a>
       <a href="#comparison">比較</a>
       <a href="#pricing">料金</a>
-      <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" class="nav-cta">今すぐ始める</a>
+      <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" class="nav-cta">今すぐ導入</a>
     </nav>
   </div>
 </header>
 
-<!-- HERO -->
+<!-- ═══════════ HERO ═══════════ -->
 <section class="hero">
   <div class="container">
-    <div class="hero-content">
-      <div class="hero-urgency">SSBJ開示義務化まで残りわずか</div>
+    <div class="hero-inner">
+
+      <!-- Penalty shock: first thing they see -->
+      <div class="penalty-strip">
+        <div class="ps-item"><div class="ps-val">懲役10年</div><div class="ps-lbl">個人への刑事罰</div></div>
+        <div class="ps-item"><div class="ps-val">罰金7億円</div><div class="ps-lbl">法人への罰金</div></div>
+        <div class="ps-item"><div class="ps-val">課徴金</div><div class="ps-lbl">金融庁 行政処分</div></div>
+      </div>
+
       <h1>2027年3月、<span class="hl">SSBJ義務化</span>。<br>あなたの会社は、<br>準備できていますか？</h1>
-      <p class="hero-sub">有価証券報告書へのサステナビリティ情報開示が義務化されます。Scope 1-3のCO2排出量算定から開示文章の生成まで、GreenOpsのAIが全て自動化します。</p>
-      <div class="hero-buttons">
-        <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" class="btn btn-primary btn-lg">今すぐ始める</a>
-        <a href="#pricing" class="btn btn-ghost btn-lg">料金プランを見る</a>
+
+      <!-- Countdown: massive, in hero -->
+      <div class="hero-cd">
+        <div class="hcd-unit"><span class="hcd-val" id="cd-d">---</span><span class="hcd-lbl">DAYS</span></div>
+        <div class="hcd-sep">:</div>
+        <div class="hcd-unit"><span class="hcd-val" id="cd-h">--</span><span class="hcd-lbl">HOURS</span></div>
+        <div class="hcd-sep">:</div>
+        <div class="hcd-unit"><span class="hcd-val" id="cd-m">--</span><span class="hcd-lbl">MIN</span></div>
+        <div class="hcd-sep">:</div>
+        <div class="hcd-unit"><span class="hcd-val" id="cd-s">--</span><span class="hcd-lbl">SEC</span></div>
+      </div>
+
+      <p class="hero-sub">SSBJ開示基準の義務化まで、残された時間はわずか。違反すれば懲役10年・法人罰金7億円。GreenOpsのAIがScope 1-3算定からSSBJ開示文章生成まで完全自動化します。</p>
+
+      <div class="hero-btns">
+        <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" class="btn bp bl">月額9,800円で今すぐ始める</a>
+        <a href="#pricing" class="btn bg bl">料金プランを見る</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- COUNTDOWN -->
-<div class="countdown-bar">
-  <div class="container">
-    <div class="countdown-inner">
-      <div class="countdown-label"><strong>SSBJ義務化</strong>（2027年3月期）まで</div>
-      <div class="countdown-digits">
-        <div class="cd-unit"><span class="cd-val" id="cd-d">---</span><span class="cd-lbl">Days</span></div>
-        <span class="cd-sep">:</span>
-        <div class="cd-unit"><span class="cd-val" id="cd-h">--</span><span class="cd-lbl">Hours</span></div>
-        <span class="cd-sep">:</span>
-        <div class="cd-unit"><span class="cd-val" id="cd-m">--</span><span class="cd-lbl">Min</span></div>
-        <span class="cd-sep">:</span>
-        <div class="cd-unit"><span class="cd-val" id="cd-s">--</span><span class="cd-lbl">Sec</span></div>
-      </div>
-    </div>
-  </div>
+<!-- Urgency bar -->
+<div class="urgency-bar">
+  <p>SSBJ開示義務化まで<strong>あと<span id="ub-days">---</span>日</strong> / 違反時: <strong>懲役10年</strong>・<strong>法人罰金7億円</strong>・<strong>課徴金</strong></p>
 </div>
 
-<!-- CHECKER -->
-<section class="section checker-section" id="checker">
-  <div class="container" style="text-align:center">
-    <div class="section-label">Obligation Checker</div>
-    <h2 class="section-title" style="max-width:100%">あなたの会社はいつ対象になるか</h2>
-    <p class="section-desc" style="margin:0 auto 40px">時価総額を入力するだけで、SSBJ開示義務の対象年度を判定します。</p>
-    <div class="checker-box">
-      <h3>対象企業チェッカー</h3>
-      <p>自社の時価総額（億円）を入力してください</p>
-      <div class="checker-input-row">
-        <input type="number" class="checker-input" id="marketCap" placeholder="例: 5000" min="0">
-        <button class="checker-btn" onclick="checkObligation()">判定する</button>
+<!-- ═══════════ PENALTY DETAIL ═══════════ -->
+<section class="sec penalty-sec" id="penalty">
+  <div class="container">
+    <div class="sl">Non-Compliance Risk</div>
+    <h2 class="st">「知らなかった」では済まない。開示義務違反の罰則。</h2>
+    <p class="sd">金融商品取引法に基づき、有価証券報告書の虚偽記載・不提出には以下の厳格な罰則が科されます。SSBJ開示も同法の適用対象です。</p>
+    <div class="pen-grid">
+      <div class="pen-card">
+        <div class="pen-val">懲役10年</div>
+        <div class="pen-lbl">個人に対する刑事罰</div>
+        <div class="pen-det">有価証券報告書の虚偽記載: 10年以下の懲役もしくは1,000万円以下の罰金、またはこれらの併科（金商法第197条）</div>
       </div>
-      <div class="checker-result" id="checkerResult"></div>
+      <div class="pen-card">
+        <div class="pen-val">7億円</div>
+        <div class="pen-lbl">法人に対する罰金</div>
+        <div class="pen-det">法人重科規定により、法人に対しては7億円以下の罰金刑。担当役員の個人責任も問われる（金商法第207条）</div>
+      </div>
+      <div class="pen-card">
+        <div class="pen-val">課徴金</div>
+        <div class="pen-lbl">金融庁による行政処分</div>
+        <div class="pen-det">虚偽記載: 時価総額の0.003%〜0.006%の課徴金。時価総額1兆円なら3,000万〜6,000万円の納付命令</div>
+      </div>
+    </div>
+    <p class="pen-note">※ 金融商品取引法第197条、第207条に基づく。未対応のまま2027年3月期を迎えた場合、開示不備として行政処分・株主訴訟の対象となるリスクがあります。「準備が間に合わなかった」は抗弁になりません。</p>
+  </div>
+</section>
+
+<!-- ═══════════ TIMELINE ═══════════ -->
+<section class="sec">
+  <div class="container">
+    <div class="sl">Mandate Timeline</div>
+    <h2 class="st">対象企業は毎年4倍に拡大する</h2>
+    <p class="sd">段階的に義務化が拡大。2027年の68社から始まり、3年で284社、最終的にはプライム全社へ。</p>
+    <div class="tl-visual">
+      <div class="tl-col">
+        <div class="tl-year-label">2027年3月期</div>
+        <div class="tl-bar-wrap"><div class="tl-bar"><div class="tl-bar-num">68社</div></div></div>
+        <div class="tl-desc2">時価総額3兆円以上</div>
+        <div class="tl-cap">Phase 1</div>
+      </div>
+      <div class="tl-col">
+        <div class="tl-year-label">2028年3月期</div>
+        <div class="tl-bar-wrap"><div class="tl-bar"><div class="tl-bar-num">171社</div></div></div>
+        <div class="tl-desc2">時価総額1兆円以上</div>
+        <div class="tl-cap">Phase 2</div>
+      </div>
+      <div class="tl-col">
+        <div class="tl-year-label">2029年3月期</div>
+        <div class="tl-bar-wrap"><div class="tl-bar"><div class="tl-bar-num">284社</div></div></div>
+        <div class="tl-desc2">時価総額5,000億円以上</div>
+        <div class="tl-cap">Phase 3</div>
+      </div>
+      <div class="tl-col">
+        <div class="tl-year-label">2030年〜</div>
+        <div class="tl-bar-wrap"><div class="tl-bar"><div class="tl-bar-num">1,800+</div></div></div>
+        <div class="tl-desc2">プライム市場全社</div>
+        <div class="tl-cap">Full Scope</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- BEFORE / AFTER -->
-<section class="section">
+<!-- ═══════════ CHECKER ═══════════ -->
+<section class="sec checker-sec" id="checker">
+  <div class="container" style="text-align:center">
+    <div class="sl">Obligation Checker</div>
+    <h2 class="st" style="max-width:100%">あなたの会社はいつ義務化対象になるか</h2>
+    <p class="sd" style="margin:0 auto 36px">時価総額を入力するだけで即座に判定。対象年度とやるべきことが分かります。</p>
+    <div class="ck-box">
+      <h3>対象企業チェッカー</h3>
+      <p>自社の時価総額（億円）を入力してください</p>
+      <div class="ck-row">
+        <input type="number" class="ck-input" id="marketCap" placeholder="例: 5000" min="0">
+        <button class="ck-btn" onclick="checkObligation()">判定する</button>
+      </div>
+      <div class="ck-result" id="ckResult"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ BEFORE / AFTER ═══════════ -->
+<section class="sec">
   <div class="container">
-    <div class="section-label">Before / After</div>
-    <h2 class="section-title">GreenOps導入で何が変わるか</h2>
-    <p class="section-desc">従来の手作業・外部委託からAI自動化へ。コストと時間を劇的に削減します。</p>
+    <div class="sl">Before / After</div>
+    <h2 class="st">コンサル年間3,000万円が、年間11.8万円になる</h2>
+    <p class="sd">外部委託の1/250以下のコスト。算定工数は80%削減。数字が全てを物語ります。</p>
+
+    <div class="ba-hero-nums">
+      <div class="ba-box ba-before">
+        <div class="ba-box-label">導入前（外部コンサル）</div>
+        <div class="ba-box-val">300〜3,000万円/年</div>
+        <div class="ba-box-sub">+ 算定工数 200〜500時間/年</div>
+      </div>
+      <div class="ba-arrow">&rarr;</div>
+      <div class="ba-box ba-after">
+        <div class="ba-box-label">導入後（GreenOps）</div>
+        <div class="ba-box-val">11.8万円/年</div>
+        <div class="ba-box-sub">Starter &yen;9,800 x 12ヶ月</div>
+      </div>
+    </div>
+
     <div class="ba-wrap">
       <table class="ba-table">
-        <thead><tr><th>項目</th><th>導入前（従来）</th><th>導入後（GreenOps）</th><th>削減率</th></tr></thead>
+        <thead><tr><th>項目</th><th>導入前</th><th>GreenOps導入後</th><th>削減</th></tr></thead>
         <tbody>
-          <tr><td class="col-item">Scope 1-3 算定工数</td><td class="col-before">年間 200〜500時間</td><td class="col-after">年間 40〜100時間</td><td class="col-reduction">80% 削減</td></tr>
-          <tr><td class="col-item">外部コンサル費用</td><td class="col-before">年間 300〜3,000万円</td><td class="col-after">月額 9,800円〜</td><td class="col-reduction">96〜99% 削減</td></tr>
-          <tr><td class="col-item">SSBJ開示文章作成</td><td class="col-before">専門チーム 3〜6ヶ月</td><td class="col-after">AI自動生成 5分</td><td class="col-reduction">99% 削減</td></tr>
-          <tr><td class="col-item">データ集計ミス</td><td class="col-before">手入力による頻発</td><td class="col-after">自動検証・異常検知</td><td class="col-reduction">ゼロに</td></tr>
-          <tr><td class="col-item">監査対応準備</td><td class="col-before">2〜4週間</td><td class="col-after">算定根拠を常時記録</td><td class="col-reduction">即時対応</td></tr>
+          <tr><td class="ci">算定工数</td><td class="cb">200〜500時間/年</td><td class="ca">40〜100時間/年</td><td class="cr">80%削減</td></tr>
+          <tr><td class="ci">外部コンサル費用</td><td class="cb">300〜3,000万円/年</td><td class="ca">11.8〜35.8万円/年</td><td class="cr">96〜99%削減</td></tr>
+          <tr><td class="ci">SSBJ開示文章作成</td><td class="cb">専門チーム 3〜6ヶ月</td><td class="ca">AI自動生成 5分</td><td class="cr">99%削減</td></tr>
+          <tr><td class="ci">データ集計ミス</td><td class="cb">手入力で頻発</td><td class="ca">AI自動検証</td><td class="cr">ゼロに</td></tr>
+          <tr><td class="ci">監査対応準備</td><td class="cb">2〜4週間</td><td class="ca">算定根拠を常時記録</td><td class="cr">即時対応</td></tr>
         </tbody>
       </table>
     </div>
   </div>
 </section>
 
-<!-- PENALTY -->
-<section class="section penalty-section">
+<!-- ═══════════ COMPARISON ═══════════ -->
+<section class="sec comp-sec" id="comparison">
   <div class="container">
-    <div class="section-label">Non-Compliance Risk</div>
-    <h2 class="section-title">開示義務違反の罰則</h2>
-    <p class="section-desc">金融商品取引法に基づき、虚偽記載・不提出には厳格な罰則が科されます。</p>
-    <div class="penalty-grid">
-      <div class="penalty-card">
-        <div class="penalty-value">懲役10年</div>
-        <div class="penalty-label">個人に対する刑事罰</div>
-        <div class="penalty-detail">有価証券報告書の虚偽記載に対して、10年以下の懲役もしくは1,000万円以下の罰金、またはこれらの併科</div>
-      </div>
-      <div class="penalty-card">
-        <div class="penalty-value">7億円</div>
-        <div class="penalty-label">法人に対する罰金</div>
-        <div class="penalty-detail">法人重科により、法人に対しては7億円以下の罰金刑が科される可能性</div>
-      </div>
-      <div class="penalty-card">
-        <div class="penalty-value">課徴金</div>
-        <div class="penalty-label">金融庁による行政処分</div>
-        <div class="penalty-detail">虚偽記載の場合、時価総額の0.003%〜0.006%の課徴金納付命令の対象</div>
-      </div>
-    </div>
-    <p class="penalty-note">※ 金融商品取引法第197条、第207条に基づく。SSBJ基準による開示も有価証券報告書の一部として同法の適用対象となります。未対応のまま2027年3月期を迎えた場合、開示不備として行政処分の対象となるリスクがあります。</p>
-  </div>
-</section>
-
-<!-- TIMELINE -->
-<section class="section">
-  <div class="container">
-    <div class="section-label">Mandate Timeline</div>
-    <h2 class="section-title">SSBJ義務化のロードマップ</h2>
-    <p class="section-desc">段階的に対象企業が拡大。早期対応が競争優位に直結します。</p>
-    <div class="tl-track">
-      <div class="tl-line"></div>
-      <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-year">2027年3月期（Phase 1）</div>
-        <div class="tl-title">時価総額3兆円以上の企業</div>
-        <div class="tl-desc">プライム市場の最大手企業群が最初の義務化対象に。SSBJ基準に基づくサステナビリティ情報の有価証券報告書への記載が必須となります。</div>
-        <div class="tl-companies">対象: 約68社</div>
-      </div>
-      <div class="tl-item future">
-        <div class="tl-dot"></div>
-        <div class="tl-year">2028年3月期（Phase 2）</div>
-        <div class="tl-title">時価総額1兆円以上に拡大</div>
-        <div class="tl-desc">対象範囲が大幅に拡大。サプライチェーン全体でのScope 3開示が求められ、協力会社にもデータ提供要請が波及します。</div>
-        <div class="tl-companies">対象: 約171社（累計）</div>
-      </div>
-      <div class="tl-item future">
-        <div class="tl-dot"></div>
-        <div class="tl-year">2029年3月期（Phase 3）</div>
-        <div class="tl-title">時価総額5,000億円以上に拡大</div>
-        <div class="tl-desc">プライム市場の主要企業のほぼ全てが対象に。この時点で未対応の企業は市場からの信頼を大きく損なうリスクがあります。</div>
-        <div class="tl-companies">対象: 約284社（累計）</div>
-      </div>
-      <div class="tl-item future">
-        <div class="tl-dot"></div>
-        <div class="tl-year">2030年以降</div>
-        <div class="tl-title">全プライム市場上場企業へ</div>
-        <div class="tl-desc">最終的には全プライム市場上場企業に適用範囲が拡大される見通し。スタンダード市場への波及も議論されています。</div>
-        <div class="tl-companies">対象: 約1,800社以上</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- COMPARISON -->
-<section class="section" id="comparison" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
-  <div class="container">
-    <div class="section-label">Competitive Analysis</div>
-    <h2 class="section-title">なぜGreenOpsが選ばれるのか</h2>
-    <p class="section-desc">業界標準と比較して、圧倒的なコストパフォーマンスを実現します。</p>
+    <div class="sl">Competitive Analysis</div>
+    <h2 class="st">業界相場の1/4以下。それでいて機能は上回る。</h2>
+    <p class="sd">大手コンサルに年間数千万円を払う時代は終わりました。GreenOpsは業界相場月額12万円〜の1/4以下で、より高い精度を実現します。</p>
+    <div class="comp-callout">GreenOps &yen;29,800/月 vs 業界相場 &yen;120,000〜/月 = 1/4以下のコスト</div>
     <div class="comp-wrap">
       <table class="comp-table">
         <thead><tr><th>比較項目</th><th>GreenOps</th><th>大手コンサル</th><th>汎用SaaS</th></tr></thead>
         <tbody>
-          <tr><td>月額費用</td><td class="greenops-col">29,800円</td><td class="competitor-col">50〜250万円</td><td class="competitor-col">12〜30万円</td></tr>
-          <tr><td>初期費用</td><td class="greenops-col">0円</td><td class="competitor-col">300〜1,000万円</td><td class="competitor-col">50〜200万円</td></tr>
-          <tr><td>Scope 3対応</td><td class="greenops-col">AI全自動</td><td class="competitor-col">手動（追加費用）</td><td class="competitor-col">一部対応</td></tr>
-          <tr><td>SSBJ開示文章</td><td class="greenops-col">自動生成</td><td class="competitor-col">コンサル作成</td><td class="competitor-col">非対応</td></tr>
-          <tr><td>算定時間</td><td class="greenops-col">5分</td><td class="competitor-col">2〜6ヶ月</td><td class="competitor-col">数日〜数週間</td></tr>
-          <tr><td>建設業特化</td><td class="greenops-col">対応</td><td class="competitor-col">汎用</td><td class="competitor-col">汎用</td></tr>
-          <tr><td>導入期間</td><td class="greenops-col">即日</td><td class="competitor-col">3〜6ヶ月</td><td class="competitor-col">1〜3ヶ月</td></tr>
+          <tr><td>月額費用</td><td class="gc">&yen;29,800</td><td class="cc">50〜250万円</td><td class="cc">12〜30万円</td></tr>
+          <tr><td>初期費用</td><td class="gc">0円</td><td class="cc">300〜1,000万円</td><td class="cc">50〜200万円</td></tr>
+          <tr><td>年間総コスト</td><td class="gc">35.8万円</td><td class="cc">900〜4,000万円</td><td class="cc">194〜560万円</td></tr>
+          <tr><td>Scope 3対応</td><td class="gc">AI全自動</td><td class="cc">手動（追加費用）</td><td class="cc">一部のみ</td></tr>
+          <tr><td>SSBJ開示文章</td><td class="gc">自動生成</td><td class="cc">コンサル作成</td><td class="cc">非対応</td></tr>
+          <tr><td>算定時間</td><td class="gc">5分</td><td class="cc">2〜6ヶ月</td><td class="cc">数日〜数週間</td></tr>
+          <tr><td>導入期間</td><td class="gc">即日</td><td class="cc">3〜6ヶ月</td><td class="cc">1〜3ヶ月</td></tr>
         </tbody>
       </table>
     </div>
   </div>
 </section>
 
-<!-- PRICING -->
-<section class="section" id="pricing">
+<!-- ═══════════ PRICING ═══════════ -->
+<section class="sec" id="pricing">
   <div class="container" style="text-align:center">
-    <div class="section-label">Pricing</div>
-    <h2 class="section-title" style="max-width:100%">義務化対応を、適正価格で</h2>
-    <p class="section-desc" style="margin:0 auto 48px">全プラン初期費用0円。即日利用開始できます。</p>
-    <div class="pricing-grid">
-      <div class="price-card">
-        <div class="price-tag">STARTER</div>
-        <div class="price-name">Starter</div>
-        <div class="price-amount">&yen;9,800<span class="price-period"> /月</span></div>
-        <p class="price-desc">Scope 1-2の算定と基本的なSSBJ開示対応に。まず義務化対応の第一歩を踏み出すプランです。</p>
-        <ul class="price-features">
+    <div class="sl">Pricing</div>
+    <h2 class="st" style="max-width:100%">コンサル費用の1/250以下で、義務化対応を完了する</h2>
+    <p class="sd" style="margin:0 auto 44px">全プラン初期費用0円。即日利用開始。コンサルに年間3,000万円を払う理由はもうありません。</p>
+    <div class="pr-grid">
+      <div class="pc">
+        <div class="pc-tag">STARTER</div>
+        <div class="pc-name">Starter</div>
+        <div class="pc-price">&yen;9,800<span class="pc-period"> /月</span></div>
+        <div class="pc-annual">年間 &yen;117,600（コンサル比 99%削減）</div>
+        <p class="pc-desc">まず義務化対応の第一歩を。Scope 1-2算定と基本的なSSBJ開示に対応。</p>
+        <ul class="pc-features">
           <li>Scope 1-2 AI自動算定</li>
           <li>Scope 3 簡易算定</li>
           <li>月次排出量レポート</li>
@@ -392,14 +438,15 @@ footer p{font-size:11px;color:var(--text-muted)}
           <li>管理現場数 3件まで</li>
           <li>チャットサポート</li>
         </ul>
-        <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" class="price-btn price-btn-ghost">Starterを始める</a>
+        <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" class="pc-btn pc-btn-g">Starterを始める</a>
       </div>
-      <div class="price-card featured">
-        <div class="price-tag">PROFESSIONAL</div>
-        <div class="price-name">Professional</div>
-        <div class="price-amount">&yen;29,800<span class="price-period"> /月</span></div>
-        <p class="price-desc">Scope 1-3完全対応。SSBJ開示文章の全項目自動生成と、AI異常検知による監査対応まで。</p>
-        <ul class="price-features">
+      <div class="pc feat">
+        <div class="pc-tag">PROFESSIONAL</div>
+        <div class="pc-name">Professional</div>
+        <div class="pc-price">&yen;29,800<span class="pc-period"> /月</span></div>
+        <div class="pc-annual">年間 &yen;357,600（業界相場の1/4以下）</div>
+        <p class="pc-desc">Scope 1-3完全対応。SSBJ全項目の開示文章生成とAI異常検知で監査も万全。</p>
+        <ul class="pc-features">
           <li>Scope 1-3 完全AI自動算定</li>
           <li>SSBJ開示文章 全項目生成</li>
           <li>AI異常検知・アラート</li>
@@ -408,135 +455,112 @@ footer p{font-size:11px;color:var(--text-muted)}
           <li>管理現場数 無制限</li>
           <li>優先サポート（2h応答）</li>
         </ul>
-        <a href="https://buy.stripe.com/00wcN55hg8fgb399UHfQI05" class="price-btn price-btn-primary">Professionalを始める</a>
+        <a href="https://buy.stripe.com/00wcN55hg8fgb399UHfQI05" class="pc-btn pc-btn-p">Professionalを始める</a>
       </div>
-      <div class="price-card">
-        <div class="price-tag">ENTERPRISE</div>
-        <div class="price-name">Enterprise</div>
-        <div class="price-amount">要相談</div>
-        <p class="price-desc">大手ゼネコン・グループ企業向け。専用API連携、監査法人との連携サポート、オンプレ対応。</p>
-        <ul class="price-features">
+      <div class="pc">
+        <div class="pc-tag">ENTERPRISE</div>
+        <div class="pc-name">Enterprise</div>
+        <div class="pc-price">要相談</div>
+        <div class="pc-annual">&nbsp;</div>
+        <p class="pc-desc">大手ゼネコン・グループ企業向け。API連携・監査法人サポート・オンプレ対応。</p>
+        <ul class="pc-features">
           <li>Professional全機能</li>
           <li>SPIDERPLUS/ANDPAD API連携</li>
           <li>グループ会社の統合管理</li>
           <li>監査法人連携サポート</li>
-          <li>オンプレミス/専用環境対応</li>
+          <li>オンプレミス/専用環境</li>
           <li>専任カスタマーサクセス</li>
           <li>SLA保証</li>
         </ul>
-        <a href="#contact" class="price-btn price-btn-ghost">お問い合わせ</a>
+        <a href="#contact" class="pc-btn pc-btn-g">お問い合わせ</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
-<section class="section" id="contact" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+<!-- ═══════════ CONTACT ═══════════ -->
+<section class="sec contact-sec" id="contact">
   <div class="container" style="text-align:center">
-    <div class="section-label">Contact</div>
-    <h2 class="section-title" style="max-width:100%">Enterprise お問い合わせ</h2>
-    <p class="section-desc" style="margin:0 auto 40px">御社の要件に合わせた最適なプランをご提案いたします。</p>
-    <div class="contact-form card" style="text-align:left">
+    <div class="sl">Contact</div>
+    <h2 class="st" style="max-width:100%">Enterprise お問い合わせ</h2>
+    <p class="sd" style="margin:0 auto 36px">御社の要件に合わせた最適なプランをご提案します。</p>
+    <div class="cf" style="text-align:left">
       <form id="contactForm">
-        <div class="form-row">
-          <div class="form-group">
-            <label>会社名</label>
-            <input type="text" class="form-input" placeholder="株式会社..." required>
-          </div>
-          <div class="form-group">
-            <label>ご担当者名</label>
-            <input type="text" class="form-input" placeholder="山田 太郎" required>
-          </div>
+        <div class="fr">
+          <div class="fg"><label>会社名</label><input type="text" class="fi" placeholder="株式会社..." required></div>
+          <div class="fg"><label>ご担当者名</label><input type="text" class="fi" placeholder="山田 太郎" required></div>
         </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>メールアドレス</label>
-            <input type="email" class="form-input" placeholder="taro@example.co.jp" required>
-          </div>
-          <div class="form-group">
-            <label>電話番号</label>
-            <input type="tel" class="form-input" placeholder="03-xxxx-xxxx">
-          </div>
+        <div class="fr">
+          <div class="fg"><label>メールアドレス</label><input type="email" class="fi" placeholder="taro@example.co.jp" required></div>
+          <div class="fg"><label>電話番号</label><input type="tel" class="fi" placeholder="03-xxxx-xxxx"></div>
         </div>
-        <div class="form-group">
-          <label>お問い合わせ内容</label>
-          <textarea class="form-input" placeholder="導入検討の背景、ご質問等をご記入ください"></textarea>
-        </div>
-        <button type="submit" class="form-submit">送信する</button>
+        <div class="fg"><label>お問い合わせ内容</label><textarea class="fi" placeholder="導入検討の背景、ご質問等をご記入ください"></textarea></div>
+        <button type="submit" class="fs">送信する</button>
       </form>
-      <div class="form-success" id="formSuccess">お問い合わせを受け付けました。担当者より2営業日以内にご連絡いたします。</div>
+      <div class="fok" id="formSuccess">お問い合わせを受け付けました。担当者より2営業日以内にご連絡いたします。</div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<section class="cta-section">
+<!-- ═══════════ CTA ═══════════ -->
+<section class="cta-sec">
   <div class="container">
-    <h2>義務化まで、<span class="hl">あと<span id="ctaDays">---</span>日</span></h2>
-    <p>準備は早いほど有利です。GreenOpsで今日からSSBJ対応を始めましょう。</p>
-    <div class="cta-buttons">
-      <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" class="btn btn-primary btn-lg">今すぐ始める</a>
-      <a href="#pricing" class="btn btn-ghost btn-lg">料金プランを見る</a>
+    <h2>義務化まで<span class="rl">あと<span id="ctaDays">---</span>日。</span><br><span class="hl">準備は、今日始めるべきです。</span></h2>
+    <p>違反すれば懲役10年・法人罰金7億円。GreenOpsなら月額9,800円から、即日対応開始。</p>
+    <div class="cta-btns">
+      <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" class="btn bp bl">月額9,800円で今すぐ始める</a>
+      <a href="https://buy.stripe.com/00wcN55hg8fgb399UHfQI05" class="btn bg bl">Professional &yen;29,800/月</a>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="container">
-    <div class="footer-logo"><span class="g">Green</span><span class="o">Ops</span></div>
+    <div style="font-size:16px;font-weight:900;margin-bottom:6px"><span class="lg">Green</span><span class="lo">Ops</span></div>
     <p>&copy; 2026 GreenOps Inc. All rights reserved.</p>
   </div>
 </footer>
 
 <script>
-// ─── Countdown ───
-function updateCountdown(){
-  const target=new Date('2027-03-31T00:00:00+09:00').getTime();
-  const now=Date.now();
-  const diff=target-now;
-  if(diff<=0){document.querySelectorAll('.cd-val').forEach(e=>e.textContent='00');return}
-  const d=Math.floor(diff/864e5);
-  const h=Math.floor((diff%864e5)/36e5);
-  const m=Math.floor((diff%36e5)/6e4);
-  const s=Math.floor((diff%6e4)/1e3);
+// Countdown
+function tick(){
+  var t=new Date('2027-03-31T00:00:00+09:00').getTime()-Date.now();
+  if(t<=0){document.querySelectorAll('.hcd-val').forEach(function(e){e.textContent='00'});return}
+  var d=Math.floor(t/864e5),h=Math.floor(t%864e5/36e5),m=Math.floor(t%36e5/6e4),s=Math.floor(t%6e4/1e3);
   document.getElementById('cd-d').textContent=d;
-  document.getElementById('cd-h').textContent=String(h).padStart(2,'0');
-  document.getElementById('cd-m').textContent=String(m).padStart(2,'0');
-  document.getElementById('cd-s').textContent=String(s).padStart(2,'0');
+  document.getElementById('cd-h').textContent=('0'+h).slice(-2);
+  document.getElementById('cd-m').textContent=('0'+m).slice(-2);
+  document.getElementById('cd-s').textContent=('0'+s).slice(-2);
   document.getElementById('ctaDays').textContent=d;
+  document.getElementById('ub-days').textContent=d;
 }
-updateCountdown();
-setInterval(updateCountdown,1000);
+tick();setInterval(tick,1000);
 
-// ─── Checker ───
+// Checker
 function checkObligation(){
-  const cap=parseFloat(document.getElementById('marketCap').value);
-  const el=document.getElementById('checkerResult');
-  if(!cap||cap<=0){el.className='checker-result show urgent';el.innerHTML='<strong>数値を入力してください</strong>';return}
-  const capYen=cap;
-  if(capYen>=30000){
-    el.className='checker-result show urgent';
-    el.innerHTML='<strong>2027年3月期 - Phase 1 対象企業です</strong>義務化開始まで1年を切っています。時価総額'+cap.toLocaleString()+'億円の御社は最初の義務化対象です。Scope 1-3の算定体制を早急に整備する必要があります。';
-  }else if(capYen>=10000){
-    el.className='checker-result show urgent';
-    el.innerHTML='<strong>2028年3月期 - Phase 2 対象企業です</strong>時価総額'+cap.toLocaleString()+'億円の御社は2028年3月期から義務化対象に。Phase 1企業の開示事例を参考に、今から準備を開始することを推奨します。';
-  }else if(capYen>=5000){
-    el.className='checker-result show warning';
-    el.innerHTML='<strong>2029年3月期 - Phase 3 対象企業です</strong>時価総額'+cap.toLocaleString()+'億円の御社は2029年3月期から義務化対象に。先行企業の知見を活かし、効率的に体制構築できる有利なポジションです。';
-  }else if(capYen>=100){
-    el.className='checker-result show warning';
-    el.innerHTML='<strong>2030年以降の拡大適用が見込まれます</strong>時価総額'+cap.toLocaleString()+'億円の御社は現時点では義務化対象外ですが、プライム市場全体への適用拡大が見込まれています。また、取引先の大手企業からScope 3データの提供を求められる可能性があります。';
+  var c=parseFloat(document.getElementById('marketCap').value),el=document.getElementById('ckResult');
+  if(!c||c<=0){el.className='ck-result show urgent';el.innerHTML='<strong>数値を入力してください</strong>';return}
+  if(c>=30000){
+    el.className='ck-result show urgent';
+    el.innerHTML='<strong>2027年3月期 - Phase 1 対象です。義務化まで1年を切っています。</strong>時価総額'+c.toLocaleString()+'億円の御社は<b>最初の義務化対象68社</b>に含まれます。Scope 1-3の算定体制を今すぐ整備しなければ、懲役10年・法人罰金7億円のリスクを負います。<a href="https://buy.stripe.com/00wcN55hg8fgb399UHfQI05" class="ck-cta">Professionalで今すぐ対応開始</a>';
+  }else if(c>=10000){
+    el.className='ck-result show urgent';
+    el.innerHTML='<strong>2028年3月期 - Phase 2 対象です。準備期間は残り2年。</strong>時価総額'+c.toLocaleString()+'億円の御社は2028年3月期からSSBJ開示義務化の対象です。Phase 1企業の開示事例を待っていては間に合いません。今から準備を開始すべきです。<a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" class="ck-cta">今すぐ準備を始める</a>';
+  }else if(c>=5000){
+    el.className='ck-result show warning';
+    el.innerHTML='<strong>2029年3月期 - Phase 3 対象です。</strong>時価総額'+c.toLocaleString()+'億円の御社は2029年3月期から義務化対象（累計284社）に。今から始めれば先行企業の知見を活かして効率的に体制構築できます。<a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" class="ck-cta">早期対応で優位に立つ</a>';
+  }else if(c>=100){
+    el.className='ck-result show warning';
+    el.innerHTML='<strong>2030年以降の拡大適用が見込まれます。</strong>時価総額'+c.toLocaleString()+'億円の御社は現時点では直接の義務化対象外ですが、プライム市場全体への適用拡大が見込まれています。また、取引先の大手企業からScope 3データの提供を求められる可能性が高いです。<a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" class="ck-cta">先手を打って対応する</a>';
   }else{
-    el.className='checker-result show safe';
-    el.innerHTML='<strong>現時点では直接の義務化対象外です</strong>ただし、取引先の上場企業からサプライチェーン排出量（Scope 3）のデータ提供を求められるケースが増加しています。自主的な対応が取引継続の条件となる可能性があります。';
+    el.className='ck-result show safe';
+    el.innerHTML='<strong>現時点では直接の義務化対象外です。</strong>ただし取引先の上場企業からScope 3データの提供を求められるケースが急増しています。対応できなければ取引を失うリスクがあります。<a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" class="ck-cta">月額9,800円で備える</a>';
   }
 }
 
-// ─── Contact Form ───
+// Contact
 document.getElementById('contactForm').addEventListener('submit',function(e){
-  e.preventDefault();
-  this.style.display='none';
-  document.getElementById('formSuccess').classList.add('show');
+  e.preventDefault();this.style.display='none';document.getElementById('formSuccess').classList.add('show');
 });
 </script>
 
