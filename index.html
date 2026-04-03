@@ -343,16 +343,22 @@ footer p{font-size:11px;color:var(--text-muted)}
 <section class="sec checker-sec" id="checker">
   <div class="container" style="text-align:center">
     <div class="sl">Obligation Checker</div>
-    <h2 class="st" style="max-width:100%">あなたの会社はいつ義務化対象になるか</h2>
-    <p class="sd" style="margin:0 auto 36px">時価総額を入力するだけで即座に判定。対象年度とやるべきことが分かります。</p>
-    <div class="ck-box">
-      <h3>対象企業チェッカー</h3>
-      <p>自社の時価総額（億円）を入力してください</p>
-      <div class="ck-row">
-        <input type="number" class="ck-input" id="marketCap" placeholder="例: 5000" min="0">
-        <button class="ck-btn" onclick="checkObligation()">判定する</button>
+    <h2 class="st" style="max-width:100%">SSBJ義務化 対象企業チェッカー</h2>
+    <p class="sd" style="margin:0 auto 36px">企業名と時価総額を入力するだけで、義務化年度・罰則リスク・推奨アクションを即座に判定。結果はURLで共有できます。</p>
+    <div class="ck-box" style="text-align:left">
+      <h3 style="text-align:center">対象企業チェッカー</h3>
+      <p style="text-align:center">企業名と時価総額（億円）を入力してください</p>
+      <div class="ck-row" style="margin-bottom:8px">
+        <input type="text" class="ck-input" id="companyName" placeholder="株式会社..." style="flex:1.2">
+        <input type="number" class="ck-input" id="marketCap" placeholder="時価総額（億円）" min="0" style="flex:0.8">
       </div>
+      <div style="text-align:center"><button class="ck-btn" onclick="checkObligation()" style="width:100%;max-width:300px">義務化対象を判定する</button></div>
       <div class="ck-result" id="ckResult"></div>
+      <div id="ckActions" style="display:none;margin-top:14px;text-align:center">
+        <a id="ckMailto" href="#" style="display:inline-block;padding:10px 20px;background:var(--g);color:var(--bg);border-radius:6px;font-size:13px;font-weight:700;margin-right:8px">無償Scope1/2診断を依頼する</a>
+        <button id="ckShare" onclick="shareResult()" style="padding:10px 20px;background:var(--s2);border:1px solid var(--bd);border-radius:6px;font-size:13px;font-weight:600;color:var(--ts);cursor:pointer">結果URLをコピー</button>
+        <div id="ckCopied" style="display:none;font-size:11px;color:var(--g);margin-top:6px">URLをクリップボードにコピーしました</div>
+      </div>
     </div>
   </div>
 </section>
@@ -498,25 +504,83 @@ tick();setInterval(tick,1000);
 
 // Checker
 function checkObligation(){
-  var c=parseFloat(document.getElementById('marketCap').value),el=document.getElementById('ckResult');
-  if(!c||c<=0){el.className='ck-result show urgent';el.innerHTML='<strong>数値を入力してください</strong>';return}
+  var name=document.getElementById('companyName').value.trim();
+  var c=parseFloat(document.getElementById('marketCap').value);
+  var el=document.getElementById('ckResult');
+  var acts=document.getElementById('ckActions');
+  if(!c||c<=0){el.className='ck-result show urgent';el.innerHTML='<strong>時価総額を入力してください</strong>';acts.style.display='none';return}
+  var displayName=name||'御社';
+  var phase,cls,msg;
   if(c>=30000){
-    el.className='ck-result show urgent';
-    el.innerHTML='<strong>2027年3月期 - Phase 1 対象です。義務化まで1年を切っています。</strong>時価総額'+c.toLocaleString()+'億円の御社は<b>最初の義務化対象68社</b>に含まれます。Scope 1-3の算定体制を今すぐ整備しなければ、懲役10年・法人罰金7億円のリスクを負います。<a href="https://buy.stripe.com/00wcN55hg8fgb399UHfQI05" target="_blank" class="ck-cta">Professionalで今すぐ対応開始</a>';
+    phase='Phase 1';cls='urgent';
+    msg='<strong>'+displayName+' : 2027年3月期 Phase 1 対象</strong>'
+      +'<br><b style="color:#EF4444">義務化まで1年を切っています。</b>'
+      +'<br>時価総額'+c.toLocaleString()+'億円の'+displayName+'は最初の義務化対象68社に含まれます。'
+      +'<br><br><b>罰則リスク:</b> 懲役10年（個人）/ 罰金7億円（法人）/ 課徴金'
+      +'<br><br><b>推奨アクション:</b>'
+      +'<br>1. Scope 1-3排出量の算定体制を即時構築'
+      +'<br>2. SSBJ開示4項目（ガバナンス・戦略・リスク管理・指標目標）の準備'
+      +'<br>3. 監査法人との事前協議を開始';
   }else if(c>=10000){
-    el.className='ck-result show urgent';
-    el.innerHTML='<strong>2028年3月期 - Phase 2 対象です。準備期間は残り2年。</strong>時価総額'+c.toLocaleString()+'億円の御社は2028年3月期からSSBJ開示義務化の対象です。Phase 1企業の開示事例を待っていては間に合いません。今から準備を開始すべきです。<a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="ck-cta">今すぐ準備を始める</a>';
+    phase='Phase 2';cls='urgent';
+    msg='<strong>'+displayName+' : 2028年3月期 Phase 2 対象</strong>'
+      +'<br>時価総額'+c.toLocaleString()+'億円の'+displayName+'は2028年3月期から義務化対象です。'
+      +'<br><br><b>罰則リスク:</b> 懲役10年 / 罰金7億円 / 課徴金（Phase 1と同等）'
+      +'<br><br><b>推奨アクション:</b>'
+      +'<br>1. Phase 1企業の開示事例を待たず、今期中に算定体制を構築'
+      +'<br>2. サプライチェーン（Scope 3）のデータ収集体制を整備'
+      +'<br>3. まずScope 1-2の試算から着手し、自社の排出規模を把握';
   }else if(c>=5000){
-    el.className='ck-result show warning';
-    el.innerHTML='<strong>2029年3月期 - Phase 3 対象です。</strong>時価総額'+c.toLocaleString()+'億円の御社は2029年3月期から義務化対象（累計284社）に。今から始めれば先行企業の知見を活かして効率的に体制構築できます。<a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="ck-cta">早期対応で優位に立つ</a>';
+    phase='Phase 3';cls='warning';
+    msg='<strong>'+displayName+' : 2029年3月期 Phase 3 対象</strong>'
+      +'<br>時価総額'+c.toLocaleString()+'億円の'+displayName+'は2029年3月期から義務化対象（累計284社）。'
+      +'<br><br><b>推奨アクション:</b>'
+      +'<br>1. 先行企業の知見を活かし、効率的に体制構築'
+      +'<br>2. 取引先大手企業からのScope 3データ要請への対応準備'
+      +'<br>3. 低コストツールで早期にScope 1-2の算定を開始';
   }else if(c>=100){
-    el.className='ck-result show warning';
-    el.innerHTML='<strong>2030年以降の拡大適用が見込まれます。</strong>時価総額'+c.toLocaleString()+'億円の御社は現時点では直接の義務化対象外ですが、プライム市場全体への適用拡大が見込まれています。また、取引先の大手企業からScope 3データの提供を求められる可能性が高いです。<a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="ck-cta">先手を打って対応する</a>';
+    phase='拡大適用';cls='warning';
+    msg='<strong>'+displayName+' : 2030年以降の拡大適用が見込まれます</strong>'
+      +'<br>時価総額'+c.toLocaleString()+'億円。プライム市場全体への適用拡大が見込まれています。'
+      +'<br><br><b>推奨アクション:</b>'
+      +'<br>1. 取引先のSSBJ対象企業からScope 3データの提供を求められる可能性に備える'
+      +'<br>2. 自主的な算定体制の構築が取引継続の条件になる可能性'
+      +'<br>3. 月額9,800円から始められるGreenOpsで早期に対応';
   }else{
-    el.className='ck-result show safe';
-    el.innerHTML='<strong>現時点では直接の義務化対象外です。</strong>ただし取引先の上場企業からScope 3データの提供を求められるケースが急増しています。対応できなければ取引を失うリスクがあります。<a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="ck-cta">月額9,800円で備える</a>';
+    phase='対象外';cls='safe';
+    msg='<strong>'+displayName+' : 現時点では直接の義務化対象外</strong>'
+      +'<br>ただし、取引先の上場企業からScope 3データの提供を求められるケースが急増しています。';
   }
+  el.className='ck-result show '+cls;el.innerHTML=msg;
+  // Show actions
+  acts.style.display='block';
+  var mailSubject=encodeURIComponent('【SSBJ義務化】'+displayName+' 無償Scope1/2診断のご依頼');
+  var mailBody=encodeURIComponent(displayName+'（時価総額'+c.toLocaleString()+'億円、'+phase+'対象）のScope 1/2排出量の無償診断を希望します。\n\n15分程度のお時間で、燃料・電力データからCO2排出量を試算いただけるとのこと、ぜひお願いいたします。');
+  document.getElementById('ckMailto').href='mailto:izatai@icloud.com?subject='+mailSubject+'&body='+mailBody;
+  // Update URL
+  var url=new URL(window.location.href);url.searchParams.set('company',name);url.searchParams.set('cap',c);
+  window.history.replaceState(null,'',url.toString());
 }
+
+function shareResult(){
+  var url=window.location.href;
+  navigator.clipboard.writeText(url).then(function(){
+    document.getElementById('ckCopied').style.display='block';
+    setTimeout(function(){document.getElementById('ckCopied').style.display='none'},2000);
+  });
+}
+
+// Load from URL params on page load
+(function(){
+  var p=new URLSearchParams(window.location.search);
+  var name=p.get('company'),cap=p.get('cap');
+  if(cap){
+    if(name)document.getElementById('companyName').value=name;
+    document.getElementById('marketCap').value=cap;
+    checkObligation();
+    setTimeout(function(){document.getElementById('checker').scrollIntoView({behavior:'smooth'})},300);
+  }
+})();
 
 </script>
 
