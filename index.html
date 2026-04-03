@@ -155,7 +155,7 @@ nav a:hover{color:var(--green)}
 .comp-wrap{border:1px solid var(--border);border-radius:12px;overflow:hidden;max-width:820px}
 
 /* ═══ PRICING ═══ */
-.pr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.pr-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;max-width:720px;margin:0 auto}
 .pc{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:30px;position:relative;display:flex;flex-direction:column;transition:all 0.3s}
 .pc:hover{border-color:var(--border-light)}
 .pc.feat{border-color:var(--green);background:linear-gradient(180deg,var(--surface-2),var(--surface))}
@@ -205,7 +205,7 @@ footer p{font-size:11px;color:var(--text-muted)}
 /* Responsive */
 @media(max-width:900px){
   .pen-grid,.tl-visual{grid-template-columns:repeat(2,1fr)}
-  .pr-grid{grid-template-columns:1fr;max-width:400px;margin-left:auto;margin-right:auto}
+  .pr-grid{grid-template-columns:1fr;max-width:400px;margin:0 auto}
   .fr{grid-template-columns:1fr}
   .comp-wrap{overflow-x:auto}
   .ba-hero-nums{grid-template-columns:1fr;gap:12px}
@@ -457,29 +457,9 @@ footer p{font-size:11px;color:var(--text-muted)}
         </ul>
         <a href="https://buy.stripe.com/00wcN55hg8fgb399UHfQI05" target="_blank" class="pc-btn pc-btn-p">Professionalを始める</a>
       </div>
-      <div class="pc">
-        <div class="pc-tag">ENTERPRISE</div>
-        <div class="pc-name">Enterprise</div>
-        <div class="pc-price">要相談</div>
-        <div class="pc-annual">&nbsp;</div>
-        <p class="pc-desc">大手ゼネコン・グループ企業向け。API連携・監査法人サポート・オンプレ対応。</p>
-        <ul class="pc-features">
-          <li>Professional全機能</li>
-          <li>SPIDERPLUS/ANDPAD API連携</li>
-          <li>グループ会社の統合管理</li>
-          <li>監査法人連携サポート</li>
-          <li>オンプレミス/専用環境</li>
-          <li>専任カスタマーサクセス</li>
-          <li>SLA保証</li>
-        </ul>
-        <a href="mailto:izatai@icloud.com" class="pc-btn pc-btn-g">担当者に直接相談する &rarr;</a>
-        <div style="font-size:11px;color:var(--text-muted);margin-top:8px;text-align:center">通常24時間以内に返信します</div>
-      </div>
     </div>
   </div>
 </section>
-
-<!-- Contact section removed: Enterprise inquiries go to mailto:izatai@icloud.com -->
 
 <!-- ═══════════ CTA ═══════════ -->
 <section class="cta-sec">
@@ -496,6 +476,7 @@ footer p{font-size:11px;color:var(--text-muted)}
 <footer>
   <div class="container">
     <div style="font-size:16px;font-weight:900;margin-bottom:6px"><span class="lg">Green</span><span class="lo">Ops</span></div>
+    <p style="margin-bottom:6px"><a href="/tokutei.html">特定商取引法に基づく表記</a> | <a href="/privacy.html">プライバシーポリシー</a> | <a href="/terms.html">利用規約</a></p>
     <p>&copy; 2026 GreenOps Inc. All rights reserved.</p>
   </div>
 </footer>
