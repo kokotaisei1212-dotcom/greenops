@@ -3,114 +3,123 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI排出量算定 | GreenOps</title>
+<title>AI排出量算定・SSBJ開示文章生成 | GreenOps</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#030C07;
-  --surface:#081A0F;
-  --surface-2:#0F261A;
-  --border:#1E4D32;
-  --border-light:#2A6B44;
-  --green:#22C55E;
-  --green-bright:#4ADE80;
-  --text:#F0FDF4;
-  --text-secondary:#A7C4B5;
-  --text-muted:#5E8A72;
-  --white:#FFFFFF;
-  --red:#F87171;
+  --bg:#020A06;--surface:#071710;--surface-2:#0C2118;--surface-3:#122E21;
+  --border:#1A3D2B;--border-light:#24573A;--green:#22C55E;--green-bright:#4ADE80;
+  --text:#F0FDF4;--text-secondary:#A7C4B5;--text-muted:#5E8A72;
+  --red:#F87171;--amber:#FCD34D;
 }
 html{scroll-behavior:smooth}
 body{font-family:'Noto Sans JP','Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.8;-webkit-font-smoothing:antialiased}
 a{text-decoration:none;color:inherit}
 
-header{background:rgba(3,12,7,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 24px}
-.header-inner{max-width:1120px;margin:0 auto;height:64px;display:flex;align-items:center;justify-content:space-between}
-.logo{font-size:22px;font-weight:900;letter-spacing:-0.03em}
-.logo-green{color:var(--green)}
-.logo-white{color:var(--text)}
-.back-link{font-size:13px;color:var(--text-muted);font-weight:500;transition:color 0.2s}
+header{background:rgba(2,10,6,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 24px}
+.header-inner{max-width:1080px;margin:0 auto;height:60px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:20px;font-weight:900;letter-spacing:-0.03em}
+.logo .g{color:var(--green)}.logo .o{color:var(--text)}
+.back-link{font-size:12px;color:var(--text-muted);font-weight:600;transition:color 0.2s}
 .back-link:hover{color:var(--green)}
 
-.page-hero{padding:48px 24px;text-align:center;border-bottom:1px solid var(--border)}
-.page-hero h1{font-size:clamp(24px,3.5vw,36px);font-weight:900;letter-spacing:-0.02em;margin-bottom:8px}
-.page-hero p{font-size:15px;color:var(--text-secondary)}
+.page-hero{padding:40px 24px;text-align:center;border-bottom:1px solid var(--border)}
+.page-hero h1{font-size:clamp(22px,3vw,32px);font-weight:900;letter-spacing:-0.02em;margin-bottom:6px}
+.page-hero p{font-size:14px;color:var(--text-secondary)}
 
-.main{max-width:800px;margin:0 auto;padding:40px 24px}
+.main{max-width:860px;margin:0 auto;padding:32px 24px}
 
-.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:32px;margin-bottom:20px}
-.card h2{font-size:18px;font-weight:800;margin-bottom:20px;display:flex;align-items:center;gap:12px;letter-spacing:-0.01em}
-.card-icon{width:32px;height:32px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;color:var(--green)}
+/* Tabs */
+.tab-bar{display:flex;gap:4px;margin-bottom:24px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:4px}
+.tab{flex:1;padding:10px;text-align:center;font-size:13px;font-weight:700;color:var(--text-muted);border-radius:7px;cursor:pointer;transition:all 0.2s;border:none;background:transparent}
+.tab:hover{color:var(--text-secondary)}
+.tab.active{background:var(--green);color:var(--bg)}
 
-.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
-.form-group{display:flex;flex-direction:column;gap:6px}
-.form-group label{font-size:12px;font-weight:700;color:var(--text-secondary);letter-spacing:0.02em}
-.form-group .hint{font-size:11px;color:var(--text-muted)}
-input,select,textarea{padding:12px 16px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;background:var(--bg);color:var(--text);transition:border-color 0.2s}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(34,197,94,0.1)}
+/* Card */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px;margin-bottom:20px}
+.card h2{font-size:16px;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:10px;letter-spacing:-0.01em}
+.card-icon{width:28px;height:28px;background:var(--surface-2);border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;color:var(--green);font-weight:800}
+
+/* Form */
+.form-group{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.form-group label{font-size:11px;font-weight:700;color:var(--text-secondary);letter-spacing:0.03em;text-transform:uppercase}
+.form-group .hint{font-size:11px;color:var(--text-muted);text-transform:none;letter-spacing:0}
+input,select,textarea{padding:11px 14px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;background:var(--bg);color:var(--text);transition:border-color 0.2s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(34,197,94,0.08)}
 input::placeholder,textarea::placeholder{color:var(--text-muted)}
-select{cursor:pointer}
-select option{background:var(--bg);color:var(--text)}
-textarea{resize:vertical;min-height:100px}
+select{cursor:pointer}select option{background:var(--bg);color:var(--text)}
+textarea{resize:vertical;min-height:140px;font-family:'Inter','Noto Sans JP',monospace;font-size:13px;line-height:1.6}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
 
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 32px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;border:none;transition:all 0.25s;letter-spacing:0.01em}
-.btn-primary{background:var(--green);color:var(--bg);width:100%}
-.btn-primary:hover{background:var(--green-bright);transform:translateY(-1px);box-shadow:0 4px 20px rgba(34,197,94,0.25)}
-.btn-primary:disabled{background:var(--border);color:var(--text-muted);cursor:not-allowed;transform:none;box-shadow:none}
+/* Samples */
+.sample-bar{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.sample-btn{padding:7px 14px;background:var(--surface-2);border:1px solid var(--border);border-radius:6px;font-size:12px;font-weight:600;color:var(--text-secondary);cursor:pointer;transition:all 0.2s}
+.sample-btn:hover{border-color:var(--green);color:var(--green)}
 
+/* Button */
+.btn-submit{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;background:var(--green);color:var(--bg);border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.25s}
+.btn-submit:hover{background:var(--green-bright);transform:translateY(-1px);box-shadow:0 4px 16px rgba(34,197,94,0.22)}
+.btn-submit:disabled{background:var(--border);color:var(--text-muted);cursor:not-allowed;transform:none;box-shadow:none}
+
+/* Mode panels */
+.mode-panel{display:none}
+.mode-panel.active{display:block}
+
+/* Results */
 .results{display:none}
 .results.show{display:block}
 
-.scope-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px}
-.scope-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:20px 16px;text-align:center}
-.scope-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);margin-bottom:6px}
-.scope-value{font-size:28px;font-weight:900;color:var(--green);font-family:'Inter','Noto Sans JP',sans-serif;letter-spacing:-0.02em}
-.scope-unit{font-size:12px;color:var(--text-muted);margin-top:2px}
+.scope-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px}
+.scope-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:18px 14px;text-align:center}
+.scope-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);margin-bottom:4px}
+.scope-value{font-size:26px;font-weight:900;color:var(--green);font-family:'Inter','Noto Sans JP',sans-serif;letter-spacing:-0.02em}
+.scope-unit{font-size:11px;color:var(--text-muted);margin-top:2px}
 .scope-card.total{background:var(--green);border-color:var(--green)}
-.scope-card.total .scope-label{color:rgba(3,12,7,0.6)}
+.scope-card.total .scope-label{color:rgba(2,10,6,0.5)}
 .scope-card.total .scope-value{color:var(--bg)}
-.scope-card.total .scope-unit{color:rgba(3,12,7,0.6)}
+.scope-card.total .scope-unit{color:rgba(2,10,6,0.5)}
 
-.breakdown{margin-bottom:28px}
-.breakdown h3{font-size:15px;font-weight:700;margin-bottom:12px;color:var(--text)}
-.breakdown-item{padding:14px 16px;background:var(--bg);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;font-size:13px;color:var(--text-secondary);line-height:1.8}
-.breakdown-item strong{color:var(--text);display:block;font-size:12px;font-weight:700;letter-spacing:0.02em;margin-bottom:4px}
+.result-section{margin-bottom:24px}
+.result-section h3{font-size:14px;font-weight:700;margin-bottom:10px;color:var(--text);letter-spacing:0.01em}
+.result-item{padding:14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;font-size:13px;color:var(--text-secondary);line-height:1.8}
+.result-item strong{color:var(--text);display:block;font-size:11px;font-weight:700;letter-spacing:0.03em;text-transform:uppercase;margin-bottom:3px}
 
-.recommendations{margin-bottom:28px}
-.recommendations h3{font-size:15px;font-weight:700;margin-bottom:12px;color:var(--text)}
-.rec-item{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;font-size:13px;color:var(--text-secondary);line-height:1.8}
-.rec-num{flex-shrink:0;width:24px;height:24px;background:var(--green);border-radius:4px;color:var(--bg);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;font-family:'Inter',sans-serif}
+.ssbj-output{background:var(--surface-2);border:1px solid var(--border-light);border-radius:10px;padding:24px;font-size:14px;color:var(--text-secondary);line-height:2;white-space:pre-wrap;font-family:'Noto Sans JP',sans-serif}
+.ssbj-output h4{color:var(--green);font-size:13px;font-weight:700;letter-spacing:0.04em;margin-bottom:8px;text-transform:uppercase}
 
-.summary-box{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:20px;font-size:14px;color:var(--text-secondary);line-height:1.9}
+.rec-item{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;font-size:13px;color:var(--text-secondary);line-height:1.8}
+.rec-num{flex-shrink:0;width:22px;height:22px;background:var(--green);border-radius:4px;color:var(--bg);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800}
 
+.btn-reset{display:flex;align-items:center;justify-content:center;width:100%;padding:13px;background:transparent;color:var(--text);border:1px solid var(--border);border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;margin-top:16px}
+.btn-reset:hover{border-color:var(--green);color:var(--green)}
+
+/* Loading */
 .loading{display:none;text-align:center;padding:60px 24px}
 .loading.show{display:block}
-.spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin 0.7s linear infinite;margin:0 auto 20px}
+.spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin 0.7s linear infinite;margin:0 auto 16px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loading p{color:var(--text-muted);font-size:14px}
+.loading p{color:var(--text-muted);font-size:13px}
 
-.error-box{display:none;background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.2);border-radius:8px;padding:16px;color:var(--red);font-size:13px;margin-top:16px;line-height:1.7}
+.error-box{display:none;background:rgba(248,113,113,0.06);border:1px solid rgba(248,113,113,0.15);border-radius:8px;padding:14px;color:var(--red);font-size:13px;margin-top:14px;line-height:1.7}
 .error-box.show{display:block}
 
-.upgrade-banner{background:var(--surface);border:1px solid var(--green);border-radius:12px;padding:28px;text-align:center;margin-top:28px}
-.upgrade-banner h3{font-size:17px;font-weight:800;margin-bottom:8px}
-.upgrade-banner p{font-size:13px;color:var(--text-secondary);margin-bottom:20px;line-height:1.8}
-.upgrade-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.upgrade-btn{display:inline-block;padding:10px 24px;border-radius:8px;font-size:13px;font-weight:700;transition:all 0.2s}
-.upgrade-btn-primary{background:var(--green);color:var(--bg)}
-.upgrade-btn-primary:hover{background:var(--green-bright);transform:translateY(-1px)}
-.upgrade-btn-secondary{border:1px solid var(--border);color:var(--text-secondary)}
-.upgrade-btn-secondary:hover{border-color:var(--green);color:var(--green)}
+/* Auth gate */
+.auth-gate{display:none;text-align:center;padding:120px 24px}
+.auth-gate.show{display:block}
+.auth-gate h2{font-size:24px;font-weight:900;margin-bottom:12px}
+.auth-gate p{font-size:15px;color:var(--text-secondary);margin-bottom:28px}
+.auth-gate .btn{display:inline-flex}
 
-footer{border-top:1px solid var(--border);padding:32px 24px;text-align:center}
-footer p{font-size:12px;color:var(--text-muted)}
+footer{border-top:1px solid var(--border);padding:28px 24px;text-align:center}
+footer p{font-size:11px;color:var(--text-muted)}
 
-@media(max-width:700px){
+@media(max-width:640px){
   .scope-grid{grid-template-columns:repeat(2,1fr)}
   .form-grid{grid-template-columns:1fr}
-  .upgrade-buttons{flex-direction:column;align-items:center}
+  .sample-bar{flex-direction:column}
+  .tab{font-size:11px;padding:8px 4px}
 }
 </style>
 </head>
@@ -118,129 +127,156 @@ footer p{font-size:12px;color:var(--text-muted)}
 
 <header>
   <div class="header-inner">
-    <a href="/" class="logo"><span class="logo-green">Green</span><span class="logo-white">Ops</span></a>
-    <a href="/" class="back-link">← トップに戻る</a>
+    <a href="/" class="logo"><span class="g">Green</span><span class="o">Ops</span></a>
+    <a href="/" class="back-link">トップに戻る</a>
   </div>
 </header>
 
+<!-- Auth Gate (shown when no session_id) -->
+<div class="auth-gate" id="authGate">
+  <h2>有料プランへの登録が必要です</h2>
+  <p>AI排出量算定・SSBJ開示文章生成は、GreenOpsの有料プランに含まれる機能です。</p>
+  <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" class="btn" style="background:var(--green);color:var(--bg);padding:14px 32px;border-radius:8px;font-weight:700;font-size:15px">プランを選んで始める</a>
+</div>
+
+<!-- Main App (shown when authorized) -->
+<div id="appContent" style="display:none">
+
 <div class="page-hero">
-  <h1>AI CO2排出量算定</h1>
-  <p>燃料・電力・資材データを入力するだけで、Scope 1-3のCO2排出量をAIが自動算定</p>
+  <h1>AI排出量算定・SSBJ開示文章生成</h1>
+  <p>データを入力するだけで、Scope 1-3算定からSSBJ準拠の開示文章まで自動生成</p>
 </div>
 
 <div class="main">
 
+  <!-- Input Mode Tabs -->
+  <div class="tab-bar">
+    <button class="tab active" onclick="switchMode('form')">フォーム入力</button>
+    <button class="tab" onclick="switchMode('csv')">CSV貼り付け</button>
+    <button class="tab" onclick="switchMode('text')">テキスト貼り付け</button>
+  </div>
+
   <form id="calcForm">
-    <div class="card">
-      <h2><span class="card-icon">S1</span>Scope 1: 燃料使用量（直接排出）</h2>
-      <div class="form-grid">
-        <div class="form-group">
-          <label>燃料種別</label>
-          <select id="fuelType">
-            <option value="軽油">軽油（バックホウ・ダンプ等）</option>
-            <option value="ガソリン">ガソリン（発電機・車両等）</option>
-            <option value="LPG">LPG（暖房・溶接等）</option>
-            <option value="A重油">A重油（ボイラー等）</option>
-            <option value="灯油">灯油（暖房等）</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>使用量</label>
-          <div class="hint">月間の使用量を入力</div>
-          <input type="number" id="amount" placeholder="例: 500" min="0" step="0.1">
-        </div>
-        <div class="form-group">
-          <label>単位</label>
-          <select id="unit">
-            <option value="L">リットル (L)</option>
-            <option value="kg">キログラム (kg)</option>
-            <option value="m3">立方メートル (m3)</option>
-          </select>
+
+    <!-- FORM MODE -->
+    <div class="mode-panel active" id="mode-form">
+      <div class="card">
+        <h2><span class="card-icon">S1</span>Scope 1: 直接排出</h2>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>燃料種別</label>
+            <select id="fuelType">
+              <option value="軽油">軽油</option>
+              <option value="ガソリン">ガソリン</option>
+              <option value="LPG">LPG</option>
+              <option value="A重油">A重油</option>
+              <option value="灯油">灯油</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>月間使用量</label>
+            <input type="number" id="amount" placeholder="例: 500" min="0" step="0.1">
+          </div>
+          <div class="form-group">
+            <label>単位</label>
+            <select id="unit">
+              <option value="L">L（リットル）</option>
+              <option value="kg">kg</option>
+              <option value="m3">m3</option>
+            </select>
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="card">
-      <h2><span class="card-icon">S2</span>Scope 2: 電力使用量（間接排出）</h2>
-      <div class="form-grid">
+      <div class="card">
+        <h2><span class="card-icon">S2</span>Scope 2: 間接排出</h2>
         <div class="form-group">
           <label>月間電力使用量 (kWh)</label>
-          <div class="hint">現場事務所・仮設電力等の合計</div>
+          <label class="hint">現場事務所・仮設電力等の合計</label>
           <input type="number" id="electricityKwh" placeholder="例: 1200" min="0" step="0.1">
         </div>
       </div>
-    </div>
-
-    <div class="card">
-      <h2><span class="card-icon">S3</span>Scope 3: 資材・サプライチェーン</h2>
-      <div class="form-group">
-        <label>使用資材の情報</label>
-        <div class="hint">資材名と数量を記入（例: コンクリート 200m3, 鉄筋 50t）</div>
-        <textarea id="materials" placeholder="コンクリート 200m3&#10;鉄筋 50t&#10;型枠合板 300枚"></textarea>
+      <div class="card">
+        <h2><span class="card-icon">S3</span>Scope 3: サプライチェーン</h2>
+        <div class="form-group">
+          <label>使用資材</label>
+          <label class="hint">資材名と数量を1行ずつ記入</label>
+          <textarea id="materials" placeholder="コンクリート 200m3&#10;鉄筋 50t&#10;型枠合板 300枚"></textarea>
+        </div>
       </div>
     </div>
 
-    <button type="submit" class="btn btn-primary" id="submitBtn">AIで排出量を算定する</button>
+    <!-- CSV MODE -->
+    <div class="mode-panel" id="mode-csv">
+      <div class="card">
+        <h2><span class="card-icon">CSV</span>CSVデータ貼り付け</h2>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:14px">排出源データをCSV形式で貼り付けてください。ヘッダー行を含めてください。</p>
+        <div class="sample-bar">
+          <button type="button" class="sample-btn" onclick="loadSample('construction')">建設業サンプル</button>
+          <button type="button" class="sample-btn" onclick="loadSample('manufacturing')">製造業サンプル</button>
+          <button type="button" class="sample-btn" onclick="loadSample('sme')">中小企業サンプル</button>
+        </div>
+        <textarea id="csvData" placeholder="カテゴリ,項目,数量,単位&#10;Scope1,軽油,1200,L&#10;Scope1,ガソリン,300,L&#10;Scope2,電力,4500,kWh&#10;Scope3,コンクリート,200,m3&#10;Scope3,鉄筋,50,t"></textarea>
+      </div>
+    </div>
 
+    <!-- TEXT MODE -->
+    <div class="mode-panel" id="mode-text">
+      <div class="card">
+        <h2><span class="card-icon">TXT</span>テキスト貼り付け</h2>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:14px">排出源データを自由形式のテキストで貼り付けてください。AIが自動でパースします。</p>
+        <div class="sample-bar">
+          <button type="button" class="sample-btn" onclick="loadTextSample('construction')">建設業サンプル</button>
+          <button type="button" class="sample-btn" onclick="loadTextSample('manufacturing')">製造業サンプル</button>
+          <button type="button" class="sample-btn" onclick="loadTextSample('sme')">中小企業サンプル</button>
+        </div>
+        <textarea id="textData" placeholder="例:&#10;今月の現場データです。&#10;バックホウとダンプで軽油を合計1200リットル使用。&#10;現場事務所の電力は4500kWh。&#10;コンクリート200m3、鉄筋50トンを使用しました。"></textarea>
+      </div>
+    </div>
+
+    <button type="submit" class="btn-submit" id="submitBtn">AI算定を実行し、SSBJ開示文章を生成</button>
     <div class="error-box" id="errorBox"></div>
   </form>
 
   <div class="loading" id="loading">
     <div class="spinner"></div>
-    <p>Claude AI が環境省基準に基づいて排出量を算定中...</p>
+    <p>Claude AIがScope 1-3排出量を算定し、SSBJ開示文章を生成中...</p>
   </div>
 
   <div class="results" id="results">
     <div class="card">
       <h2><span class="card-icon">CO2</span>算定結果</h2>
       <div class="scope-grid">
-        <div class="scope-card">
-          <div class="scope-label">Scope 1</div>
-          <div class="scope-value" id="scope1Val">-</div>
-          <div class="scope-unit">tCO2</div>
-        </div>
-        <div class="scope-card">
-          <div class="scope-label">Scope 2</div>
-          <div class="scope-value" id="scope2Val">-</div>
-          <div class="scope-unit">tCO2</div>
-        </div>
-        <div class="scope-card">
-          <div class="scope-label">Scope 3</div>
-          <div class="scope-value" id="scope3Val">-</div>
-          <div class="scope-unit">tCO2</div>
-        </div>
-        <div class="scope-card total">
-          <div class="scope-label">合計</div>
-          <div class="scope-value" id="totalVal">-</div>
-          <div class="scope-unit">tCO2</div>
-        </div>
+        <div class="scope-card"><div class="scope-label">Scope 1</div><div class="scope-value" id="scope1Val">-</div><div class="scope-unit">tCO2</div></div>
+        <div class="scope-card"><div class="scope-label">Scope 2</div><div class="scope-value" id="scope2Val">-</div><div class="scope-unit">tCO2</div></div>
+        <div class="scope-card"><div class="scope-label">Scope 3</div><div class="scope-value" id="scope3Val">-</div><div class="scope-unit">tCO2</div></div>
+        <div class="scope-card total"><div class="scope-label">合計</div><div class="scope-value" id="totalVal">-</div><div class="scope-unit">tCO2</div></div>
       </div>
 
-      <div class="breakdown" id="breakdownSection">
+      <div class="result-section" id="breakdownSection">
         <h3>算定根拠</h3>
         <div id="breakdownContent"></div>
       </div>
 
-      <div class="recommendations" id="recSection">
-        <h3>AI削減提案</h3>
+      <div class="result-section" id="recSection">
+        <h3>削減提案</h3>
         <div id="recContent"></div>
       </div>
 
-      <div class="summary-box" id="summaryBox"></div>
-    </div>
-
-    <div class="upgrade-banner">
-      <h3>より詳細な算定と自動報告書生成</h3>
-      <p>有料プランでは月次推移管理、複数現場の一元管理、SSBJ準拠報告書の自動生成に対応します。</p>
-      <div class="upgrade-buttons">
-        <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" class="upgrade-btn upgrade-btn-secondary">Starter ¥9,800/月</a>
-        <a href="https://buy.stripe.com/00wcN55hg8fgb399UHfQI05" class="upgrade-btn upgrade-btn-primary">Professional ¥29,800/月</a>
+      <div class="result-section">
+        <h3>総合評価</h3>
+        <div class="result-item" id="summaryBox"></div>
       </div>
     </div>
 
-    <button class="btn btn-primary" onclick="resetForm()" style="margin-top:20px">新しい算定を開始する</button>
+    <div class="card">
+      <h2><span class="card-icon" style="color:var(--amber)">SSBJ</span>SSBJ開示文章（自動生成）</h2>
+      <div class="ssbj-output" id="ssbjOutput"></div>
+    </div>
+
+    <button class="btn-reset" onclick="resetForm()">新しい算定を開始する</button>
   </div>
 
+</div>
 </div>
 
 <footer>
@@ -248,98 +284,160 @@ footer p{font-size:12px;color:var(--text-muted)}
 </footer>
 
 <script>
-// Access guard: only allow access from Stripe checkout success redirect
-(function() {
-  const params = new URLSearchParams(window.location.search);
-  const hasSession = params.has('session_id');
-  const fromStripe = document.referrer.includes('checkout.stripe.com');
-  const stored = sessionStorage.getItem('greenops_authorized');
-
-  if (hasSession || fromStripe) {
-    sessionStorage.setItem('greenops_authorized', '1');
-  } else if (!stored) {
-    document.body.innerHTML = '';
-    window.location.href = '/';
-    throw new Error('Unauthorized');
+// ─── Auth Guard ───
+(function(){
+  const params=new URLSearchParams(window.location.search);
+  const hasSession=params.has('session_id');
+  const fromStripe=document.referrer.includes('checkout.stripe.com');
+  const stored=sessionStorage.getItem('greenops_authorized');
+  if(hasSession||fromStripe){
+    sessionStorage.setItem('greenops_authorized','1');
+    document.getElementById('appContent').style.display='block';
+  }else if(stored){
+    document.getElementById('appContent').style.display='block';
+  }else{
+    document.getElementById('authGate').classList.add('show');
   }
 })();
 
-const form = document.getElementById('calcForm');
-const loading = document.getElementById('loading');
-const results = document.getElementById('results');
-const errorBox = document.getElementById('errorBox');
+// ─── Mode switching ───
+let currentMode='form';
+function switchMode(mode){
+  currentMode=mode;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.mode-panel').forEach(p=>p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('mode-'+mode).classList.add('active');
+}
 
-form.addEventListener('submit', async (e) => {
+// ─── Sample Data ───
+const csvSamples={
+  construction:'カテゴリ,項目,数量,単位\nScope1,軽油（バックホウ）,800,L\nScope1,軽油（ダンプトラック）,400,L\nScope1,ガソリン（発電機）,150,L\nScope2,電力（現場事務所）,3200,kWh\nScope2,電力（仮設照明）,1800,kWh\nScope3,コンクリート,350,m3\nScope3,鉄筋,80,t\nScope3,型枠合板,500,枚\nScope3,アスファルト,120,t',
+  manufacturing:'カテゴリ,項目,数量,単位\nScope1,都市ガス（ボイラー）,15000,m3\nScope1,A重油（加熱炉）,2000,L\nScope1,LPG（フォークリフト）,500,kg\nScope2,電力（工場全体）,85000,kWh\nScope3,鋼板,200,t\nScope3,アルミニウム,30,t\nScope3,プラスチック樹脂,15,t\nScope3,段ボール（梱包材）,5,t',
+  sme:'カテゴリ,項目,数量,単位\nScope1,ガソリン（社用車3台）,360,L\nScope1,灯油（暖房）,200,L\nScope2,電力（事務所）,2400,kWh\nScope3,コピー用紙,50,kg\nScope3,PC機器（購入）,3,台'
+};
+const textSamples={
+  construction:'当月の建設現場（RC造マンション新築工事）のデータです。\n\nバックホウ2台で軽油800リットル、ダンプトラック3台で軽油400リットルを使用しました。\n現場の発電機でガソリンを150リットル消費しています。\n\n電力は現場事務所で3,200kWh、仮設照明で1,800kWhの合計5,000kWhです。\n\n資材はコンクリート350m3、鉄筋80トン、型枠合板500枚、アスファルト120トンを使用しました。',
+  manufacturing:'当月の製造工場の排出データです。\n\nボイラーで都市ガスを15,000m3使用。加熱炉でA重油を2,000リットル。\nフォークリフト用のLPGが500kgです。\n\n工場全体の電力使用量は85,000kWhでした。\n\n購入資材は鋼板200トン、アルミニウム30トン、プラスチック樹脂15トン、梱包用段ボール5トンです。',
+  sme:'当社（従業員15名のIT企業）の今月のデータです。\n\n社用車3台でガソリン合計360リットル使いました。\n冬場の暖房用に灯油を200リットル使用。\n\n事務所の電力使用量は2,400kWhです。\n\nその他、コピー用紙を50kg購入し、ノートPCを3台新規購入しました。'
+};
+function loadSample(type){document.getElementById('csvData').value=csvSamples[type]}
+function loadTextSample(type){document.getElementById('textData').value=textSamples[type]}
+
+// ─── Form Submit ───
+const form=document.getElementById('calcForm');
+const loading=document.getElementById('loading');
+const results=document.getElementById('results');
+const errorBox=document.getElementById('errorBox');
+
+form.addEventListener('submit',async(e)=>{
   e.preventDefault();
+  let payload={};
 
-  const fuelType = document.getElementById('fuelType').value;
-  const amount = document.getElementById('amount').value;
-  const unit = document.getElementById('unit').value;
-  const electricityKwh = document.getElementById('electricityKwh').value;
-  const materials = document.getElementById('materials').value;
-
-  if (!amount && !electricityKwh && !materials) {
-    errorBox.textContent = '少なくとも1つの項目にデータを入力してください。';
-    errorBox.classList.add('show');
-    return;
+  if(currentMode==='form'){
+    const fuelType=document.getElementById('fuelType').value;
+    const amount=document.getElementById('amount').value;
+    const unit=document.getElementById('unit').value;
+    const electricityKwh=document.getElementById('electricityKwh').value;
+    const materials=document.getElementById('materials').value;
+    if(!amount&&!electricityKwh&&!materials){showError('少なくとも1つの項目にデータを入力してください。');return}
+    payload={fuelType,amount,unit,electricityKwh,materials};
+  }else if(currentMode==='csv'){
+    const csv=document.getElementById('csvData').value.trim();
+    if(!csv){showError('CSVデータを貼り付けてください。');return}
+    payload={materials:'以下のCSVデータからScope 1-3を算定してください:\n'+csv};
+  }else{
+    const text=document.getElementById('textData').value.trim();
+    if(!text){showError('テキストデータを入力してください。');return}
+    payload={materials:'以下のテキストデータからScope 1-3の排出量を算定してください:\n'+text};
   }
 
-  form.style.display = 'none';
+  form.style.display='none';
+  document.querySelector('.tab-bar').style.display='none';
   loading.classList.add('show');
   results.classList.remove('show');
   errorBox.classList.remove('show');
 
-  try {
-    const res = await fetch('/api/analyze', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ fuelType, amount, unit, electricityKwh, materials }),
+  try{
+    const res=await fetch('/api/analyze',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload),
     });
+    const data=await res.json();
+    if(data.error)throw new Error(data.error);
 
-    const data = await res.json();
-
-    if (data.error) throw new Error(data.error);
-
-    if (data.raw) {
-      document.getElementById('summaryBox').textContent = data.raw;
+    if(data.raw){
+      document.getElementById('summaryBox').textContent=data.raw;
+      document.getElementById('ssbjOutput').textContent=data.raw;
       loading.classList.remove('show');
       results.classList.add('show');
       return;
     }
 
-    document.getElementById('scope1Val').textContent = data.scope1?.value?.toFixed(2) ?? '-';
-    document.getElementById('scope2Val').textContent = data.scope2?.value?.toFixed(2) ?? '-';
-    document.getElementById('scope3Val').textContent = data.scope3?.value?.toFixed(2) ?? '-';
-    document.getElementById('totalVal').textContent = data.total?.toFixed(2) ?? '-';
+    document.getElementById('scope1Val').textContent=data.scope1?.value?.toFixed(2)??'-';
+    document.getElementById('scope2Val').textContent=data.scope2?.value?.toFixed(2)??'-';
+    document.getElementById('scope3Val').textContent=data.scope3?.value?.toFixed(2)??'-';
+    document.getElementById('totalVal').textContent=data.total?.toFixed(2)??'-';
 
-    const bc = document.getElementById('breakdownContent');
-    bc.innerHTML = '';
-    if (data.scope1?.breakdown) bc.innerHTML += '<div class="breakdown-item"><strong>SCOPE 1（直接排出）</strong>' + data.scope1.breakdown + '</div>';
-    if (data.scope2?.breakdown) bc.innerHTML += '<div class="breakdown-item"><strong>SCOPE 2（間接排出）</strong>' + data.scope2.breakdown + '</div>';
-    if (data.scope3?.breakdown) bc.innerHTML += '<div class="breakdown-item"><strong>SCOPE 3（サプライチェーン）</strong>' + data.scope3.breakdown + '</div>';
+    const bc=document.getElementById('breakdownContent');
+    bc.innerHTML='';
+    if(data.scope1?.breakdown)bc.innerHTML+='<div class="result-item"><strong>Scope 1 - 直接排出</strong>'+esc(data.scope1.breakdown)+'</div>';
+    if(data.scope2?.breakdown)bc.innerHTML+='<div class="result-item"><strong>Scope 2 - 間接排出</strong>'+esc(data.scope2.breakdown)+'</div>';
+    if(data.scope3?.breakdown)bc.innerHTML+='<div class="result-item"><strong>Scope 3 - サプライチェーン</strong>'+esc(data.scope3.breakdown)+'</div>';
 
-    const rc = document.getElementById('recContent');
-    rc.innerHTML = '';
-    if (data.recommendations?.length) {
-      data.recommendations.forEach((rec, i) => {
-        rc.innerHTML += '<div class="rec-item"><div class="rec-num">' + (i + 1) + '</div><div>' + rec + '</div></div>';
-      });
+    const rc=document.getElementById('recContent');
+    rc.innerHTML='';
+    if(data.recommendations?.length){
+      data.recommendations.forEach((r,i)=>{rc.innerHTML+='<div class="rec-item"><div class="rec-num">'+(i+1)+'</div><div>'+esc(r)+'</div></div>'});
     }
 
-    document.getElementById('summaryBox').textContent = data.summary || '';
+    document.getElementById('summaryBox').textContent=data.summary||'';
+
+    // Generate SSBJ disclosure text
+    const s1=data.scope1?.value?.toFixed(2)??'N/A';
+    const s2=data.scope2?.value?.toFixed(2)??'N/A';
+    const s3=data.scope3?.value?.toFixed(2)??'N/A';
+    const total=data.total?.toFixed(2)??'N/A';
+    const ssbjText=`SSBJ開示基準準拠 - サステナビリティ関連財務情報開示\n\n`
+      +`【指標及び目標】温室効果ガス排出量\n\n`
+      +`当社グループの当期における温室効果ガス排出量は以下のとおりであります。\n\n`
+      +`  Scope 1（直接排出）: ${s1} tCO2\n`
+      +`  Scope 2（エネルギー起源間接排出）: ${s2} tCO2\n`
+      +`  Scope 3（その他の間接排出）: ${s3} tCO2\n`
+      +`  合計: ${total} tCO2\n\n`
+      +`【算定基準】\n`
+      +`Scope 1の算定は、環境省「温室効果ガス排出量算定・報告マニュアル」に基づき、各燃料の使用量に環境省公表排出係数を乗じて算出しております。`
+      +`Scope 2は、電気事業者別排出係数（調整後排出係数）を使用して算定しております。`
+      +`Scope 3は、サプライチェーンを通じた温室効果ガス排出量算定に関する基本ガイドライン（環境省・経済産業省）に基づき算定しております。\n\n`
+      +`【算定根拠】\n`
+      +(data.scope1?.breakdown?`Scope 1: ${data.scope1.breakdown}\n`:'')
+      +(data.scope2?.breakdown?`Scope 2: ${data.scope2.breakdown}\n`:'')
+      +(data.scope3?.breakdown?`Scope 3: ${data.scope3.breakdown}\n`:'')
+      +`\n【リスク管理】\n`
+      +`当社は気候変動に関連するリスク及び機会を識別・評価・管理するプロセスを構築しております。`
+      +`排出量の月次モニタリングを実施し、異常値の検知と是正措置を講じる体制を整備しております。\n\n`
+      +`【削減に向けた取組み】\n`
+      +(data.recommendations?.length?data.recommendations.map((r,i)=>`${i+1}. ${r}`).join('\n'):'算定結果に基づく削減施策を策定中です。');
+
+    document.getElementById('ssbjOutput').textContent=ssbjText;
 
     loading.classList.remove('show');
     results.classList.add('show');
-  } catch (err) {
+  }catch(err){
     loading.classList.remove('show');
-    form.style.display = 'block';
-    errorBox.textContent = 'エラーが発生しました: ' + err.message;
-    errorBox.classList.add('show');
+    form.style.display='block';
+    document.querySelector('.tab-bar').style.display='flex';
+    showError('エラーが発生しました: '+err.message);
   }
 });
 
-function resetForm() {
-  form.style.display = 'block';
+function showError(msg){errorBox.textContent=msg;errorBox.classList.add('show')}
+function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
+
+function resetForm(){
+  form.style.display='block';
+  document.querySelector('.tab-bar').style.display='flex';
   results.classList.remove('show');
   form.reset();
 }
