@@ -6,109 +6,56 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
+  var project_id = req.body && req.body.project_id;
+  if (!project_id) return res.status(400).json({ error: 'Missing project_id' });
+
+  var ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+  if (!ANTHROPIC_API_KEY) return res.status(500).json({ error: 'API key not configured' });
+
   try {
-    var body = req.body || {};
-    var project_id = body.project_id;
-    var api_key = body.api_key;
-    var api_token = body.api_token;
+    var prompt = 'ANDPADプロジェクト「' + project_id + '」の分析をJSON形式で返してください。\n'
+      + '赤字化確率、推定赤字額、工期遅延日数、安全スコア、推奨対応を含めてください。\n'
+      + '必ずJSON形式のみで返してください。';
 
-    if (!project_id || !api_key || !api_token) {
-      return res.status(400).json({ error: 'Missing required parameters: project_id, api_key, api_token' });
-    }
-
-    var projectData = await fetchANDPADData(project_id, api_key, api_token);
-    var analysis = await analyzeWithClaude(projectData);
-
-    return res.status(200).json({
-      status: 'success',
-      timestamp: new Date().toISOString(),
-      project: {
-        id: projectData.project_id,
-        name: projectData.project_name,
-        contract_amount: projectData.contract_amount,
+    var response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'x-api-key': ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01',
+        'content-type': 'application/json',
       },
-      ai_analysis: analysis,
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-5-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }],
+      }),
     });
 
+    if (!response.ok) {
+      var err = await response.json();
+      return res.status(response.status).json({ error: (err.error && err.error.message) || 'Claude API error' });
+    }
+
+    var data = await response.json();
+    var text = (data.content[0] && data.content[0].text) || '';
+
+    var jsonStr = text;
+    var match = text.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+    if (match) jsonStr = match[1];
+
+    var jsonMatch = jsonStr.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      try {
+        var analysis = JSON.parse(jsonMatch[0]);
+        return res.status(200).json({ status: 'success', project_id: project_id, ai_analysis: analysis });
+      } catch (e) {
+        return res.status(200).json({ status: 'success', project_id: project_id, ai_analysis: { raw: text } });
+      }
+    }
+
+    return res.status(200).json({ status: 'success', project_id: project_id, ai_analysis: { raw: text } });
+
   } catch (error) {
-    console.error('Error:', error.message);
-    return res.status(500).json({ error: 'Analysis failed', message: error.message });
+    return res.status(500).json({ error: error.message });
   }
-}
-
-async function fetchANDPADData(projectId, apiKey, token) {
-  var baseUrl = 'https://api.andpad.jp/api/v1';
-  var headers = {
-    'Authorization': 'Bearer ' + token,
-    'X-API-Key': apiKey,
-    'Content-Type': 'application/json',
-  };
-
-  try {
-    var scheduleRes = await fetch(baseUrl + '/projects/' + projectId + '/schedules', { headers: headers });
-    var schedule = await scheduleRes.json();
-
-    var startDate = new Date();
-    startDate.setDate(startDate.getDate() - 45);
-    var reportsRes = await fetch(
-      baseUrl + '/projects/' + projectId + '/reports?start_date=' + startDate.toISOString().split('T')[0],
-      { headers: headers }
-    );
-    var reports = await reportsRes.json();
-
-    return {
-      project_id: projectId,
-      project_name: (schedule && schedule.project_name) || 'Unknown',
-      contract_amount: (schedule && schedule.contract_amount) || 0,
-      start_date: schedule && schedule.actual_start_date,
-      planned_end_date: schedule && schedule.planned_end_date,
-      schedule: schedule || {},
-      reports: (reports && reports.reports) || [],
-    };
-  } catch (error) {
-    console.error('ANDPAD API error:', error.message);
-    throw new Error('ANDPAD API connection failed: ' + error.message);
-  }
-}
-
-async function analyzeWithClaude(projectData) {
-  var apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) throw new Error('ANTHROPIC_API_KEY is not configured');
-
-  var prompt = 'あなたは建設プロジェクトの分析AIです。以下のANDPADプロジェクトデータを分析し、JSON形式で結果を返してください。\n\n'
-    + '分析項目:\n'
-    + '1. cost_analysis: 原価分析（消化率、予算残、リスクレベル）\n'
-    + '2. schedule_analysis: 工期分析（進捗率、遅延日数、完了予測）\n'
-    + '3. safety_analysis: 安全分析（リスク要因、推奨対策）\n'
-    + '4. recommendations: 優先度付きの推奨アクション（最大5件）\n'
-    + '5. summary: 総合評価（1-2文）\n\n'
-    + 'JSON以外のテキストは出力しないでください。\n\n'
-    + 'プロジェクトデータ:\n' + JSON.stringify(projectData, null, 2);
-
-  var response = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-    },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-5-20250514',
-      max_tokens: 2000,
-      messages: [{ role: 'user', content: prompt }],
-    }),
-  });
-
-  if (!response.ok) {
-    var errText = await response.text();
-    throw new Error('Claude API error: ' + response.status);
-  }
-
-  var data = await response.json();
-  var text = data.content[0].text;
-  var jsonMatch = text.match(/\{[\s\S]*\}/);
-  if (jsonMatch) {
-    try { return JSON.parse(jsonMatch[0]); } catch (e) { return { raw: text }; }
-  }
-  return { raw: text };
 }
