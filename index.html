@@ -1,303 +1,131 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GreenOps | 建設業向け Scope 3 自動計算</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-:root{--g:#1f7a3e;--bg:#f9fafb;--text:#1a1a1a;--sub:#666;--bd:#e5e5e5}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{font-family:'Noto Sans JP',sans-serif;background:#fff;color:var(--text)}
-header{position:fixed;top:0;width:100%;height:60px;background:#fff;border-bottom:1px solid var(--bd);display:flex;align-items:center;z-index:999}
-.header-inner{max-width:1200px;width:100%;margin:0 auto;padding:0 60px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:18px;font-weight:900;color:var(--g)}
-.nav{display:flex;gap:50px;font-size:13px}
-.nav a{color:var(--sub);text-decoration:none;transition:color 0.3s}
-.nav a:hover{color:var(--g)}
-.nav-btn{background:var(--g);color:#fff;border:none;padding:10px 24px;border-radius:3px;font-size:12px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block}
-.nav-btn:hover{background:#0f6a2f}
-.sec{padding:80px 60px}
-.sec-inner{max-width:1200px;margin:0 auto}
-.sec.alt{background:var(--bg)}
-.sec h2{font-size:40px;font-weight:900;margin-bottom:60px;text-align:center;line-height:1.2}
-.hero{margin-top:60px;padding:120px 60px;text-align:center;background:linear-gradient(180deg,#f9fafb 0%,#fff 100%)}
-.hero h1{font-size:56px;font-weight:900;margin-bottom:24px;line-height:1.2}
-.hero .hl{color:var(--g)}
-.hero-sub{font-size:16px;color:var(--sub);margin-bottom:48px;line-height:1.6}
-.hero-btn{background:var(--g);color:#fff;border:none;padding:14px 48px;font-size:14px;font-weight:700;border-radius:3px;cursor:pointer;text-decoration:none;display:inline-block}
-.hero-btn:hover{background:#0f6a2f}
-.trust{font-size:12px;color:var(--sub);display:flex;gap:40px;justify-content:center;margin-top:40px;flex-wrap:wrap}
-.trust strong{color:var(--g)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:40px;margin-bottom:40px}
-.card{background:#fff;border:1px solid var(--bd);padding:40px;border-radius:4px}
-.card:hover{border-color:var(--g);box-shadow:0 4px 16px rgba(31,122,62,0.1)}
-.card h3{font-size:18px;font-weight:700;margin-bottom:16px}
-.card p{font-size:14px;color:var(--sub);line-height:1.7}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-.two-col h3{font-size:32px;font-weight:700;margin-bottom:40px;line-height:1.3}
-.features{display:flex;flex-direction:column;gap:24px}
-.feature{display:flex;gap:16px;align-items:flex-start}
-.check{width:20px;height:20px;background:var(--g);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:2px}
-.feature p{font-size:14px;color:var(--sub);line-height:1.7}
-.compare{display:grid;grid-template-columns:1fr 1fr;gap:32px}
-.comp{padding:24px;border-radius:4px;border-left:4px solid;font-size:13px}
-.comp.before{background:#fff5f5;border-left-color:#d32f2f}
-.comp.after{background:#f1f8f4;border-left-color:var(--g)}
-.comp h4{font-size:11px;font-weight:700;text-transform:uppercase;margin-bottom:16px}
-.before h4{color:#b71c1c}
-.after h4{color:#1b5e20}
-.comp ul{list-style:none}
-.comp li{margin-bottom:8px;display:flex;gap:12px;color:var(--sub)}
-.before li::before{content:'-';color:#d32f2f;font-weight:bold;width:16px}
-.after li::before{content:'+';color:var(--g);font-weight:bold;width:16px}
-.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:32px}
-.fcard{background:#fff;border:1px solid var(--bd);padding:32px;border-radius:4px;text-align:center}
-.fcard-num{font-size:48px;font-weight:900;color:var(--g);margin-bottom:12px}
-.fcard h4{font-size:16px;font-weight:700;margin-bottom:8px}
-.fcard p{font-size:13px;color:var(--sub)}
-.pricing{text-align:center}
-.pcard{max-width:480px;margin:0 auto;background:#fff;border:2px solid var(--g);padding:48px 40px;border-radius:4px}
-.price{font-size:56px;font-weight:900;color:var(--g);margin-bottom:8px}
-.period{font-size:14px;color:var(--sub);margin-bottom:40px}
-.plist{list-style:none;text-align:left;margin-bottom:40px}
-.plist li{padding:12px 0;border-bottom:1px solid var(--bd);font-size:13px;display:flex;gap:12px}
-.plist li:last-child{border-bottom:none}
-.plist li::before{content:'\2713';color:var(--g);font-weight:700}
-.comp-table{width:100%;border-collapse:collapse;border:1px solid var(--bd);margin-top:40px}
-.comp-table th{background:var(--text);color:#fff;padding:14px 16px;text-align:left;font-weight:700;font-size:13px}
-.comp-table td{padding:12px 16px;border-bottom:1px solid var(--bd);font-size:13px}
-.comp-table tr:nth-child(even){background:var(--bg)}
-.comp-table .green{color:var(--g);font-weight:700}
-.qa{background:#fff;border:1px solid var(--bd);padding:24px;border-radius:4px;margin-bottom:16px;cursor:pointer}
-.qa-q{display:flex;justify-content:space-between;font-weight:600;font-size:13px}
-.qa-a{display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--bd);font-size:13px;color:var(--sub)}
-.qa.active .qa-a{display:block}
-.cta{background:var(--bg);padding:80px 60px;text-align:center}
-.cta h2{font-size:36px;font-weight:900;margin-bottom:16px}
-.cta p{font-size:16px;color:var(--sub);margin-bottom:32px}
-footer{background:var(--text);color:#999;padding:40px;text-align:center;font-size:12px}
-footer a{color:#999;text-decoration:none;margin:0 12px}
-@media(max-width:768px){.sec{padding:60px 24px}.hero{padding:80px 24px}.hero h1{font-size:32px}.two-col{grid-template-columns:1fr;gap:40px}.compare{grid-template-columns:1fr}.header-inner{padding:0 24px}.nav{display:none}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenOps - 建設業向けSaaS｜日報→給与自動化</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f6f8fb;color:#0a0e27}
+        header{background:linear-gradient(135deg,#0052cc 0%,#0066ff 100%);color:white;padding:32px 24px;text-align:center}
+        .logo{font-size:36px;font-weight:800;margin-bottom:16px}
+        .hero{background:white;max-width:1200px;margin:-40px auto 0;border-radius:16px;padding:48px;box-shadow:0 8px 32px rgba(0,0,0,0.12);position:relative;z-index:10}
+        .hero h1{font-size:36px;font-weight:800;margin-bottom:16px;line-height:1.3}
+        .hero p{font-size:16px;color:#57606a;margin-bottom:32px;line-height:1.6}
+        .cta-button{display:inline-block;padding:16px 48px;background:#0052cc;color:white;border:none;border-radius:8px;font-weight:700;font-size:16px;cursor:pointer;transition:all 200ms;text-decoration:none}
+        .cta-button:hover{background:#003d99;transform:translateY(-2px);box-shadow:0 12px 24px rgba(0,82,204,0.3)}
+        main{max-width:1200px;margin:0 auto;padding:64px 24px}
+        .section-title{font-size:32px;font-weight:800;margin-bottom:48px;text-align:center;padding-bottom:16px;border-bottom:3px solid #0052cc}
+        .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px;margin-bottom:64px}
+        .feature-card{background:white;padding:32px;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.08);border-top:4px solid #0052cc;transition:all 200ms}
+        .feature-card:hover{transform:translateY(-8px);box-shadow:0 12px 32px rgba(0,0,0,0.12)}
+        .feature-icon{font-size:48px;margin-bottom:16px}
+        .feature-title{font-size:18px;font-weight:700;margin-bottom:12px;color:#0052cc}
+        .feature-desc{font-size:14px;color:#57606a;line-height:1.6}
+        .pricing{background:white;border-radius:12px;padding:48px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,0.08);margin-bottom:64px}
+        .price{font-size:48px;font-weight:800;color:#0052cc;margin:16px 0}
+        .benefits{background:#f0fdf4;border:2px solid #2da44e;border-radius:12px;padding:32px;margin-bottom:64px}
+        .benefits h3{color:#2da44e;margin-bottom:16px;font-size:20px}
+        .benefits ul{list-style:none;line-height:2;font-size:14px;color:#15803d}
+        table{width:100%;border-collapse:collapse;background:white;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);margin:32px 0}
+        th{background:#f6f8fb;padding:16px;text-align:left;font-weight:700;border-bottom:2px solid #d0d7de;font-size:13px}
+        td{padding:16px;border-bottom:1px solid #d0d7de;font-size:13px}
+        footer{background:#0a0e27;color:white;padding:48px 24px;text-align:center;margin-top:64px}
+        footer a{color:#8b949e;text-decoration:none;margin:0 8px}
+        footer a:hover{color:white}
+        @media(max-width:768px){.hero{padding:24px;margin:-20px 12px 0}.hero h1{font-size:24px}main{padding:32px 16px}.features{grid-template-columns:1fr}}
+    </style>
 </head>
 <body>
 <header>
-<div class="header-inner">
-<div class="logo">GreenOps</div>
-<nav class="nav">
-<a href="#problem">課題</a>
-<a href="#solution">解決策</a>
-<a href="#pricing">料金</a>
-</nav>
-<a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="nav-btn">今すぐ購入</a>
-</div>
+    <div class="logo">GreenOps</div>
+    <p style="font-size:16px;margin-top:8px">建設業向けSaaS | 日報→原価→給与 完全自動化</p>
 </header>
 
-<section class="hero">
-<h1>毎月 <span class="hl">5時間</span> の手作業が<br><span class="hl">1分</span> で終わる</h1>
-<p class="hero-sub">大成・清水・大林からの Scope 3 データ報告に、自動対応</p>
-<a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="hero-btn">14日無料で始める</a>
-<div class="trust">
-<span><strong>初期費用なし</strong></span>
-<span><strong>&yen;9,800/月</strong></span>
-<span><strong>いつでも解約可</strong></span>
-</div>
-</section>
-
-<section class="sec alt" id="problem">
-<div class="sec-inner">
-<h2>建設業が直面している課題</h2>
-<div class="grid">
-<div class="card">
-<h3>毎月の報告義務</h3>
-<p>ゼネコンからの Scope 3 データ要求は必須。大成・清水・大林それぞれ異なる形式で、月ごとに対応が必要です。</p>
-</div>
-<div class="card">
-<h3>5〜10時間の手作業</h3>
-<p>建機使用時間を手入力、CO2 係数で計算、ゼネコン形式に変換。毎月この繰り返しに数時間が費やされます。</p>
-</div>
-<div class="card">
-<h3>計算ミスと信用喪失</h3>
-<p>手計算での誤差。ゼネコンからの指摘で信用を失い、監査対応にも予期しない時間がかかります。</p>
-</div>
-</div>
-</div>
-</section>
-
-<section class="sec" id="solution">
-<div class="sec-inner">
-<h2>GreenOps で解決する</h2>
-<div class="two-col">
-<div>
-<h3>ANDPAD のデータから自動計算・レポート生成</h3>
-<div class="features">
-<div class="feature">
-<div class="check">1</div>
-<p><strong>自動計算：</strong>現場に入力されている建機と使用時間から、環境省公開係数で自動計算。新しいツール導入の手間はありません。</p>
-</div>
-<div class="feature">
-<div class="check">2</div>
-<p><strong>自動レポート生成：</strong>月次レポートを 1クリックで自動生成。大成・清水・大林すべてのフォーマットに対応します。</p>
-</div>
-<div class="feature">
-<div class="check">3</div>
-<p><strong>監査対応：</strong>計算履歴がすべて記録される。「いつ誰が何を計算したのか」の証跡が残るので、監査対応も確実です。</p>
-</div>
-</div>
-</div>
-<div class="compare">
-<div class="comp before">
-<h4>現在（手作業）</h4>
-<ul>
-<li>毎月 5〜10時間</li>
-<li>計算ミスのリスク</li>
-<li>3社対応が煩雑</li>
-<li>監査準備に時間</li>
-</ul>
-</div>
-<div class="comp after">
-<h4>導入後</h4>
-<ul>
-<li>毎月 1分で完結</li>
-<li>ミスゼロ</li>
-<li>3社自動対応</li>
-<li>履歴で即対応</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</section>
-
-<section class="sec alt">
-<div class="sec-inner">
-<h2>5つの機能</h2>
-<div class="feature-grid">
-<div class="fcard">
-<div class="fcard-num">1</div>
-<h4>CO2 自動計算</h4>
-<p>環境省係数準拠。誤差 &plusmn;5%。</p>
-</div>
-<div class="fcard">
-<div class="fcard-num">2</div>
-<h4>レポート自動生成</h4>
-<p>PDF 即時出力。3社対応。</p>
-</div>
-<div class="fcard">
-<div class="fcard-num">3</div>
-<h4>ゼネコン別対応</h4>
-<p>大成・清水・大林に自動対応。</p>
-</div>
-<div class="fcard">
-<div class="fcard-num">4</div>
-<h4>マルチユーザー</h4>
-<p>最大 10 ユーザー。権限設定可。</p>
-</div>
-<div class="fcard">
-<div class="fcard-num">5</div>
-<h4>計算履歴記録</h4>
-<p>誰が何をいつ計算したか記録。</p>
-</div>
-</div>
-</div>
-</section>
-
-<section class="sec pricing" id="pricing">
-<div class="sec-inner">
-<h2>料金</h2>
-<div class="pcard">
-<div class="price">&yen;9,800</div>
-<div class="period">毎月 / 14日後に自動課金</div>
-<ul class="plist">
-<li>CO2 自動計算</li>
-<li>レポート自動生成</li>
-<li>大成・清水・大林対応</li>
-<li>最大 10 ユーザー</li>
-<li>計算履歴自動記録</li>
-<li>24時間メールサポート</li>
-<li>環境省準拠</li>
-</ul>
-<a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="hero-btn" style="display:inline-block;width:100%;padding:12px 32px;text-align:center">14日無料で始める</a>
+<div class="hero">
+    <h1>月末地獄を4日で解消</h1>
+    <p>ANDPADユーザー23.3万社が待っていた自動化パイプライン。日報入力から給与計算まで、すべてが自動で流れます。</p>
+    <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="cta-button">14日間無料トライアルを開始</a>
 </div>
 
-<h2 style="margin-top:60px;margin-bottom:40px">外部コンサルとの比較</h2>
-<table class="comp-table">
-<thead>
-<tr>
-<th style="width:40%">項目</th>
-<th class="green">GreenOps</th>
-<th>外部コンサル</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="font-weight:700">月額費用</td>
-<td class="green">&yen;9,800</td>
-<td>&yen;100,000 〜</td>
-</tr>
-<tr>
-<td style="font-weight:700">初期費用</td>
-<td class="green">&yen;0</td>
-<td>&yen;300万 〜</td>
-</tr>
-<tr>
-<td style="font-weight:700">導入期間</td>
-<td class="green">即日</td>
-<td>2〜6ヶ月</td>
-</tr>
-<tr>
-<td style="font-weight:700">自動化</td>
-<td class="green">100%</td>
-<td>手動が中心</td>
-</tr>
-<tr>
-<td style="font-weight:700">レポート生成</td>
-<td class="green">1分</td>
-<td>1〜2週間</td>
-</tr>
-</tbody>
-</table>
-</div>
+<main>
+<section>
+    <h2 class="section-title">5つの機能</h2>
+    <div class="features">
+        <div class="feature-card"><div class="feature-icon">&#x1F4DD;</div><div class="feature-title">日報入力</div><div class="feature-desc">工事名・工種・作業人員・時間を入力。自動で工事台帳に転記されます。</div></div>
+        <div class="feature-card"><div class="feature-icon">&#x1F4CB;</div><div class="feature-title">工事台帳</div><div class="feature-desc">日報から自動転記。工事ごとの原価がリアルタイムで可視化。</div></div>
+        <div class="feature-card"><div class="feature-icon">&#x1F4B9;</div><div class="feature-title">原価管理</div><div class="feature-desc">予算 vs 実績を自動比較。AIが赤字工事を即座に検知。</div></div>
+        <div class="feature-card"><div class="feature-icon">&#x1F4BC;</div><div class="feature-title">給与計算</div><div class="feature-desc">基本給・残業代・手当をワンクリック生成。freee/弥生へ自動送信。</div></div>
+        <div class="feature-card"><div class="feature-icon">&#x1F4CA;</div><div class="feature-title">会計連携</div><div class="feature-desc">freee・弥生向けの仕訳データを自動生成。CSVでダウンロード可能。</div></div>
+    </div>
 </section>
 
-<section class="sec alt">
-<div class="sec-inner">
-<h2>よくある質問</h2>
-<div class="qa" onclick="this.classList.toggle('active')">
-<div class="qa-q">
-<span>ANDPAD を使っていないと使えない？</span>
-<span>+</span>
-</div>
-<div class="qa-a">ANDPAD ユーザーを対象としています。API 連携での直営導入も検討中です。</div>
-</div>
-<div class="qa" onclick="this.classList.toggle('active')">
-<div class="qa-q">
-<span>14日後に本当に課金される？</span>
-<span>+</span>
-</div>
-<div class="qa-a">はい。14日目に月額&yen;9,800が課金されます。14日以内に解約すれば課金されません。</div>
-</div>
-<div class="qa" onclick="this.classList.toggle('active')">
-<div class="qa-q">
-<span>環境省基準で本当に大丈夫？</span>
-<span>+</span>
-</div>
-<div class="qa-a">すべての CO2 係数は環境省公開の GHG プロトコルに基づいています。</div>
-</div>
-</div>
+<section>
+    <h2 class="section-title">削減効果</h2>
+    <table>
+        <thead><tr><th>処理内容</th><th>従来の方法</th><th>GreenOps</th><th>削減時間</th></tr></thead>
+        <tbody>
+            <tr><td><strong>日報→工事台帳</strong></td><td>手入力 (5-10h/月)</td><td>自動転記</td><td>8時間/月</td></tr>
+            <tr><td><strong>出面→給与基礎</strong></td><td>Excel手作業 (8-12h/月)</td><td>自動生成</td><td>10時間/月</td></tr>
+            <tr><td><strong>原価管理→赤字検知</strong></td><td>月末手集計 (6-8h/月)</td><td>AI自動判定</td><td>7時間/月</td></tr>
+            <tr><td><strong>台帳→会計仕訳</strong></td><td>CSV作成→入力 (10-15h/月)</td><td>自動生成</td><td>12時間/月</td></tr>
+            <tr style="background:#f6f8fb;font-weight:700"><td colspan="3">月間削減時間</td><td>47.5時間/月 = &yen;142,500</td></tr>
+        </tbody>
+    </table>
+
+    <div class="pricing">
+        <h3 style="color:#0052cc">料金</h3>
+        <div class="price">&yen;9,800/月</div>
+        <p style="color:#57606a;margin-bottom:24px">基本プラン（14日間無料）</p>
+        <p style="color:#2da44e;font-weight:700;font-size:18px">ROI 1,634%</p>
+        <p style="color:#57606a">月額&yen;29,800（プロプラン）で月&yen;522,700削減</p>
+    </div>
+
+    <div class="benefits">
+        <h3>14日間無料トライアルに含まれるもの</h3>
+        <ul>
+            <li>日報入力・工事台帳・原価管理・給与計算・会計連携すべて使用可能</li>
+            <li>データはlocalStorageに自動保存。ブラウザを閉じても残ります</li>
+            <li>freee・弥生向けCSV自動生成・ダウンロード</li>
+            <li>日報履歴管理・削除機能</li>
+            <li>セットアップサポート（無料）</li>
+        </ul>
+    </div>
 </section>
 
-<section class="cta">
-<h2>毎月 5 時間を取り戻す</h2>
-<p>手作業から解放されて、本来の仕事に集中する時間を作る。</p>
-<a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="hero-btn">今すぐ始める</a>
+<section>
+    <h2 class="section-title">なぜ今なのか</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;margin-bottom:48px">
+        <div style="background:white;padding:24px;border-radius:12px;border-left:4px solid #b08500">
+            <div style="font-size:24px;font-weight:800;color:#b08500;margin-bottom:8px">2024年4月施行</div>
+            <p style="color:#57606a;font-size:14px">時間外労働上限規制。対応率わずか22%。残業時間の自動集計が急務。</p>
+        </div>
+        <div style="background:white;padding:24px;border-radius:12px;border-left:4px solid #d1242f">
+            <div style="font-size:24px;font-weight:800;color:#d1242f;margin-bottom:8px">2025年12月</div>
+            <p style="color:#57606a;font-size:14px">改正建設業法完全施行。原価割れ禁止。日次の赤字検知が必須に。</p>
+        </div>
+        <div style="background:white;padding:24px;border-radius:12px;border-left:4px solid #2da44e">
+            <div style="font-size:24px;font-weight:800;color:#2da44e;margin-bottom:8px">2027年3月</div>
+            <p style="color:#57606a;font-size:14px">SSBJ義務化。工事別CO2排出量の開示。自動算出が必須。</p>
+        </div>
+    </div>
 </section>
+
+<section style="text-align:center;padding:48px;background:white;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.08)">
+    <h2 style="font-size:28px;font-weight:800;margin-bottom:24px">今すぐ始めましょう</h2>
+    <p style="color:#57606a;margin-bottom:32px;font-size:16px">建設業者が実際に使ってみて、削減効果を体感できます。<br>14日間、すべての機能が使用可能です。</p>
+    <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="cta-button">14日間無料トライアルを開始</a>
+</section>
+</main>
 
 <footer>
-<p>&copy; 2026 GreenOps Inc.</p>
-<a href="/tokutei.html">特定商取引法</a> | <a href="/privacy.html">プライバシー</a> | <a href="/terms.html">利用規約</a>
+    <p style="margin-bottom:16px">&copy; 2026 GreenOps Inc. All rights reserved.</p>
+    <p><a href="/tokutei.html">特定商取引法</a> | <a href="/privacy.html">プライバシー</a> | <a href="/terms.html">利用規約</a></p>
 </footer>
+
+<script>
+var p = new URLSearchParams(window.location.search);
+if(p.get('session_id')) window.location.href = '/service_starter.html';
+</script>
 </body>
 </html>
