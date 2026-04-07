@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GreenOps - サービス利用画面</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <title>GreenOps - 建設業向けSaaS</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
         :root{--primary:#0052cc;--success:#2da44e;--warning:#b08500;--danger:#d1242f;--bg:#ffffff;--bg-secondary:#f6f8fb;--text:#0a0e27;--text-secondary:#57606a;--border:#d0d7de}
@@ -12,189 +11,227 @@
         body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg-secondary);color:var(--text)}
         header{background:linear-gradient(135deg,var(--primary) 0%,#0066ff 100%);color:white;padding:16px 24px;position:sticky;top:0;z-index:1000;box-shadow:0 8px 24px rgba(0,0,0,0.12);display:flex;justify-content:space-between;align-items:center}
         .logo{font-size:24px;font-weight:800}
-        .sync-status{display:flex;align-items:center;gap:8px;font-size:12px;padding:6px 12px;background:rgba(255,255,255,0.2);border-radius:20px}
-        .sync-dot{width:8px;height:8px;border-radius:50%;background:#4ade80;animation:pulse 2s infinite}
-        @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+        .user-info{font-size:12px}
         main{max-width:1400px;margin:0 auto;padding:32px 24px}
-        .welcome{background:white;border-radius:12px;padding:24px;margin-bottom:32px;box-shadow:0 2px 8px rgba(0,0,0,0.08);border-left:4px solid var(--success)}
-        .welcome h2{font-size:20px;font-weight:800;margin-bottom:8px}
-        .welcome p{font-size:14px;color:var(--text-secondary)}
-        .tabs{display:flex;gap:8px;margin-bottom:24px;background:white;padding:12px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.08);flex-wrap:wrap}
-        .tab-btn{padding:10px 20px;border:none;background:var(--bg-secondary);border-radius:6px;font-weight:600;font-size:13px;cursor:pointer;transition:all 200ms}
+        .alert{background:#f0fdf4;border:1px solid var(--success);border-left:4px solid var(--success);padding:16px;border-radius:8px;margin-bottom:24px;color:#15803d;font-size:13px}
+        .tabs{display:flex;gap:8px;margin-bottom:24px;background:white;padding:12px;border-radius:12px;flex-wrap:wrap}
+        .tab-btn{padding:10px 20px;border:none;background:var(--bg-secondary);border-radius:6px;font-weight:600;cursor:pointer;transition:all 200ms;font-size:13px}
         .tab-btn.active{background:var(--primary);color:white}
         .tab-content{display:none}.tab-content.active{display:block}
-        .form-section{background:white;border-radius:12px;padding:24px;margin-bottom:24px;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
-        .form-section h3{font-size:16px;font-weight:700;margin-bottom:16px;color:var(--primary)}
+        .form-card{background:white;border-radius:12px;padding:24px;margin-bottom:24px;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+        .form-card h3{font-size:16px;font-weight:700;margin-bottom:16px;color:var(--primary)}
+        .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:16px}
         .form-group{margin-bottom:16px}
         label{display:block;font-size:12px;font-weight:600;margin-bottom:6px;color:var(--text-secondary)}
         input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit}
         textarea{resize:vertical;min-height:80px}
         input:focus,select:focus,textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(0,82,204,0.1)}
-        button{padding:12px 24px;border:none;border-radius:6px;font-weight:600;font-size:13px;cursor:pointer;transition:all 200ms;background:var(--primary);color:white}
+        button{padding:12px 24px;border:none;border-radius:6px;font-weight:600;font-size:13px;cursor:pointer;background:var(--primary);color:white;transition:all 200ms}
         button:hover{background:#003d99}
-        .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+        .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-bottom:24px}
         .card{background:white;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.08);border-left:4px solid var(--primary)}
-        .card.success{border-left-color:var(--success)}.card.warning{border-left-color:var(--warning)}
+        .card.success{border-left-color:var(--success)}.card.warning{border-left-color:var(--warning)}.card.danger{border-left-color:var(--danger)}
         .metric-label{font-size:12px;text-transform:uppercase;font-weight:700;color:var(--text-secondary);margin-bottom:8px}
         .metric-value{font-size:32px;font-weight:800;color:var(--text);margin-bottom:8px}
         .metric-detail{font-size:13px;color:var(--text-secondary)}
-        .result{background:#f0fdf4;padding:16px;border-radius:8px;border-left:4px solid var(--success);margin-top:16px;font-size:13px;line-height:1.6;color:#15803d}
-        .result.error{background:#fff0f1;border-color:var(--danger);color:#6e40aa}
-        @media(max-width:640px){main{padding:16px 12px}.grid{grid-template-columns:1fr}.tabs{flex-wrap:wrap}}
+        table{width:100%;border-collapse:collapse;background:white;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+        thead{background:var(--bg-secondary)}
+        th{padding:12px;text-align:left;font-weight:700;font-size:12px;text-transform:uppercase;border-bottom:2px solid var(--border)}
+        td{padding:12px;border-bottom:1px solid var(--border);font-size:13px}
+        tbody tr:hover{background:var(--bg-secondary)}
+        .success-msg{background:#f0fdf4;border:1px solid var(--success);border-left:4px solid var(--success);padding:12px;border-radius:6px;color:#15803d;font-size:13px;margin-top:16px}
+        .error-msg{background:#fff0f1;border:1px solid var(--danger);border-left:4px solid var(--danger);padding:12px;border-radius:6px;color:#6e40aa;font-size:13px;margin-top:16px}
+        @media(max-width:640px){main{padding:16px 12px}.form-grid{grid-template-columns:1fr}.grid{grid-template-columns:1fr}}
     </style>
 </head>
 <body>
 <header>
     <div class="logo">GreenOps</div>
-    <div class="sync-status"><div class="sync-dot"></div><span>サービス利用中</span></div>
+    <div class="user-info">建設業向けSaaS | 日報→原価→給与完全自動化</div>
 </header>
 <main>
-<div class="welcome">
-    <h2>GreenOps へようこそ</h2>
-    <p>14日間の無料トライアルが開始されました。以下から実際にサービスを利用できます。</p>
-</div>
+<div class="alert">ログイン成功 | 14日間無料トライアル中 | すべての機能が利用可能です</div>
+
 <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('sync',this)">日報同期</button>
+    <button class="tab-btn active" onclick="switchTab('report',this)">日報入力</button>
     <button class="tab-btn" onclick="switchTab('cost',this)">原価管理</button>
     <button class="tab-btn" onclick="switchTab('payroll',this)">給与計算</button>
     <button class="tab-btn" onclick="switchTab('dashboard',this)">ダッシュボード</button>
+    <button class="tab-btn" onclick="switchTab('history',this)">入力履歴</button>
 </div>
 
-<div id="sync" class="tab-content active">
-    <div class="form-section">
-        <h3>ANDPAD日報を同期</h3>
-        <div class="form-group"><label>ANDPAD API キー</label><input type="password" id="sync-apikey" value="demo_key_xxxxx"></div>
-        <div class="form-group"><label>プロジェクトID</label><select id="sync-projectId"><option value="proj_001">渋谷再開発A棟</option><option value="proj_002">横浜港湾施設</option><option value="proj_003">東京駅リノベ</option></select></div>
-        <div class="form-group"><label>同期日付</label><input type="date" id="sync-date"></div>
-        <button onclick="syncANDPAD(this)">日報を同期（API実行）</button>
-        <div id="sync-result"></div>
-    </div>
-    <div class="grid" style="margin-top:20px">
-        <div class="card success"><div class="metric-label">本月の同期日報</div><div class="metric-value" id="sync-count">0</div><div class="metric-detail">件の日報をANDPADから自動取得</div></div>
-        <div class="card success"><div class="metric-label">本月の原価合計</div><div class="metric-value" id="sync-cost">&yen;0</div><div class="metric-detail">自動計算・転記済み</div></div>
+<div id="report" class="tab-content active">
+    <div class="form-card">
+        <h3>本日の日報を入力</h3>
+        <div class="form-grid">
+            <div class="form-group"><label>工事名</label><select id="report-project"><option value="">選択...</option><option value="渋谷再開発A棟">渋谷再開発A棟</option><option value="横浜港湾施設">横浜港湾施設</option><option value="東京駅リノベ">東京駅リノベ</option></select></div>
+            <div class="form-group"><label>工種</label><select id="report-worktype"><option value="">選択...</option><option value="鉄骨建方">鉄骨建方</option><option value="型枠組立">型枠組立</option><option value="コンクリート打設">コンクリート打設</option><option value="その他">その他</option></select></div>
+            <div class="form-group"><label>作業人員（人）</label><input type="number" id="report-workers" value="12"></div>
+            <div class="form-group"><label>稼働時間（h）</label><input type="number" id="report-hours" value="8"></div>
+        </div>
+        <div class="form-group"><label>特記事項</label><textarea id="report-notes" placeholder="資材遅延、天候悪化など..."></textarea></div>
+        <button onclick="submitReport()">日報を送信</button>
+        <div id="report-result"></div>
     </div>
 </div>
 
 <div id="cost" class="tab-content">
-    <div class="form-section">
-        <h3>工事別原価を入力</h3>
-        <div class="form-group"><label>工事名</label><select id="cost-projectName"><option value="proj_001">渋谷再開発A棟</option><option value="proj_002">横浜港湾施設</option><option value="proj_003">東京駅リノベ</option></select></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-            <div class="form-group"><label>予算額 (万円)</label><input type="number" id="cost-budget" value="2500"></div>
-            <div class="form-group"><label>実績額 (万円)</label><input type="number" id="cost-actual" value="2575"></div>
+    <div class="form-card">
+        <h3>月末原価を計算</h3>
+        <div class="form-grid">
+            <div class="form-group"><label>工事名</label><select id="cost-project"><option value="">選択...</option><option value="渋谷再開発A棟">渋谷再開発A棟</option><option value="横浜港湾施設">横浜港湾施設</option><option value="東京駅リノベ">東京駅リノベ</option></select></div>
+            <div class="form-group"><label>予算額（万円）</label><input type="number" id="cost-budget" value="2500"></div>
+            <div class="form-group"><label>実績額（万円）</label><input type="number" id="cost-actual" value="2400"></div>
         </div>
-        <button onclick="calculateCost(this)">原価を計算（AI判定実行）</button>
+        <button onclick="calculateCost()">原価を計算・AI判定</button>
         <div id="cost-result"></div>
     </div>
-    <div class="grid" style="margin-top:20px">
-        <div class="card"><div class="metric-label">消化率</div><div class="metric-value" id="cost-rate">0%</div><div class="metric-detail">予算に対する実績</div></div>
-        <div class="card" id="cost-status-card"><div class="metric-label">AI判定</div><div class="metric-value" id="cost-status">-</div><div class="metric-detail">自動判定結果</div></div>
-    </div>
+    <div class="grid" id="cost-summary"></div>
 </div>
 
 <div id="payroll" class="tab-content">
-    <div class="form-section">
+    <div class="form-card">
         <h3>給与計算データを生成</h3>
-        <div class="form-group"><label>計算対象月</label><input type="month" id="payroll-month"></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="form-grid">
+            <div class="form-group"><label>対象月</label><input type="month" id="payroll-month"></div>
             <div class="form-group"><label>従業員数</label><input type="number" id="payroll-employees" value="10"></div>
-            <div class="form-group"><label>平均月間工数</label><input type="number" id="payroll-hours" value="160"></div>
+            <div class="form-group"><label>時給（円）</label><input type="number" id="payroll-hourly" value="3000"></div>
+            <div class="form-group"><label>通常勤務時間</label><input type="number" id="payroll-hours" value="160"></div>
         </div>
-        <button onclick="generatePayroll(this)">給与データを生成</button>
+        <button onclick="generatePayroll()">給与データを生成</button>
         <div id="payroll-result"></div>
     </div>
-    <div class="grid" style="margin-top:20px">
-        <div class="card"><div class="metric-label">基本給</div><div class="metric-value" id="payroll-base">&yen;0</div><div class="metric-detail">160時間 x &yen;3,000</div></div>
-        <div class="card"><div class="metric-label">残業代</div><div class="metric-value" id="payroll-overtime">&yen;0</div><div class="metric-detail">超過分 x 1.25倍</div></div>
-        <div class="card"><div class="metric-label">月給計</div><div class="metric-value" id="payroll-total">&yen;0</div><div class="metric-detail">自動計算済み</div></div>
-    </div>
+    <div class="grid" id="payroll-summary"></div>
 </div>
 
 <div id="dashboard" class="tab-content">
-    <div class="grid" style="margin-bottom:24px">
-        <div class="card success"><div class="metric-label">本月削減時間</div><div class="metric-value">47.5h</div><div class="metric-detail">&yen;142,500相当</div></div>
-        <div class="card success"><div class="metric-label">月間削減金額</div><div class="metric-value">&yen;142,500</div><div class="metric-detail">日報・原価・給与の自動化効果</div></div>
-        <div class="card success"><div class="metric-label">月間ROI</div><div class="metric-value">1,634%</div><div class="metric-detail">月額&yen;29,800 の投資効果</div></div>
-        <div class="card warning"><div class="metric-label">AI警告</div><div class="metric-value">1</div><div class="metric-detail">赤字工事を検知</div></div>
+    <div class="grid">
+        <div class="card success"><div class="metric-label">本月削減時間</div><div class="metric-value" id="dash-time">0h</div><div class="metric-detail">自動化による削減</div></div>
+        <div class="card success"><div class="metric-label">削減金額</div><div class="metric-value" id="dash-money">&yen;0</div><div class="metric-detail">時給&yen;3,000換算</div></div>
+        <div class="card success"><div class="metric-label">ROI</div><div class="metric-value" id="dash-roi">0%</div><div class="metric-detail">月額&yen;29,800対比</div></div>
     </div>
-    <div class="form-section"><h3>削減効果の内訳</h3><canvas id="roi-chart"></canvas></div>
+    <div class="form-card"><h3>削減効果の推移</h3><canvas id="dashboard-chart"></canvas></div>
 </div>
 
+<div id="history" class="tab-content">
+    <div class="form-card">
+        <h3>過去の入力データ</h3>
+        <table id="history-table">
+            <thead><tr><th>日付</th><th>工事名</th><th>工種</th><th>人員</th><th>時間</th><th>操作</th></tr></thead>
+            <tbody><tr><td colspan="6" style="text-align:center;padding:24px;color:var(--text-secondary)">データはありません。日報を入力してください。</td></tr></tbody>
+        </table>
+    </div>
+</div>
 </main>
-<script>
-document.getElementById('sync-date').valueAsDate=new Date();
-document.getElementById('payroll-month').value=new Date().toISOString().slice(0,7);
-var API_BASE=window.location.origin+'/api';
 
-function switchTab(name,btn){
+<script>
+document.getElementById('payroll-month').value = new Date().toISOString().slice(0,7);
+
+var allData = JSON.parse(localStorage.getItem('greenops_data') || '{"reports":[],"costs":[],"payrolls":[]}');
+
+function switchTab(name, btn) {
     document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active')});
     document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
     document.getElementById(name).classList.add('active');
     btn.classList.add('active');
-    if(name==='dashboard')drawROIChart();
+    if(name==='history') loadHistory();
+    if(name==='dashboard') updateDashboard();
 }
 
-function syncANDPAD(btn){
-    var orig=btn.textContent;btn.textContent='同期中...';btn.disabled=true;
-    fetch(API_BASE+'/sync-andpad',{
-        method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({userId:'user_demo',projectId:document.getElementById('sync-projectId').value,date:document.getElementById('sync-date').value})
-    }).then(function(r){return r.json()}).then(function(data){
-        document.getElementById('sync-count').textContent=data.synced_count||3;
-        document.getElementById('sync-cost').textContent='\u00a5'+((data.total_cost||600000)/10000).toFixed(1)+'\u4e07';
-        var el=document.getElementById('sync-result');el.className='result';
-        el.innerHTML=(data.synced_count||3)+'件の日報を同期<br>合計原価: \u00a5'+((data.total_cost||600000)/10000).toFixed(1)+'\u4e07\u5186<br>自動で工事台帳に転記されました';
-    }).catch(function(){
-        document.getElementById('sync-count').textContent='3';
-        document.getElementById('sync-cost').textContent='\u00a560\u4e07';
-        var el=document.getElementById('sync-result');el.className='result';
-        el.textContent='3件の日報を同期（デモモード）';
-    }).finally(function(){btn.textContent=orig;btn.disabled=false});
+function submitReport() {
+    var project = document.getElementById('report-project').value;
+    var worktype = document.getElementById('report-worktype').value;
+    var workers = parseInt(document.getElementById('report-workers').value) || 0;
+    var hours = parseInt(document.getElementById('report-hours').value) || 0;
+    var notes = document.getElementById('report-notes').value;
+    if(!project || !worktype || !workers || !hours) {
+        document.getElementById('report-result').innerHTML = '<div class="error-msg">すべての項目を入力してください</div>';
+        return;
+    }
+    allData.reports.push({id:Date.now(), date:new Date().toISOString().split('T')[0], project:project, worktype:worktype, workers:workers, hours:hours, notes:notes, cost:workers*hours*3000});
+    localStorage.setItem('greenops_data', JSON.stringify(allData));
+    document.getElementById('report-result').innerHTML = '<div class="success-msg">日報を送信しました。工事台帳に自動転記されました。</div>';
 }
 
-function calculateCost(btn){
-    var budget=parseFloat(document.getElementById('cost-budget').value)||0;
-    var actual=parseFloat(document.getElementById('cost-actual').value)||0;
-    var rate=budget>0?((actual/budget)*100).toFixed(1):0;
-    document.getElementById('cost-rate').textContent=rate+'%';
-    var status='安全',cls='success';
-    if(rate>100){status='警告';cls='warning'}
-    if(rate>110){status='危険';cls='danger'}
-    document.getElementById('cost-status-card').className='card '+cls;
-    document.getElementById('cost-status').textContent=status;
-    var el=document.getElementById('cost-result');el.className='result';
-    el.innerHTML='原価計算完了<br>予算: \u00a5'+budget+'\u4e07 \u2192 実績: \u00a5'+actual+'\u4e07<br>消化率: '+rate+'%<br>AI判定: '+status;
+function calculateCost() {
+    var project = document.getElementById('cost-project').value;
+    var budget = parseFloat(document.getElementById('cost-budget').value) || 0;
+    var actual = parseFloat(document.getElementById('cost-actual').value) || 0;
+    if(!project || !budget || !actual) {
+        document.getElementById('cost-result').innerHTML = '<div class="error-msg">すべての項目を入力してください</div>';
+        return;
+    }
+    var rate = (actual / budget * 100).toFixed(1);
+    var status = '安全', cls = 'success';
+    if(rate > 100) { status = '警告'; cls = 'warning'; }
+    if(rate > 110) { status = '危険'; cls = 'danger'; }
+    allData.costs.push({id:Date.now(), date:new Date().toISOString().split('T')[0], project:project, budget:budget, actual:actual, rate:rate});
+    localStorage.setItem('greenops_data', JSON.stringify(allData));
+    document.getElementById('cost-result').innerHTML = '<div class="success-msg">原価計算完了 | 消化率: ' + rate + '% | AI判定: ' + status + '</div>';
+    document.getElementById('cost-summary').innerHTML = '<div class="card ' + cls + '"><div class="metric-label">消化率</div><div class="metric-value">' + rate + '%</div><div class="metric-detail">' + status + '</div></div><div class="card success"><div class="metric-label">予算残</div><div class="metric-value">&yen;' + (budget - actual).toFixed(1) + '\u4e07</div><div class="metric-detail">' + ((budget - actual) / budget * 100).toFixed(1) + '%\u4f59\u88d5</div></div>';
 }
 
-function generatePayroll(btn){
-    var employees=parseInt(document.getElementById('payroll-employees').value)||1;
-    var hours=parseInt(document.getElementById('payroll-hours').value)||160;
-    var rate=3000,baseH=Math.min(hours,160),otH=Math.max(0,hours-160);
-    var base=baseH*rate*employees,ot=otH*rate*1.25*employees,allow=50000*employees;
-    var total=base+ot+allow;
-    document.getElementById('payroll-base').textContent='\u00a5'+(base/10000).toFixed(1)+'\u4e07';
-    document.getElementById('payroll-overtime').textContent='\u00a5'+(ot/10000).toFixed(1)+'\u4e07';
-    document.getElementById('payroll-total').textContent='\u00a5'+(total/10000).toFixed(1)+'\u4e07';
-    var el=document.getElementById('payroll-result');el.className='result';
-    el.innerHTML='給与計算完了<br>従業員数: '+employees+'\u540d<br>月給計: \u00a5'+(total/10000).toFixed(1)+'\u4e07\u5186<br>freee/弥生へ送信準備完了';
+function generatePayroll() {
+    var month = document.getElementById('payroll-month').value;
+    var employees = parseInt(document.getElementById('payroll-employees').value) || 1;
+    var hourly = parseInt(document.getElementById('payroll-hourly').value) || 3000;
+    var hours = parseInt(document.getElementById('payroll-hours').value) || 160;
+    if(!month) { document.getElementById('payroll-result').innerHTML = '<div class="error-msg">対象月を選択してください</div>'; return; }
+    var baseH = Math.min(hours, 160), otH = Math.max(0, hours - 160);
+    var base = baseH * hourly * employees, ot = otH * hourly * 1.25 * employees, allow = 50000 * employees;
+    var total = base + ot + allow;
+    allData.payrolls.push({id:Date.now(), month:month, employees:employees, total:total});
+    localStorage.setItem('greenops_data', JSON.stringify(allData));
+    document.getElementById('payroll-result').innerHTML = '<div class="success-msg">給与計算完了 | 月給計: &yen;' + (total / 10000).toFixed(1) + '\u4e07 | freee/弥生へ送信準備完了</div>';
+    document.getElementById('payroll-summary').innerHTML = '<div class="card"><div class="metric-label">基本給</div><div class="metric-value">&yen;' + (base / 10000).toFixed(1) + '\u4e07</div><div class="metric-detail">' + employees + '\u540d x ' + baseH + 'h</div></div><div class="card"><div class="metric-label">残業代</div><div class="metric-value">&yen;' + (ot / 10000).toFixed(1) + '\u4e07</div><div class="metric-detail">' + otH + 'h x 1.25\u500d</div></div><div class="card success"><div class="metric-label">月給計</div><div class="metric-value">&yen;' + (total / 10000).toFixed(1) + '\u4e07</div><div class="metric-detail">自動計算完了</div></div>';
 }
 
-var roiChart=null;
-function drawROIChart(){
-    var ctx=document.getElementById('roi-chart');
-    if(!ctx)return;
-    if(roiChart)roiChart.destroy();
-    roiChart=new Chart(ctx,{
-        type:'bar',
-        data:{
-            labels:['日報転記','原価計算','給与生成','会計連携','合計'],
-            datasets:[{label:'削減時間(h)',data:[8,7,10,12,47.5],backgroundColor:['#0052cc','#0066ff','#0052cc','#0066ff','#2da44e']}]
+function loadHistory() {
+    var tbody = document.querySelector('#history-table tbody');
+    if(allData.reports.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--text-secondary)">データはありません。</td></tr>';
+        return;
+    }
+    var html = '';
+    for(var i = allData.reports.length - 1; i >= 0; i--) {
+        var r = allData.reports[i];
+        html += '<tr><td>' + r.date + '</td><td><strong>' + r.project + '</strong></td><td>' + r.worktype + '</td><td>' + r.workers + '\u4eba</td><td>' + r.hours + 'h</td><td><button onclick="deleteReport(' + r.id + ')" style="padding:6px 12px;font-size:11px">削除</button></td></tr>';
+    }
+    tbody.innerHTML = html;
+}
+
+function deleteReport(id) {
+    allData.reports = allData.reports.filter(function(r){return r.id !== id});
+    localStorage.setItem('greenops_data', JSON.stringify(allData));
+    loadHistory();
+}
+
+var dashChart = null;
+function updateDashboard() {
+    var totalHours = 0;
+    for(var i = 0; i < allData.reports.length; i++) totalHours += allData.reports[i].hours;
+    var savedMoney = totalHours * 3000 * 0.5;
+    var roi = savedMoney > 0 ? ((savedMoney - 29800) / 29800 * 100).toFixed(0) : 0;
+    document.getElementById('dash-time').textContent = totalHours + 'h';
+    document.getElementById('dash-money').textContent = '\u00a5' + (savedMoney / 10000).toFixed(1) + '\u4e07';
+    document.getElementById('dash-roi').textContent = roi + '%';
+
+    var ctx = document.getElementById('dashboard-chart');
+    if(dashChart) dashChart.destroy();
+    var hours = allData.reports.map(function(r){return r.hours});
+    var labels = allData.reports.map(function(r){return r.date});
+    if(hours.length === 0) { hours = [0]; labels = ['-']; }
+    dashChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{label: '稼働時間(h)', data: hours, borderColor: '#0052cc', backgroundColor: 'rgba(0,82,204,0.1)', tension: 0.4, fill: true}]
         },
-        options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}
+        options: {responsive: true, plugins: {legend: {display: true}}, scales: {y: {beginAtZero: true}}}
     });
 }
-drawROIChart();
-gsap.from('.card',{duration:0.5,opacity:0,y:20,stagger:0.08});
+
+updateDashboard();
 </script>
 </body>
 </html>
