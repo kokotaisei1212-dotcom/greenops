@@ -3,208 +3,211 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Starter - Scope 1-2 AI算定 | GreenOps</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<title>GreenOps | Scope 1-2 自動算定ダッシュボード</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <style>
+:root{--g:#1f7a3e;--gl:#e8f5e9;--bg:#f9fafb;--text:#1a1a1a;--sub:#666;--bd:#e5e5e5;--r:#d32f2f;--rl:#ffebee}
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#020A06;--s:#071710;--s2:#0C2118;--bd:#1A3D2B;--bl:#24573A;--g:#22C55E;--gb:#4ADE80;--t:#F0FDF4;--ts:#A7C4B5;--tm:#5E8A72;--r:#F87171}
-body{font-family:'Noto Sans JP','Inter',sans-serif;background:var(--bg);color:var(--t);line-height:1.8;-webkit-font-smoothing:antialiased}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
 a{text-decoration:none;color:inherit}
-header{background:rgba(2,10,6,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);padding:0 24px}
+header{background:#fff;border-bottom:1px solid var(--bd);padding:0 24px}
 .hdr{max-width:900px;margin:0 auto;height:56px;display:flex;align-items:center;justify-content:space-between}
-.logo{font-size:20px;font-weight:900}.lg{color:var(--g)}.lo{color:var(--t)}
-.plan-badge{font-size:11px;font-weight:700;color:var(--bg);background:var(--g);padding:3px 10px;border-radius:4px}
-.back{font-size:12px;color:var(--tm);font-weight:600}.back:hover{color:var(--g)}
-.hero{padding:36px 24px;text-align:center;border-bottom:1px solid var(--bd)}
-.hero h1{font-size:clamp(20px,3vw,28px);font-weight:900;margin-bottom:4px}
-.hero p{font-size:14px;color:var(--ts)}
+.logo{font-size:18px;font-weight:900;color:var(--g)}
+.badge{font-size:11px;font-weight:700;color:#fff;background:var(--g);padding:3px 10px;border-radius:3px}
+.back{font-size:12px;color:var(--sub)}.back:hover{color:var(--g)}
+.page-hero{padding:32px 24px;text-align:center;background:#fff;border-bottom:1px solid var(--bd)}
+.page-hero h1{font-size:24px;font-weight:900;margin-bottom:4px}
+.page-hero p{font-size:14px;color:var(--sub)}
 .main{max-width:900px;margin:0 auto;padding:32px 24px}
-.card{background:var(--s);border:1px solid var(--bd);border-radius:12px;padding:28px;margin-bottom:18px}
-.card h2{font-size:16px;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:10px}
-.ic{width:28px;height:28px;background:var(--s2);border:1px solid var(--bd);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--g);font-weight:800;flex-shrink:0}
+.card{background:#fff;border:1px solid var(--bd);border-radius:6px;padding:28px;margin-bottom:16px}
+.card h2{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.ic{width:24px;height:24px;background:var(--gl);color:var(--g);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0}
 .fg{display:flex;flex-direction:column;gap:4px;margin-bottom:14px}
-.fg label{font-size:11px;font-weight:700;color:var(--ts);letter-spacing:.03em;text-transform:uppercase}
-.fg .hint{font-size:11px;color:var(--tm);text-transform:none;letter-spacing:0}
-input,select,textarea{padding:10px 14px;border:1px solid var(--bd);border-radius:8px;font-size:14px;font-family:inherit;background:var(--bg);color:var(--t);transition:border-color .2s}
-input:focus,select:focus{outline:none;border-color:var(--g);box-shadow:0 0 0 3px rgba(34,197,94,.08)}
-input::placeholder{color:var(--tm)}
-select{cursor:pointer}select option{background:var(--bg);color:var(--t)}
+.fg label{font-size:11px;font-weight:700;color:var(--sub);letter-spacing:.02em;text-transform:uppercase}
+.fg .hint{font-size:11px;color:#999;text-transform:none;letter-spacing:0}
+input,select{padding:10px 14px;border:1px solid var(--bd);border-radius:4px;font-size:14px;font-family:inherit;background:#fff;color:var(--text)}
+input:focus,select:focus{outline:none;border-color:var(--g);box-shadow:0 0 0 3px rgba(31,122,62,.08)}
+input::placeholder{color:#ccc}
+select{cursor:pointer}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
-.sample-bar{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
-.sb{padding:6px 12px;background:var(--s2);border:1px solid var(--bd);border-radius:6px;font-size:11px;font-weight:600;color:var(--ts);cursor:pointer;transition:all .2s;border-style:solid}
+.sample-bar{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+.sample-bar span{font-size:11px;color:var(--sub);font-weight:600}
+.sb{padding:6px 12px;background:#fff;border:1px solid var(--bd);border-radius:3px;font-size:11px;font-weight:600;color:var(--sub);cursor:pointer}
 .sb:hover{border-color:var(--g);color:var(--g)}
-.submit{display:flex;align-items:center;justify-content:center;width:100%;padding:14px;background:var(--g);color:var(--bg);border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s}
-.submit:hover{background:var(--gb);transform:translateY(-1px);box-shadow:0 4px 16px rgba(34,197,94,.22)}
-.submit:disabled{background:var(--bd);color:var(--tm);cursor:not-allowed;transform:none;box-shadow:none}
+.submit{display:block;width:100%;padding:14px;background:var(--g);color:#fff;border:none;border-radius:4px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif}
+.submit:hover{background:#0f6a2f}
+.submit:disabled{background:var(--bd);color:#999;cursor:not-allowed}
 .results{display:none}.results.show{display:block}
-.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
-.sc{background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:16px;text-align:center}
-.sc-l{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--tm);margin-bottom:4px}
-.sc-v{font-size:26px;font-weight:900;color:var(--g);font-family:'Inter',sans-serif;letter-spacing:-.02em}
-.sc-u{font-size:11px;color:var(--tm)}
-.sc.tot{background:var(--g);border-color:var(--g)}.sc.tot .sc-l{color:rgba(2,10,6,.5)}.sc.tot .sc-v{color:var(--bg)}.sc.tot .sc-u{color:rgba(2,10,6,.5)}
-.bd-item{padding:12px;background:var(--bg);border:1px solid var(--bd);border-radius:8px;margin-bottom:6px;font-size:13px;color:var(--ts);line-height:1.8}
-.bd-item strong{color:var(--t);display:block;font-size:11px;font-weight:700;letter-spacing:.02em;margin-bottom:2px}
-.rec{display:flex;gap:10px;padding:12px;background:var(--s2);border:1px solid var(--bd);border-radius:8px;margin-bottom:6px;font-size:13px;color:var(--ts);line-height:1.8;align-items:flex-start}
-.rn{flex-shrink:0;width:22px;height:22px;background:var(--g);border-radius:4px;color:var(--bg);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800}
-.chart-wrap{background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:20px;margin-bottom:20px;position:relative;height:280px}
-.dl-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;background:var(--s2);border:1px solid var(--bd);border-radius:8px;font-size:13px;font-weight:600;color:var(--ts);cursor:pointer;transition:all .2s}
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.sc{background:var(--bg);border:1px solid var(--bd);border-radius:6px;padding:16px;text-align:center}
+.sc-l{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--sub);margin-bottom:4px}
+.sc-v{font-size:28px;font-weight:900;color:var(--g);font-family:'Noto Sans JP',sans-serif}
+.sc-u{font-size:11px;color:var(--sub)}
+.sc.tot{background:var(--g);border-color:var(--g)}.sc.tot .sc-l,.sc.tot .sc-u{color:rgba(255,255,255,.7)}.sc.tot .sc-v{color:#fff}
+.bd-item{padding:12px;background:var(--bg);border:1px solid var(--bd);border-radius:4px;margin-bottom:6px;font-size:13px;color:var(--sub);line-height:1.8}
+.bd-item strong{color:var(--text);display:block;font-size:11px;font-weight:700;margin-bottom:2px}
+.rec{display:flex;gap:10px;padding:12px;background:var(--gl);border:1px solid #c8e6c9;border-radius:4px;margin-bottom:6px;font-size:13px;color:var(--sub);line-height:1.8;align-items:flex-start}
+.rn{flex-shrink:0;width:20px;height:20px;background:var(--g);border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800}
+.chart-wrap{background:#fff;border:1px solid var(--bd);border-radius:6px;padding:20px;height:280px;position:relative}
+.dl-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;background:#fff;border:1px solid var(--bd);border-radius:4px;font-size:13px;font-weight:600;color:var(--sub);cursor:pointer}
 .dl-btn:hover{border-color:var(--g);color:var(--g)}
-.reset{display:flex;align-items:center;justify-content:center;width:100%;padding:12px;background:transparent;color:var(--t);border:1px solid var(--bd);border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;margin-top:14px}
+.reset{display:block;width:100%;padding:12px;background:#fff;color:var(--text);border:1px solid var(--bd);border-radius:4px;font-size:14px;font-weight:700;cursor:pointer;margin-top:14px;font-family:'Noto Sans JP',sans-serif}
 .reset:hover{border-color:var(--g);color:var(--g)}
 .loading{display:none;text-align:center;padding:60px}.loading.show{display:block}
-.spinner{width:32px;height:32px;border:3px solid var(--bd);border-top-color:var(--g);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 14px}
+.spinner{width:28px;height:28px;border:3px solid var(--bd);border-top-color:var(--g);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 14px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loading p{color:var(--tm);font-size:13px}
-.err{display:none;background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.15);border-radius:8px;padding:12px;color:var(--r);font-size:13px;margin-top:14px}.err.show{display:block}
+.loading p{color:var(--sub);font-size:13px}
+.err{display:none;background:var(--rl);border:1px solid #ef9a9a;border-radius:4px;padding:12px;color:var(--r);font-size:13px;margin-top:14px}.err.show{display:block}
 .gate{display:none;text-align:center;padding:120px 24px}.gate.show{display:block}
-.gate h2{font-size:22px;font-weight:900;margin-bottom:10px}
-.gate p{font-size:14px;color:var(--ts);margin-bottom:24px}
-.gate .btn{display:inline-flex;padding:14px 28px;background:var(--g);color:var(--bg);border-radius:8px;font-weight:700;font-size:15px}
-footer{border-top:1px solid var(--bd);padding:24px;text-align:center}
-footer p{font-size:11px;color:var(--tm)}
-footer a{color:var(--g)}
-@media(max-width:640px){.sg{grid-template-columns:1fr}.grid2,.grid3{grid-template-columns:1fr}.sample-bar{flex-direction:column}}
+.gate h2{font-size:24px;font-weight:900;margin-bottom:10px}
+.gate p{font-size:14px;color:var(--sub);margin-bottom:24px}
+.gate-btn{display:inline-block;padding:14px 32px;background:var(--g);color:#fff;border-radius:4px;font-weight:700;font-size:14px}
+footer{background:var(--text);color:#999;padding:24px;text-align:center;font-size:11px}
+footer a{color:#999;text-decoration:none}
+@media(max-width:640px){.sg{grid-template-columns:1fr}.grid2,.grid3{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="gate" id="gate">
-  <h2>Starterプランへの登録が必要です</h2>
-  <p>Scope 1-2 AI自動算定は、Starterプラン（月額9,800円）に含まれる機能です。</p>
-  <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" class="btn">Starterプランを始める</a>
+<h2>Starter プランへの登録が必要です</h2>
+<p>Scope 1-2 自動算定は Starter プラン（月額 9,800円）に含まれる機能です。</p>
+<a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" class="gate-btn">Starter プランを始める</a>
 </div>
+
 <div id="app" style="display:none">
-<header><div class="hdr"><a href="/" class="logo"><span class="lg">Green</span><span class="lo">Ops</span></a><span class="plan-badge">STARTER</span><a href="/" class="back">トップに戻る</a></div></header>
-<div class="hero"><h1>Scope 1-2 AI自動算定</h1><p>燃料・電力データを入力するだけで、環境省排出係数に基づくCO2排出量を自動算定</p></div>
+<header><div class="hdr"><a href="/" class="logo">GreenOps</a><span class="badge">STARTER</span><a href="/" class="back">トップに戻る</a></div></header>
+<div class="page-hero"><h1>Scope 1-2 自動算定</h1><p>燃料・電力データから環境省排出係数で CO2 を自動計算</p></div>
 <div class="main">
+
 <div class="sample-bar">
-  <span style="font-size:11px;color:var(--tm);font-weight:600;padding:6px 0">サンプル:</span>
-  <button class="sb" onclick="loadSample('construction')">建設業</button>
-  <button class="sb" onclick="loadSample('manufacturing')">製造業</button>
-  <button class="sb" onclick="loadSample('retail')">小売業</button>
+<span>サンプル:</span>
+<button class="sb" onclick="loadSample('construction')">建設業</button>
+<button class="sb" onclick="loadSample('manufacturing')">製造業</button>
+<button class="sb" onclick="loadSample('retail')">小売業</button>
 </div>
+
 <form id="form">
-  <div class="card">
-    <h2><span class="ic">S1</span>Scope 1: 直接排出（燃料使用）</h2>
-    <div class="grid3">
-      <div class="fg"><label>燃料種別</label><select id="fuelType"><option value="軽油">軽油</option><option value="ガソリン">ガソリン</option><option value="LPG">LPG</option><option value="A重油">A重油</option><option value="都市ガス">都市ガス</option><option value="灯油">灯油</option></select></div>
-      <div class="fg"><label>月間使用量</label><input type="number" id="amount" placeholder="例: 500" min="0" step="0.1"></div>
-      <div class="fg"><label>単位</label><select id="unit"><option value="L">L</option><option value="kg">kg</option><option value="m3">m3</option></select></div>
-    </div>
-  </div>
-  <div class="card">
-    <h2><span class="ic">S2</span>Scope 2: 間接排出（電力使用）</h2>
-    <div class="grid2">
-      <div class="fg"><label>月間電力使用量 (kWh)</label><label class="hint">現場・事務所等の合計</label><input type="number" id="elec" placeholder="例: 3000" min="0" step="0.1"></div>
-      <div class="fg"><label>拠点数</label><label class="hint">電力を使用する拠点の数</label><input type="number" id="sites" placeholder="例: 2" min="1" value="1"></div>
-    </div>
-  </div>
-  <div class="card">
-    <h2><span class="ic">+</span>補足情報（任意）</h2>
-    <div class="fg"><label>その他の排出源や備考</label><input type="text" id="notes" placeholder="例: 社用車5台（ガソリン車）、倉庫の暖房に灯油使用"></div>
-  </div>
-  <button type="submit" class="submit">Scope 1-2 排出量をAI算定する</button>
-  <div class="err" id="err"></div>
+<div class="card">
+<h2><span class="ic">S1</span>Scope 1: 直接排出</h2>
+<div class="grid3">
+<div class="fg"><label>燃料種別</label><select id="fuelType"><option value="軽油">軽油</option><option value="ガソリン">ガソリン</option><option value="LPG">LPG</option><option value="A重油">A重油</option><option value="都市ガス">都市ガス</option><option value="灯油">灯油</option></select></div>
+<div class="fg"><label>月間使用量</label><input type="number" id="amount" placeholder="例: 500" min="0" step="0.1"></div>
+<div class="fg"><label>単位</label><select id="unit"><option value="L">L</option><option value="kg">kg</option><option value="m3">m3</option></select></div>
+</div>
+</div>
+<div class="card">
+<h2><span class="ic">S2</span>Scope 2: 間接排出</h2>
+<div class="grid2">
+<div class="fg"><label>月間電力使用量 (kWh)</label><label class="hint">現場・事務所等の合計</label><input type="number" id="elec" placeholder="例: 3000" min="0" step="0.1"></div>
+<div class="fg"><label>拠点数</label><label class="hint">電力を使用する拠点の数</label><input type="number" id="sites" placeholder="例: 2" min="1" value="1"></div>
+</div>
+</div>
+<div class="card">
+<h2><span class="ic">+</span>補足情報（任意）</h2>
+<div class="fg"><label>その他の排出源や備考</label><input type="text" id="notes" placeholder="例: 社用車5台、倉庫の暖房に灯油使用"></div>
+</div>
+<button type="submit" class="submit">Scope 1-2 を AI 算定する</button>
+<div class="err" id="err"></div>
 </form>
-<div class="loading" id="loading"><div class="spinner"></div><p>環境省排出係数に基づきScope 1-2を算定中...</p></div>
+
+<div class="loading" id="loading"><div class="spinner"></div><p>環境省排出係数に基づき Scope 1-2 を算定中...</p></div>
+
 <div class="results" id="results">
-  <div class="card">
-    <h2><span class="ic">CO2</span>算定結果</h2>
-    <div class="sg">
-      <div class="sc"><div class="sc-l">Scope 1</div><div class="sc-v" id="v1">-</div><div class="sc-u">tCO2e</div></div>
-      <div class="sc"><div class="sc-l">Scope 2</div><div class="sc-v" id="v2">-</div><div class="sc-u">tCO2e</div></div>
-      <div class="sc tot"><div class="sc-l">合計</div><div class="sc-v" id="vt">-</div><div class="sc-u">tCO2e</div></div>
-    </div>
-    <div id="breakdown"></div>
-    <div id="intensity" class="bd-item" style="display:none;margin-top:12px"></div>
-  </div>
-  <div class="card">
-    <h2><span class="ic">G</span>月次推移グラフ</h2>
-    <div class="chart-wrap"><canvas id="chart"></canvas></div>
-  </div>
-  <div class="card">
-    <h2><span class="ic">R</span>削減提案</h2>
-    <div id="recs"></div>
-  </div>
-  <div class="card">
-    <h2><span class="ic">DL</span>レポートダウンロード</h2>
-    <p style="font-size:13px;color:var(--ts);margin-bottom:12px">算定結果を簡易レポートとしてダウンロードできます。</p>
-    <button class="dl-btn" onclick="downloadReport()">テキストレポートをダウンロード</button>
-  </div>
-  <button class="reset" onclick="resetForm()">新しい算定を開始する</button>
+<div class="card">
+<h2><span class="ic">CO2</span>算定結果</h2>
+<div class="sg">
+<div class="sc"><div class="sc-l">Scope 1</div><div class="sc-v" id="v1">-</div><div class="sc-u">tCO2e</div></div>
+<div class="sc"><div class="sc-l">Scope 2</div><div class="sc-v" id="v2">-</div><div class="sc-u">tCO2e</div></div>
+<div class="sc tot"><div class="sc-l">合計</div><div class="sc-v" id="vt">-</div><div class="sc-u">tCO2e</div></div>
+</div>
+<div id="breakdown"></div>
+<div id="intensity" class="bd-item" style="display:none;margin-top:12px"></div>
+</div>
+<div class="card">
+<h2><span class="ic">G</span>月次推移</h2>
+<div class="chart-wrap"><canvas id="chart"></canvas></div>
+</div>
+<div class="card">
+<h2><span class="ic">R</span>削減提案</h2>
+<div id="recs"></div>
+</div>
+<div class="card">
+<h2><span class="ic">DL</span>レポート</h2>
+<p style="font-size:13px;color:var(--sub);margin-bottom:12px">算定結果をテキストレポートとしてダウンロードできます。</p>
+<button class="dl-btn" onclick="downloadReport()">レポートをダウンロード</button>
+</div>
+<button class="reset" onclick="resetForm()">新しい算定を開始する</button>
 </div>
 </div>
 </div>
-<footer><p>&copy; 2026 GreenOps Inc. | <a href="/tokutei.html">特定商取引法に基づく表記</a> | <a href="/privacy.html">プライバシーポリシー</a> | <a href="/terms.html">利用規約</a></p></footer>
+
+<footer><p>&copy; 2026 GreenOps Inc. | <a href="/tokutei.html">特定商取引法</a> | <a href="/privacy.html">プライバシー</a> | <a href="/terms.html">利用規約</a></p></footer>
 
 <script>
-(function(){var p=new URLSearchParams(location.search);if(p.has('session_id')||document.referrer.includes('checkout.stripe.com')){sessionStorage.setItem('go_starter','1');document.getElementById('app').style.display='block'}else if(sessionStorage.getItem('go_starter')){document.getElementById('app').style.display='block'}else{document.getElementById('gate').classList.add('show')}})();
+(function(){var p=new URLSearchParams(location.search);if(p.has('session_id')||document.referrer.includes('checkout.stripe.com')){sessionStorage.setItem('go_s','1');document.getElementById('app').style.display='block'}else if(sessionStorage.getItem('go_s')){document.getElementById('app').style.display='block'}else{document.getElementById('gate').classList.add('show')}})();
 
 var samples={
-  construction:{fuel:'軽油',amount:1200,unit:'L',elec:5000,sites:2,notes:'バックホウ2台、ダンプ3台、現場事務所2棟'},
-  manufacturing:{fuel:'都市ガス',amount:8000,unit:'m3',elec:45000,sites:3,notes:'ボイラー2基、工場3棟、事務所1棟'},
-  retail:{fuel:'ガソリン',amount:600,unit:'L',elec:12000,sites:5,notes:'配送車4台、店舗5店舗'}
+construction:{fuel:'軽油',amount:1200,unit:'L',elec:5000,sites:2,notes:'バックホウ2台、ダンプ3台、現場事務所2棟'},
+manufacturing:{fuel:'都市ガス',amount:8000,unit:'m3',elec:45000,sites:3,notes:'ボイラー2基、工場3棟'},
+retail:{fuel:'ガソリン',amount:600,unit:'L',elec:12000,sites:5,notes:'配送車4台、店舗5店舗'}
 };
 function loadSample(k){var s=samples[k];document.getElementById('fuelType').value=s.fuel;document.getElementById('amount').value=s.amount;document.getElementById('unit').value=s.unit;document.getElementById('elec').value=s.elec;document.getElementById('sites').value=s.sites;document.getElementById('notes').value=s.notes}
 
 var chartInst=null,lastData=null;
 document.getElementById('form').addEventListener('submit',async function(e){
-  e.preventDefault();
-  var fuel=document.getElementById('fuelType').value,amt=document.getElementById('amount').value,u=document.getElementById('unit').value,el=document.getElementById('elec').value,sites=document.getElementById('sites').value,notes=document.getElementById('notes').value;
-  if(!amt&&!el){showErr('燃料使用量または電力使用量を入力してください。');return}
-  this.style.display='none';document.querySelector('.sample-bar').style.display='none';
-  show('loading');hide('results');hideErr();
-  try{
-    var r=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fuelType:fuel,amount:amt,unit:u,electricityKwh:el,materials:notes+(sites>1?' (拠点数:'+sites+')':''),plan:'starter'})});
-    var d=await r.json();if(d.error)throw new Error(d.error);
-    lastData=d;
-    document.getElementById('v1').textContent=d.scope1?.value?.toFixed(3)??'-';
-    document.getElementById('v2').textContent=d.scope2?.value?.toFixed(3)??'-';
-    document.getElementById('vt').textContent=d.total?.toFixed(3)??'-';
-    var bd=document.getElementById('breakdown');bd.innerHTML='';
-    if(d.scope1?.breakdown)bd.innerHTML+='<div class="bd-item"><strong>SCOPE 1</strong>'+esc(d.scope1.breakdown)+'</div>';
-    if(d.scope2?.breakdown)bd.innerHTML+='<div class="bd-item"><strong>SCOPE 2</strong>'+esc(d.scope2.breakdown)+'</div>';
-    var intEl=document.getElementById('intensity');
-    if(d.intensity){intEl.style.display='block';intEl.innerHTML='<strong>排出原単位</strong>'+esc(d.intensity)}else{intEl.style.display='none'}
-    var rc=document.getElementById('recs');rc.innerHTML='';
-    if(d.recommendations){(Array.isArray(d.recommendations)?d.recommendations:[d.recommendations]).forEach(function(r,i){rc.innerHTML+='<div class="rec"><div class="rn">'+(i+1)+'</div><div>'+esc(typeof r==='string'?r:r.action||JSON.stringify(r))+'</div></div>'})}
-    renderChart(d);
-    hide('loading');show('results');
-  }catch(err){hide('loading');document.getElementById('form').style.display='block';document.querySelector('.sample-bar').style.display='flex';showErr('エラー: '+err.message)}
+e.preventDefault();
+var fuel=document.getElementById('fuelType').value,amt=document.getElementById('amount').value,u=document.getElementById('unit').value,el=document.getElementById('elec').value,sites=document.getElementById('sites').value,notes=document.getElementById('notes').value;
+if(!amt&&!el){showErr('燃料使用量または電力使用量を入力してください。');return}
+this.style.display='none';document.querySelector('.sample-bar').style.display='none';
+show('loading');hide('results');hideErr();
+try{
+var r=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fuelType:fuel,amount:amt,unit:u,electricityKwh:el,materials:notes+(sites>1?' (拠点数:'+sites+')':''),plan:'starter'})});
+var d=await r.json();if(d.error)throw new Error(d.error);
+lastData=d;
+document.getElementById('v1').textContent=d.scope1?.value?.toFixed(3)??'-';
+document.getElementById('v2').textContent=d.scope2?.value?.toFixed(3)??'-';
+document.getElementById('vt').textContent=d.total?.toFixed(3)??'-';
+var bd=document.getElementById('breakdown');bd.innerHTML='';
+if(d.scope1?.breakdown)bd.innerHTML+='<div class="bd-item"><strong>SCOPE 1</strong>'+esc(d.scope1.breakdown)+'</div>';
+if(d.scope2?.breakdown)bd.innerHTML+='<div class="bd-item"><strong>SCOPE 2</strong>'+esc(d.scope2.breakdown)+'</div>';
+var intEl=document.getElementById('intensity');
+if(d.intensity){intEl.style.display='block';intEl.innerHTML='<strong>排出原単位</strong>'+esc(d.intensity)}else{intEl.style.display='none'}
+var rc=document.getElementById('recs');rc.innerHTML='';
+if(d.recommendations){(Array.isArray(d.recommendations)?d.recommendations:[d.recommendations]).forEach(function(r,i){rc.innerHTML+='<div class="rec"><div class="rn">'+(i+1)+'</div><div>'+esc(typeof r==='string'?r:r.action||JSON.stringify(r))+'</div></div>'})}
+renderChart(d);
+hide('loading');show('results');
+}catch(err){hide('loading');document.getElementById('form').style.display='block';document.querySelector('.sample-bar').style.display='flex';showErr('エラー: '+err.message)}
 });
 
 function renderChart(d){
-  var s1=d.scope1?.value||0,s2=d.scope2?.value||0;
-  var months=['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
-  var now=new Date().getMonth();
-  var d1=[],d2=[];
-  for(var i=0;i<12;i++){var f=.7+Math.random()*.6;d1.push(+(s1*f).toFixed(3));d2.push(+(s2*(.8+Math.random()*.4)).toFixed(3))}
-  d1[now]=s1;d2[now]=s2;
-  if(chartInst)chartInst.destroy();
-  chartInst=new Chart(document.getElementById('chart'),{type:'bar',data:{labels:months,datasets:[{label:'Scope 1',data:d1,backgroundColor:'rgba(239,68,68,0.6)',borderRadius:4},{label:'Scope 2',data:d2,backgroundColor:'rgba(34,197,94,0.6)',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#A7C4B5',font:{size:11}}}},scales:{x:{stacked:true,ticks:{color:'#5E8A72',font:{size:10}},grid:{color:'rgba(26,61,43,0.4)'}},y:{stacked:true,ticks:{color:'#5E8A72',font:{size:10},callback:function(v){return v+' t'}},grid:{color:'rgba(26,61,43,0.4)'}}}}});
+var s1=d.scope1?.value||0,s2=d.scope2?.value||0;
+var months=['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+var now=new Date().getMonth();
+var d1=[],d2=[];
+for(var i=0;i<12;i++){d1.push(+(s1*(.7+Math.random()*.6)).toFixed(3));d2.push(+(s2*(.8+Math.random()*.4)).toFixed(3))}
+d1[now]=s1;d2[now]=s2;
+if(chartInst)chartInst.destroy();
+chartInst=new Chart(document.getElementById('chart'),{type:'bar',data:{labels:months,datasets:[{label:'Scope 1',data:d1,backgroundColor:'rgba(211,47,47,0.5)',borderRadius:3},{label:'Scope 2',data:d2,backgroundColor:'rgba(31,122,62,0.5)',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#666',font:{size:11}}}},scales:{x:{stacked:true,ticks:{color:'#999',font:{size:10}},grid:{color:'#eee'}},y:{stacked:true,ticks:{color:'#999',font:{size:10},callback:function(v){return v+' t'}},grid:{color:'#eee'}}}}});
 }
 
 function downloadReport(){
-  if(!lastData)return;var d=lastData;
-  var t='GreenOps Starter - Scope 1-2 排出量算定レポート\n';
-  t+='生成日: '+new Date().toLocaleDateString('ja-JP')+'\n';
-  t+='='.repeat(50)+'\n\n';
-  t+='■ 算定結果\n';
-  t+='Scope 1 (直接排出): '+(d.scope1?.value?.toFixed(3)??'-')+' tCO2e\n';
-  t+='Scope 2 (間接排出): '+(d.scope2?.value?.toFixed(3)??'-')+' tCO2e\n';
-  t+='合計: '+(d.total?.toFixed(3)??'-')+' tCO2e\n\n';
-  t+='■ 算定根拠\n';
-  if(d.scope1?.breakdown)t+='[Scope 1] '+d.scope1.breakdown+'\n';
-  if(d.scope2?.breakdown)t+='[Scope 2] '+d.scope2.breakdown+'\n';
-  if(d.intensity)t+='\n■ 排出原単位\n'+d.intensity+'\n';
-  if(d.recommendations){t+='\n■ 削減提案\n';(Array.isArray(d.recommendations)?d.recommendations:[]).forEach(function(r,i){t+=(i+1)+'. '+(typeof r==='string'?r:r.action||'')+'\n'})}
-  if(d.summary)t+='\n■ 総合評価\n'+d.summary+'\n';
-  t+='\n'+'='.repeat(50)+'\n算定基準: 環境省 温室効果ガス排出量算定・報告マニュアル\nScope 2 排出係数: 0.441 kgCO2e/kWh\nPowered by GreenOps (https://greenops.vercel.app)\n';
-  var blob=new Blob([t],{type:'text/plain;charset=utf-8'});
-  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='greenops_starter_report_'+new Date().toISOString().slice(0,10)+'.txt';a.click();
+if(!lastData)return;var d=lastData;
+var t='GreenOps Starter - Scope 1-2 算定レポート\n';
+t+='生成日: '+new Date().toLocaleDateString('ja-JP')+'\n';
+t+='='.repeat(50)+'\n\n';
+t+='Scope 1 (直接排出): '+(d.scope1?.value?.toFixed(3)??'-')+' tCO2e\n';
+t+='Scope 2 (間接排出): '+(d.scope2?.value?.toFixed(3)??'-')+' tCO2e\n';
+t+='合計: '+(d.total?.toFixed(3)??'-')+' tCO2e\n\n';
+if(d.scope1?.breakdown)t+='[Scope 1] '+d.scope1.breakdown+'\n';
+if(d.scope2?.breakdown)t+='[Scope 2] '+d.scope2.breakdown+'\n';
+if(d.intensity)t+='\n排出原単位: '+d.intensity+'\n';
+if(d.recommendations){t+='\n削減提案:\n';(Array.isArray(d.recommendations)?d.recommendations:[]).forEach(function(r,i){t+=(i+1)+'. '+(typeof r==='string'?r:r.action||'')+'\n'})}
+if(d.summary)t+='\n総合評価: '+d.summary+'\n';
+t+='\n'+'='.repeat(50)+'\n算定基準: 環境省排出係数 / Scope 2: 0.441 kgCO2e/kWh\nPowered by GreenOps\n';
+var blob=new Blob([t],{type:'text/plain;charset=utf-8'});
+var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='greenops_report_'+new Date().toISOString().slice(0,10)+'.txt';a.click();
 }
 
 function resetForm(){document.getElementById('form').style.display='block';document.querySelector('.sample-bar').style.display='flex';hide('results');document.getElementById('form').reset()}
