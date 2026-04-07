@@ -33,7 +33,7 @@ export default async function handler(req, res) {
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-5-20250514',
+        model: 'claude-3-5-sonnet-20241022',
         max_tokens: 500,
         messages: [{
           role: 'user',
