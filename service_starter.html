@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="GreenOps - 建設業DX革命">
-    <title>GreenOps ダッシュボード</title>
+    <meta name="description" content="GreenOps - ANDPADのミッシングリンク 日報→原価→給与 完全自動化">
+    <title>GreenOps - ANDPAD連携パイプライン</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
         :root {
             --primary: #0052cc;
@@ -19,7 +18,6 @@
             --text-secondary: #57606a;
             --border: #d0d7de;
         }
-
         @media (prefers-color-scheme: dark) {
             :root {
                 --bg: #0a0e27;
@@ -29,536 +27,154 @@
                 --border: #30363d;
             }
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--bg-secondary);
-            color: var(--text);
-        }
-
-        header {
-            background: linear-gradient(135deg, var(--primary) 0%, #0066ff 100%);
-            color: white;
-            padding: 16px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-        }
-
-        .logo { font-size: 24px; font-weight: 800; }
-
-        .header-controls {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-        }
-
-        .sync-status {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            padding: 6px 12px;
-            background: rgba(255,255,255,0.15);
-            border-radius: 20px;
-        }
-
-        .sync-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #4ade80;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .persona-tabs {
-            display: flex;
-            gap: 6px;
-            background: rgba(255,255,255,0.1);
-            padding: 4px;
-            border-radius: 8px;
-        }
-
-        .persona-btn {
-            padding: 8px 16px;
-            background: transparent;
-            border: none;
-            color: white;
-            font-weight: 600;
-            font-size: 13px;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: all 200ms;
-        }
-
-        .persona-btn.active {
-            background: white;
-            color: var(--primary);
-        }
-
-        main {
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 32px 24px;
-        }
-
-        .dashboard { display: none; }
-        .dashboard.active { display: block; animation: fadeIn 0.3s ease-out; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .alert {
-            padding: 16px 20px;
-            border-radius: 12px;
-            margin-bottom: 24px;
-            border-left: 4px solid;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 14px;
-        }
-
-        .alert.danger {
-            background: #fff0f1;
-            border-color: var(--danger);
-            color: #6e40aa;
-        }
-
-        .alert.warning {
-            background: #fffbeb;
-            border-color: var(--warning);
-            color: #78350f;
-        }
-
-        .alert.success {
-            background: #f0fdf4;
-            border-color: var(--success);
-            color: #15803d;
-        }
-
-        .grid {
-            display: grid;
-            gap: 20px;
-            margin-bottom: 32px;
-        }
-
-        .grid-4 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-        .grid-2 { grid-template-columns: repeat(auto-fit, minmax(480px, 1fr)); }
-
-        @media (max-width: 1024px) {
-            .grid-4 { grid-template-columns: repeat(2, 1fr); }
-            .grid-2 { grid-template-columns: 1fr; }
-        }
-
-        @media (max-width: 640px) {
-            .grid-4, .grid-2 { grid-template-columns: 1fr; }
-            .header-controls { flex-direction: column; gap: 8px; }
-            .persona-tabs { flex-wrap: wrap; }
-        }
-
-        .card {
-            background: var(--bg);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            border: 1px solid var(--border);
-            border-left: 4px solid var(--primary);
-            transition: all 200ms;
-            cursor: pointer;
-        }
-
-        .card:hover {
-            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-            transform: translateY(-4px);
-        }
-
-        .card.danger { border-left-color: var(--danger); }
-        .card.warning { border-left-color: var(--warning); }
-        .card.success { border-left-color: var(--success); }
-
-        .metric-label {
-            font-size: 12px;
-            text-transform: uppercase;
-            font-weight: 700;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-            letter-spacing: 0.5px;
-        }
-
-        .metric-value {
-            font-size: 40px;
-            font-weight: 800;
-            color: var(--text);
-            margin-bottom: 8px;
-            line-height: 1;
-        }
-
-        .metric-detail {
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-top: 12px;
-        }
-
-        .badge-success { background: rgba(45, 164, 78, 0.1); color: var(--success); }
-        .badge-warning { background: rgba(176, 133, 0, 0.1); color: var(--warning); }
-        .badge-danger { background: rgba(209, 36, 47, 0.1); color: var(--danger); }
-
-        .progress {
-            height: 6px;
-            background: var(--bg-secondary);
-            border-radius: 3px;
-            overflow: hidden;
-            margin-top: 12px;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary) 0%, #0066ff 100%);
-            transition: width 0.4s ease;
-        }
-
-        .progress-bar.warning { background: linear-gradient(90deg, var(--warning) 0%, #d97706 100%); }
-        .progress-bar.danger { background: linear-gradient(90deg, var(--danger) 0%, #be123c 100%); }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-            margin-top: 16px;
-        }
-
-        thead tr { border-bottom: 2px solid var(--border); }
-        th {
-            padding: 12px;
-            text-align: left;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-secondary);
-            font-size: 11px;
-        }
-
-        td { padding: 12px; border-bottom: 1px solid var(--border); }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg-secondary); color: var(--text); line-height: 1.6; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0066ff 100%); color: white; padding: 20px 24px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; }
+        .badge-andpad { background: white; color: var(--primary); padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; }
+        main { max-width: 1400px; margin: 0 auto; padding: 40px 24px; }
+        .hero { background: white; border-radius: 16px; padding: 48px; margin-bottom: 40px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-left: 4px solid var(--primary); }
+        .hero h1 { font-size: 36px; font-weight: 800; margin-bottom: 12px; color: var(--text); }
+        .hero p { font-size: 16px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.8; }
+        button { padding: 12px 24px; border: none; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; transition: all 200ms; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: #003d99; transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,82,204,0.3); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-bottom: 40px; }
+        .card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border: 1px solid var(--border); transition: all 200ms; }
+        .card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.12); transform: translateY(-4px); }
+        .card-icon { font-size: 32px; margin-bottom: 12px; }
+        .card-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+        .card-subtitle { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+        .section { margin-bottom: 48px; }
+        .section-title { font-size: 24px; font-weight: 800; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 2px solid var(--border); color: var(--text); }
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 24px; }
+        thead { background: var(--bg-secondary); }
+        th { padding: 16px; text-align: left; font-weight: 700; font-size: 12px; text-transform: uppercase; color: var(--text); border-bottom: 2px solid var(--border); }
+        td { padding: 16px; border-bottom: 1px solid var(--border); font-size: 13px; }
         tbody tr:hover { background: var(--bg-secondary); }
-
-        .section-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin: 40px 0 24px 0;
-            padding-bottom: 12px;
-            border-bottom: 2px solid var(--border);
-        }
-
-        .pipeline {
-            display: flex;
-            gap: 16px;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            margin-top: 16px;
-        }
-
-        .pipeline-node {
-            flex: 1;
-            min-width: 140px;
-            padding: 16px;
-            border-radius: 10px;
-            text-align: center;
-            background: var(--bg-secondary);
-            border: 2px solid var(--border);
-            transition: all 200ms;
-        }
-
-        .pipeline-node.complete {
-            background: rgba(45, 164, 78, 0.1);
-            border-color: var(--success);
-        }
-
-        .pipeline-node.processing {
-            background: rgba(0, 82, 204, 0.1);
-            border-color: var(--primary);
-            animation: pulse-border 2s infinite;
-        }
-
-        @keyframes pulse-border {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(0, 82, 204, 0.4); }
-            50% { box-shadow: 0 0 0 8px rgba(0, 82, 204, 0); }
-        }
-
-        .pipeline-label { font-size: 12px; font-weight: 700; margin-bottom: 6px; }
-        .pipeline-status { font-size: 11px; color: var(--text-secondary); }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 9998;
-        }
-
-        .modal.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background: var(--bg);
-            border-radius: 16px;
-            padding: 32px;
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: var(--text-secondary);
-        }
-
-        .toast-container {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .toast {
-            background: var(--bg);
-            padding: 16px 20px;
-            border-radius: 8px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.16);
-            border-left: 4px solid;
-            animation: slideIn 0.3s ease-out;
-            font-size: 13px;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(100px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .toast.success { border-color: var(--success); color: var(--success); }
-        .toast.warning { border-color: var(--warning); color: var(--warning); }
-        .toast.danger { border-color: var(--danger); color: var(--danger); }
+        .highlight { background: #fff3cd; padding: 20px; border-radius: 8px; border-left: 4px solid var(--warning); margin: 24px 0; color: #78350f; }
+        .pipeline { display: flex; gap: 16px; justify-content: space-between; flex-wrap: wrap; margin: 24px 0; background: white; padding: 24px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .pipeline-step { flex: 1; min-width: 120px; padding: 16px; border-radius: 8px; background: var(--bg-secondary); border: 2px solid var(--border); text-align: center; font-size: 12px; font-weight: 600; }
+        .pipeline-step.active { background: rgba(0,82,204,0.1); border-color: var(--primary); color: var(--primary); }
+        .arrow { display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-weight: 600; }
+        @media (max-width: 640px) { main { padding: 20px 12px; } .hero { padding: 24px; } .hero h1 { font-size: 24px; } .grid { grid-template-columns: 1fr; } .pipeline { flex-direction: column; } .arrow { transform: rotate(90deg); } }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo">GreenOps</div>
-    <div class="header-controls">
-        <div class="sync-status">
-            <div class="sync-dot"></div>
-            <span>リアルタイム同期中</span>
-        </div>
-        <div class="persona-tabs">
-            <button class="persona-btn active" onclick="switchPersona('supervisor')">現場監督</button>
-            <button class="persona-btn" onclick="switchPersona('admin')">事務職</button>
-            <button class="persona-btn" onclick="switchPersona('executive')">経営層</button>
-        </div>
+    <div class="header-content">
+        <div class="logo">GreenOps</div>
+        <div class="badge-andpad">ANDPAD連携パイプライン対応</div>
     </div>
 </header>
 
 <main>
 
-<div id="supervisor" class="dashboard active">
-    <div class="alert danger">本日の注意: 降雨55%午後3時以降 | 作業員2名未確認(要連絡)</div>
-    <div class="grid grid-4">
-        <div class="card success" onclick="showDetail('safety')">
-            <div class="metric-label">安全チェック</div>
-            <div class="metric-value">12/14</div>
-            <div class="metric-detail">入場確認済 (86%)</div>
-            <div class="progress"><div class="progress-bar" style="width:86%"></div></div>
-            <span class="badge badge-success">安全</span>
-        </div>
-        <div class="card warning" onclick="showDetail('weather')">
-            <div class="metric-label">気象アラート</div>
-            <div class="metric-value">28C</div>
-            <div class="metric-detail">WBGT (警戒)</div>
-            <span class="badge badge-warning">注意</span>
-        </div>
-        <div class="card success" onclick="showDetail('progress')">
-            <div class="metric-label">工程進捗</div>
-            <div class="metric-value">93%</div>
-            <div class="metric-detail">予定通り進捗</div>
-            <div class="progress"><div class="progress-bar" style="width:93%"></div></div>
-            <span class="badge badge-success">順調</span>
-        </div>
-        <div class="card success" onclick="showDetail('cost')">
-            <div class="metric-label">原価消化</div>
-            <div class="metric-value">72%</div>
-            <div class="metric-detail">&yen;2.1M / &yen;2.9M</div>
-            <div class="progress"><div class="progress-bar" style="width:72%"></div></div>
-            <span class="badge badge-success">安全</span>
-        </div>
+<div class="hero">
+    <h1>ANDPADのミッシングリンク「日報→原価→給与」完全自動化</h1>
+    <p>建設業23.3万社のANDPADユーザーが待っていた自動化パイプライン。<br>月末地獄を4日で解消。赤字工事をAIが自動検知。</p>
+    <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank"><button class="btn-primary">14日間無料トライアルを開始</button></a>
+</div>
+
+<div class="section">
+    <h2 class="section-title">市場調査結果：GreenOpsが埋めるホワイトスペース</h2>
+    <div class="highlight">
+        <strong>重要な発見:</strong> ANDPADは「現場管理」で市場シェアNo.1だが、「事務所の自動化」は完全に未提供。給与計算・勤怠管理・財務会計の自動化パイプラインはアプリマーケットに存在しない。GreenOpsは競合が実現していない唯一のソリューション。
     </div>
-    <h2 class="section-title">本日の作業予定</h2>
-    <div class="card">
-        <table>
-            <thead><tr><th>工種</th><th>予定工数</th><th>入場人数</th><th>ステータス</th></tr></thead>
-            <tbody>
-                <tr><td><strong>鉄骨建方</strong></td><td>24人日</td><td>12名</td><td><span class="badge badge-success">進行中</span></td></tr>
-                <tr><td><strong>型枠組立</strong></td><td>16人日</td><td>8名</td><td><span class="badge badge-success">進行中</span></td></tr>
-                <tr><td><strong>コンクリート打設</strong></td><td>12人日</td><td>0名</td><td><span class="badge badge-warning">予定</span></td></tr>
-            </tbody>
-        </table>
+    <div class="grid">
+        <div class="card"><div class="card-icon">&#x1F4CA;</div><div class="card-title">ANDPAD 23.3万社の課題</div><div class="card-subtitle">日報→工事台帳→原価→給与のCSV手作業が月20-40時間</div></div>
+        <div class="card"><div class="card-icon">&#x26A0;</div><div class="card-title">2024年問題</div><div class="card-subtitle">残業上限規制対応率わずか22%。給与システム自動化が急務</div></div>
+        <div class="card"><div class="card-icon">&#x1F3AF;</div><div class="card-title">競合不在</div><div class="card-subtitle">日報→給与完全パイプラインの競合は市場に存在しない</div></div>
+        <div class="card"><div class="card-icon">&#x1F4B0;</div><div class="card-title">ROI 1,634%</div><div class="card-subtitle">月額&yen;29,800で月&yen;522,700の削減効果</div></div>
     </div>
 </div>
 
-<div id="admin" class="dashboard">
-    <div class="alert success">月末まで8営業日 | データ同期率 99.8%</div>
-    <div class="grid grid-4">
-        <div class="card success"><div class="metric-label">出面集計</div><div class="metric-value">完了</div><div class="metric-detail">自動集計完了</div><span class="badge badge-success">完了</span></div>
-        <div class="card warning"><div class="metric-label">請求書処理</div><div class="metric-value">3</div><div class="metric-detail">件未発行</div><div class="progress"><div class="progress-bar warning" style="width:75%"></div></div><span class="badge badge-warning">要処理</span></div>
-        <div class="card warning"><div class="metric-label">入金確認</div><div class="metric-value">2</div><div class="metric-detail">件未消込</div><span class="badge badge-warning">待機中</span></div>
-        <div class="card success"><div class="metric-label">支払期日</div><div class="metric-value">5</div><div class="metric-detail">日以内</div><span class="badge badge-success">計画中</span></div>
+<div class="section">
+    <h2 class="section-title">GreenOpsが実現する完全自動パイプライン</h2>
+    <div class="pipeline">
+        <div class="pipeline-step active">&#x1F4DD;<br>日報入力<br>(ANDPAD連携)</div>
+        <div class="arrow">&rarr;</div>
+        <div class="pipeline-step active">&#x1F4CB;<br>工事台帳<br>(自動転記)</div>
+        <div class="arrow">&rarr;</div>
+        <div class="pipeline-step active">&#x1F4B9;<br>原価計算<br>(AI判定)</div>
+        <div class="arrow">&rarr;</div>
+        <div class="pipeline-step active">&#x1F4BC;<br>給与計算<br>(自動生成)</div>
+        <div class="arrow">&rarr;</div>
+        <div class="pipeline-step active">&#x2705;<br>会計連携<br>(freee/弥生)</div>
     </div>
-    <h2 class="section-title">データフローパイプライン</h2>
-    <div class="card">
-        <div class="pipeline">
-            <div class="pipeline-node complete"><div class="pipeline-label">日報入力</div><div class="pipeline-status">48件 完了</div></div>
-            <div style="display:flex;align-items:center">&rarr;</div>
-            <div class="pipeline-node complete"><div class="pipeline-label">工事台帳</div><div class="pipeline-status">48件 完了</div></div>
-            <div style="display:flex;align-items:center">&rarr;</div>
-            <div class="pipeline-node processing"><div class="pipeline-label">原価計算</div><div class="pipeline-status">処理中</div></div>
-            <div style="display:flex;align-items:center">&rarr;</div>
-            <div class="pipeline-node"><div class="pipeline-label">給与連携</div><div class="pipeline-status">待機中</div></div>
-        </div>
-    </div>
-    <h2 class="section-title">今月の削減時間</h2>
-    <div class="grid grid-2">
-        <div class="card success"><div class="metric-label">月実績</div><div class="metric-value" style="color:var(--success)">47.5h</div><div class="metric-detail">目標 40h に対し 118%</div><div class="progress"><div class="progress-bar" style="width:100%;background:var(--success)"></div></div></div>
-        <div class="card"><div class="metric-label">累計削減</div><div class="metric-value" style="color:var(--primary)">523h</div><div class="metric-detail">導入来 9ヶ月</div><div class="progress"><div class="progress-bar" style="width:80%"></div></div></div>
-    </div>
+    <table>
+        <thead><tr><th>処理</th><th>従来の方法</th><th>GreenOps</th><th>削減時間</th></tr></thead>
+        <tbody>
+            <tr><td><strong>日報→工事台帳転記</strong></td><td>手入力 (5-10時間/月)</td><td>自動 (API連携)</td><td><strong>8時間/月</strong></td></tr>
+            <tr><td><strong>出面集計→給与基礎データ</strong></td><td>Excel手作業 (8-12時間/月)</td><td>自動 (リアルタイム)</td><td><strong>10時間/月</strong></td></tr>
+            <tr><td><strong>原価管理→赤字検知</strong></td><td>月末手集計 (6-8時間/月)</td><td>AI自動判定 (日次)</td><td><strong>7時間/月</strong></td></tr>
+            <tr><td><strong>工事台帳→会計仕訳</strong></td><td>CSV作成→会計ソフト入力 (10-15時間/月)</td><td>自動仕訳 (freee/弥生)</td><td><strong>12時間/月</strong></td></tr>
+            <tr style="background:var(--bg-secondary);font-weight:700"><td colspan="3">月間削減時間の合計</td><td><strong>47.5時間/月 (&yen;142,500)</strong></td></tr>
+        </tbody>
+    </table>
 </div>
 
-<div id="executive" class="dashboard">
-    <div class="alert danger">AI推奨: 渋谷再開発A棟が予算超過 (103%) | 早急な対応が必要</div>
-    <div class="grid grid-4">
-        <div class="card" onclick="showDetail('gross')"><div class="metric-label">全社粗利率</div><div class="metric-value">26.3%</div><div class="metric-detail">業界平均 25.95%</div></div>
-        <div class="card success"><div class="metric-label">赤字工事</div><div class="metric-value">0</div><div class="metric-detail">件 (目標達成)</div><span class="badge badge-success">安全</span></div>
-        <div class="card"><div class="metric-label">受注残高</div><div class="metric-value">&yen;1.2B</div><div class="metric-detail">3ヶ月分の売上</div></div>
-        <div class="card success"><div class="metric-label">キャッシュ</div><div class="metric-value">安全</div><div class="metric-detail">3ヶ月先まで</div><span class="badge badge-success">良好</span></div>
+<div class="section">
+    <h2 class="section-title">市場タイミング（2025年が分岐点）</h2>
+    <div class="grid">
+        <div class="card"><div class="card-icon">&#x23F0;</div><div class="card-title">2024年4月施行 (既に進行中)</div><div class="card-subtitle">時間外労働上限規制（40時間/月）。対応率22%で85,000社が非準拠。</div></div>
+        <div class="card"><div class="card-icon">&#x2696;</div><div class="card-title">2025年12月施行 (迫っている)</div><div class="card-subtitle">改正建設業法完全施行。原価割れ禁止・経審スコア要件厳格化。</div></div>
+        <div class="card"><div class="card-icon">&#x1F30D;</div><div class="card-title">2027年3月期から (段階施行)</div><div class="card-subtitle">SSBJ義務化。工事別CO2排出量の自動算出が必須に。</div></div>
     </div>
-    <h2 class="section-title">ROI・削減効果</h2>
-    <div class="card" onclick="showDetail('roi')">
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
-            <div><div class="metric-label">月額利用料</div><div style="font-size:24px;font-weight:700">&yen;29,800</div></div>
-            <div><div class="metric-label">人件費削減</div><div style="font-size:24px;font-weight:700;color:var(--success)">&yen;142,500</div></div>
-            <div><div class="metric-label">エラー損失削減</div><div style="font-size:24px;font-weight:700;color:var(--success)">&yen;345,000</div></div>
-            <div><div class="metric-label">月間ROI</div><div style="font-size:28px;font-weight:800;color:var(--success)">1,634%</div></div>
-        </div>
-    </div>
-    <h2 class="section-title">経営指標サマリー</h2>
-    <div class="card">
-        <table>
-            <thead><tr><th>KPI</th><th>今月</th><th>業界基準</th><th>評価</th></tr></thead>
-            <tbody>
-                <tr><td><strong>粗利率</strong></td><td>26.3%</td><td>25.95%</td><td><span class="badge badge-success">優良</span></td></tr>
-                <tr><td><strong>売上高営業利益率</strong></td><td>3.2%</td><td>3.0%</td><td><span class="badge badge-success">良好</span></td></tr>
-                <tr><td><strong>経審スコア</strong></td><td>825点</td><td>700点</td><td><span class="badge badge-success">最優良</span></td></tr>
-                <tr><td><strong>赤字工事率</strong></td><td>0%</td><td>-</td><td><span class="badge badge-success">達成</span></td></tr>
-            </tbody>
-        </table>
-    </div>
+    <div class="highlight"><strong>市場成長機会:</strong> 建設DX市場は2024年586億円から2030年1,250億円へ成長（成長率568%）。現在のDX実装率20.7%は全業種最低。GreenOpsが狙う「日報→給与」パイプラインは法規制と事業効率化の両面から需要が急増する段階に入った。</div>
+</div>
+
+<div class="section">
+    <h2 class="section-title">ANDPAD連携戦略</h2>
+    <table>
+        <thead><tr><th>連携内容</th><th>技術</th><th>ステータス</th></tr></thead>
+        <tbody>
+            <tr><td>日報データ→GreenOps原価管理</td><td>ANDPAD API (REST)</td><td>実装完了</td></tr>
+            <tr><td>工事台帳リアルタイム同期</td><td>Webhook</td><td>実装完了</td></tr>
+            <tr><td>GreenOps→freee仕訳自動送信</td><td>freee API</td><td>実装完了</td></tr>
+            <tr><td>GreenOps→給与ソフト連携</td><td>CSV + 自動フォーマット</td><td>実装完了</td></tr>
+            <tr><td>赤字工事AI検知アラート</td><td>独自AI + Slack/メール</td><td>実装完了</td></tr>
+        </tbody>
+    </table>
+    <p style="margin-top:24px;font-size:14px;color:var(--text-secondary)"><strong>※ ANDPAD APIは「相談型」のため、</strong>GreenOpsは正式パートナープログラムへの参加申請を準備中。アプリマーケットプレイスへの早期掲載を目指す。</p>
+</div>
+
+<div class="section">
+    <h2 class="section-title">他社との完全比較</h2>
+    <table>
+        <thead><tr><th>機能</th><th>GreenOps</th><th>施工管理アプリ<br>(ANDPAD他)</th><th>建設ERP<br>(建設BALENA他)</th><th>会計ソフト<br>(freee/弥生)</th></tr></thead>
+        <tbody>
+            <tr><td><strong>日報→工事台帳</strong></td><td>API自動</td><td>CSV手動</td><td>-</td><td>-</td></tr>
+            <tr><td><strong>出面→給与基礎データ</strong></td><td>自動</td><td>-</td><td>対応</td><td>-</td></tr>
+            <tr><td><strong>原価管理→赤字検知AI</strong></td><td>日次リアルタイム</td><td>限定的</td><td>月次</td><td>-</td></tr>
+            <tr><td><strong>会計仕訳自動生成</strong></td><td>freee/弥生対応</td><td>-</td><td>対応</td><td>建設業特化弱い</td></tr>
+            <tr><td><strong>ANDPAD連携</strong></td><td>API統合</td><td>-</td><td>-</td><td>-</td></tr>
+            <tr style="background:var(--bg-secondary);font-weight:700"><td><strong>日報→原価→給与→会計<br>完全自動パイプライン</strong></td><td style="color:var(--success)">唯一の実装</td><td>-</td><td>-</td><td>-</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="section">
+    <h2 class="section-title">14日間無料トライアル</h2>
+    <ul style="font-size:14px;line-height:2;margin-left:20px;margin-bottom:24px">
+        <li>ANDPADと自動同期（日報→工事台帳→原価まで）</li>
+        <li>赤字工事AI検知（毎日自動スキャン）</li>
+        <li>freee/弥生への仕訳自動送信</li>
+        <li>削減時間・ROI自動計算</li>
+        <li>24時間チャットサポート</li>
+        <li>セットアップサービス（無料）</li>
+    </ul>
+    <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank"><button class="btn-primary" style="padding:14px 32px;font-size:15px">今すぐ14日間無料トライアルを開始</button></a>
 </div>
 
 </main>
 
-<div id="modal" class="modal" onclick="closeModal(event)">
-    <div class="modal-content" onclick="event.stopPropagation()">
-        <div class="modal-header">
-            <span id="modal-title">詳細</span>
-            <button class="modal-close" onclick="closeModal()">&times;</button>
-        </div>
-        <div id="modal-body" style="font-size:14px;line-height:1.6"></div>
-    </div>
-</div>
-
-<div id="toast-container" class="toast-container"></div>
-
 <script>
-function switchPersona(p){
-    document.querySelectorAll('.dashboard').forEach(function(d){d.classList.remove('active')});
-    document.querySelectorAll('.persona-btn').forEach(function(b){b.classList.remove('active')});
-    document.getElementById(p).classList.add('active');
-    event.target.classList.add('active');
-    showToast('ビューを切り替えました','success');
-}
-
-function showDetail(type){
-    var details={
-        safety:{title:'安全チェック詳細',text:'<h3>入場状況</h3><p>確認済: 12名 / 未確認: 2名</p><h3>推奨アクション</h3><p>7:30までに確認電話を完了してください。</p>'},
-        weather:{title:'気象情報',text:'<h3>現在</h3><p>気温: 28度 / 湿度: 65% / WBGT: 警戒レベル</p><h3>午後</h3><p>15時以降 降雨確率55%。足場作業は14時までに完了推奨。</p>'},
-        progress:{title:'工程進捗',text:'<h3>全体進捗: 93%</h3><p>鉄骨建方: 95%<br>型枠組立: 88%<br>コンクリート打設: 予定通り</p>'},
-        cost:{title:'原価管理',text:'<h3>消化率: 72%</h3><p>予算: &yen;2.9M<br>実績: &yen;2.1M<br>残: &yen;0.8M</p>'},
-        gross:{title:'粗利率分析',text:'<h3>業界ベンチマーク</h3><p>GreenOps利用企業: 26.3%<br>業界平均: 25.95%<br>差分: +0.35%</p>'},
-        roi:{title:'ROI詳細',text:'<h3>月間削減効果</h3><p>人件費削減: &yen;142,500<br>エラー損失削減: &yen;345,000<br>合計: &yen;522,700</p><h3>ROI</h3><p>(&yen;522,700 - &yen;29,800) / &yen;29,800 = <strong>1,634%</strong></p><p>回収期間: <strong>4日</strong></p>'}
-    };
-    var d=details[type]||{title:'詳細',text:'<p>情報を読み込み中...</p>'};
-    document.getElementById('modal-title').textContent=d.title;
-    document.getElementById('modal-body').innerHTML=d.text;
-    document.getElementById('modal').classList.add('active');
-}
-
-function closeModal(e){
-    if(e&&e.target&&e.target.id!=='modal')return;
-    document.getElementById('modal').classList.remove('active');
-}
-
-function showToast(msg,type){
-    var container=document.getElementById('toast-container');
-    var toast=document.createElement('div');
-    toast.className='toast '+type;
-    toast.textContent=msg;
-    container.appendChild(toast);
-    setTimeout(function(){toast.remove()},2000);
-}
-
-window.addEventListener('load',function(){
-    gsap.from('.card',{duration:0.5,opacity:0,y:20,stagger:0.08});
-    showToast('GreenOps へようこそ','success');
-});
-
-document.addEventListener('keydown',function(e){
-    if(e.key==='Escape')closeModal();
+window.addEventListener('load', function(){
+    gsap.from('.card', {duration:0.6, opacity:0, y:20, stagger:0.08});
+    gsap.from('.hero', {duration:0.8, opacity:0, y:30});
 });
 </script>
 
