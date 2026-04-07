@@ -3,89 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GreenOps | 建設業の Scope 3 自動対応</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<title>GreenOps | 建設業向け Scope 3 自動計算</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{--g:#4caf50;--bg:#f8fafb;--ts:#111;--tm:#666;--bd:#e5e5e5;--s1:#fff;--s2:#f9fafb;--s3:#444}
+:root{--g:#1f7a3e;--bg:#f9fafb;--text:#1a1a1a;--sub:#666;--bd:#e5e5e5}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:'Noto Sans JP','Inter',sans-serif;background:var(--s1);color:var(--ts);line-height:1.6}
-.container{max-width:1200px;margin:0 auto;padding:0 40px}
-header{position:fixed;top:0;width:100%;height:70px;background:rgba(255,255,255,0.98);border-bottom:1px solid var(--bd);display:flex;align-items:center;z-index:999;backdrop-filter:blur(8px)}
-.header-inner{display:flex;justify-content:space-between;align-items:center;width:100%;max-width:1200px;margin:0 auto;padding:0 40px}
-.logo{font-size:20px;font-weight:900;color:var(--g)}
-.nav{display:flex;gap:40px;font-size:13px;font-weight:600}
-.nav a{color:var(--tm);text-decoration:none;transition:color 0.3s}
+body{font-family:'Noto Sans JP',sans-serif;background:#fff;color:var(--text)}
+header{position:fixed;top:0;width:100%;height:60px;background:#fff;border-bottom:1px solid var(--bd);display:flex;align-items:center;z-index:999}
+.header-inner{max-width:1200px;width:100%;margin:0 auto;padding:0 60px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:18px;font-weight:900;color:var(--g)}
+.nav{display:flex;gap:50px;font-size:13px}
+.nav a{color:var(--sub);text-decoration:none;transition:color 0.3s}
 .nav a:hover{color:var(--g)}
-.nav-cta{background:var(--g);color:#000;border:none;padding:10px 24px;border-radius:4px;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.3s}
-.nav-cta:hover{background:#66bb6a}
-.sec{padding:80px 40px;border-bottom:1px solid var(--bd)}
+.nav-btn{background:var(--g);color:#fff;border:none;padding:10px 24px;border-radius:3px;font-size:12px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block}
+.nav-btn:hover{background:#0f6a2f}
+.sec{padding:80px 60px}
+.sec-inner{max-width:1200px;margin:0 auto}
 .sec.alt{background:var(--bg)}
-.container h2{font-size:36px;font-weight:900;margin-bottom:50px;text-align:center}
-.hero{margin-top:70px;padding:100px 40px 80px;text-align:center;background:linear-gradient(180deg,var(--bg) 0%,var(--s1) 100%)}
-.hero .ba-hero-main{font-size:48px;font-weight:900;margin-bottom:20px;line-height:1.2}
-.hero h2{font-size:24px;font-weight:700;margin-bottom:40px;color:var(--ts)}
+.sec h2{font-size:40px;font-weight:900;margin-bottom:60px;text-align:center;line-height:1.2}
+.hero{margin-top:60px;padding:120px 60px;text-align:center;background:linear-gradient(180deg,#f9fafb 0%,#fff 100%)}
+.hero h1{font-size:56px;font-weight:900;margin-bottom:24px;line-height:1.2}
 .hero .hl{color:var(--g)}
-.ba-hero-sub{font-size:16px;color:var(--tm);margin-bottom:24px}
-.cta-btns{display:flex;gap:16px;justify-content:center;margin-bottom:32px;flex-wrap:wrap}
-.btn{padding:14px 40px;border:none;border-radius:4px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.3s;font-family:'Noto Sans JP',sans-serif;text-decoration:none;display:inline-block}
-.btn-g{background:var(--g);color:#000}
-.btn-g:hover{background:#66bb6a;transform:translateY(-2px)}
-.btn-outline{background:transparent;color:var(--g);border:2px solid var(--g)}
-.btn-outline:hover{background:var(--bg)}
-.trust{font-size:12px;color:var(--tm);display:flex;gap:32px;justify-content:center;flex-wrap:wrap;margin-top:32px}
+.hero-sub{font-size:16px;color:var(--sub);margin-bottom:48px;line-height:1.6}
+.hero-btn{background:var(--g);color:#fff;border:none;padding:14px 48px;font-size:14px;font-weight:700;border-radius:3px;cursor:pointer;text-decoration:none;display:inline-block}
+.hero-btn:hover{background:#0f6a2f}
+.trust{font-size:12px;color:var(--sub);display:flex;gap:40px;justify-content:center;margin-top:40px;flex-wrap:wrap}
 .trust strong{color:var(--g)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:32px}
-.card{background:var(--s1);border:1px solid var(--bd);padding:32px;border-radius:8px;transition:all 0.3s}
-.card:hover{border-color:var(--g);box-shadow:0 8px 24px rgba(76,175,80,0.1)}
-.card-icon{font-size:36px;margin-bottom:12px}
-.card h3{font-size:18px;font-weight:700;margin-bottom:12px}
-.card p{font-size:14px;color:var(--tm);line-height:1.7}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-.two-col h3{font-size:28px;font-weight:700;margin-bottom:32px;line-height:1.4}
-.features{display:flex;flex-direction:column;gap:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:40px;margin-bottom:40px}
+.card{background:#fff;border:1px solid var(--bd);padding:40px;border-radius:4px}
+.card:hover{border-color:var(--g);box-shadow:0 4px 16px rgba(31,122,62,0.1)}
+.card h3{font-size:18px;font-weight:700;margin-bottom:16px}
+.card p{font-size:14px;color:var(--sub);line-height:1.7}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.two-col h3{font-size:32px;font-weight:700;margin-bottom:40px;line-height:1.3}
+.features{display:flex;flex-direction:column;gap:24px}
 .feature{display:flex;gap:16px;align-items:flex-start}
-.feature-check{width:24px;height:24px;background:var(--g);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0}
-.feature p{font-size:14px;color:var(--tm);line-height:1.7}
-.before-after{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.ba{padding:24px;border-radius:6px;border-left:4px solid;font-size:13px}
-.ba.before{background:rgba(220,38,38,0.08);border-left-color:#dc2626}
-.ba.after{background:rgba(76,175,80,0.08);border-left-color:var(--g)}
-.ba h4{font-size:11px;font-weight:700;text-transform:uppercase;margin-bottom:12px}
-.before h4{color:#7f1d1d}
-.after h4{color:#0a5c39}
-.ba ul{list-style:none}
-.ba li{margin-bottom:6px;display:flex;gap:8px;font-size:13px}
-.before li::before{content:'\00d7';color:#dc2626;font-weight:bold}
-.after li::before{content:'\2713';color:var(--g);font-weight:bold}
-.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:28px}
-.feature-card{background:var(--s1);border:1px solid var(--bd);padding:32px;border-radius:6px;text-align:center}
-.feature-num{font-size:40px;font-weight:900;color:var(--g);margin-bottom:12px}
-.feature-card h4{font-size:16px;font-weight:700;margin-bottom:8px}
-.feature-card p{font-size:13px;color:var(--tm)}
-.pricing-wrap{text-align:center}
-.pricing-card{max-width:500px;margin:0 auto;background:var(--s1);border:2px solid var(--g);padding:48px 40px;border-radius:8px}
-.price-tag{font-size:56px;font-weight:900;color:var(--g);margin-bottom:8px}
-.price-period{font-size:14px;color:var(--tm);margin-bottom:32px}
-.price-list{list-style:none;text-align:left;margin-bottom:32px}
-.price-list li{padding:10px 0;border-bottom:1px solid var(--bd);font-size:13px;display:flex;gap:12px}
-.price-list li:last-child{border-bottom:none}
-.price-list li::before{content:'\2713';color:var(--g);font-weight:700}
-.comp-table{width:100%;border-collapse:collapse;background:var(--s1);border:1px solid var(--bd);border-radius:6px;overflow:hidden;margin-top:32px}
-.comp-table th{background:var(--ts);color:#fff;padding:14px 16px;text-align:left;font-weight:700;font-size:13px}
+.check{width:20px;height:20px;background:var(--g);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:2px}
+.feature p{font-size:14px;color:var(--sub);line-height:1.7}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.comp{padding:24px;border-radius:4px;border-left:4px solid;font-size:13px}
+.comp.before{background:#fff5f5;border-left-color:#d32f2f}
+.comp.after{background:#f1f8f4;border-left-color:var(--g)}
+.comp h4{font-size:11px;font-weight:700;text-transform:uppercase;margin-bottom:16px}
+.before h4{color:#b71c1c}
+.after h4{color:#1b5e20}
+.comp ul{list-style:none}
+.comp li{margin-bottom:8px;display:flex;gap:12px;color:var(--sub)}
+.before li::before{content:'-';color:#d32f2f;font-weight:bold;width:16px}
+.after li::before{content:'+';color:var(--g);font-weight:bold;width:16px}
+.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:32px}
+.fcard{background:#fff;border:1px solid var(--bd);padding:32px;border-radius:4px;text-align:center}
+.fcard-num{font-size:48px;font-weight:900;color:var(--g);margin-bottom:12px}
+.fcard h4{font-size:16px;font-weight:700;margin-bottom:8px}
+.fcard p{font-size:13px;color:var(--sub)}
+.pricing{text-align:center}
+.pcard{max-width:480px;margin:0 auto;background:#fff;border:2px solid var(--g);padding:48px 40px;border-radius:4px}
+.price{font-size:56px;font-weight:900;color:var(--g);margin-bottom:8px}
+.period{font-size:14px;color:var(--sub);margin-bottom:40px}
+.plist{list-style:none;text-align:left;margin-bottom:40px}
+.plist li{padding:12px 0;border-bottom:1px solid var(--bd);font-size:13px;display:flex;gap:12px}
+.plist li:last-child{border-bottom:none}
+.plist li::before{content:'\2713';color:var(--g);font-weight:700}
+.comp-table{width:100%;border-collapse:collapse;border:1px solid var(--bd);margin-top:40px}
+.comp-table th{background:var(--text);color:#fff;padding:14px 16px;text-align:left;font-weight:700;font-size:13px}
 .comp-table td{padding:12px 16px;border-bottom:1px solid var(--bd);font-size:13px}
 .comp-table tr:nth-child(even){background:var(--bg)}
 .comp-table .green{color:var(--g);font-weight:700}
-.ck-box{background:var(--s1);border:1px solid var(--bd);padding:32px;border-radius:8px;margin-top:32px}
-.ck-box h3{text-align:left;font-size:16px;font-weight:700;margin-bottom:16px}
-.cta-sec{background:linear-gradient(180deg,var(--bg) 0%,var(--s1) 100%);padding:80px 40px;text-align:center}
-.cta-sec h2{font-size:32px;font-weight:900;margin-bottom:20px}
-.cta-sec p{font-size:16px;color:var(--tm);margin-bottom:32px}
-footer{background:var(--ts);color:#999;padding:32px;text-align:center;font-size:12px}
+.qa{background:#fff;border:1px solid var(--bd);padding:24px;border-radius:4px;margin-bottom:16px;cursor:pointer}
+.qa-q{display:flex;justify-content:space-between;font-weight:600;font-size:13px}
+.qa-a{display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--bd);font-size:13px;color:var(--sub)}
+.qa.active .qa-a{display:block}
+.cta{background:var(--bg);padding:80px 60px;text-align:center}
+.cta h2{font-size:36px;font-weight:900;margin-bottom:16px}
+.cta p{font-size:16px;color:var(--sub);margin-bottom:32px}
+footer{background:var(--text);color:#999;padding:40px;text-align:center;font-size:12px}
 footer a{color:#999;text-decoration:none;margin:0 12px}
-footer a:hover{color:#fff}
-@media(max-width:768px){.hero{padding:60px 24px 40px}.hero .ba-hero-main{font-size:32px}.two-col{grid-template-columns:1fr;gap:40px}.before-after{grid-template-columns:1fr}.sec{padding:60px 24px}.container{padding:0 24px}.header-inner{padding:0 24px}}
+@media(max-width:768px){.sec{padding:60px 24px}.hero{padding:80px 24px}.hero h1{font-size:32px}.two-col{grid-template-columns:1fr;gap:40px}.compare{grid-template-columns:1fr}.header-inner{padding:0 24px}.nav{display:none}}
 </style>
 </head>
 <body>
@@ -94,91 +88,82 @@ footer a:hover{color:#fff}
 <div class="logo">GreenOps</div>
 <nav class="nav">
 <a href="#problem">課題</a>
-<a href="#solution">解決</a>
+<a href="#solution">解決策</a>
 <a href="#pricing">料金</a>
-<a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="nav-cta">今すぐ購入</a>
 </nav>
+<a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="nav-btn">今すぐ購入</a>
 </div>
 </header>
 
 <section class="hero">
-<div class="container">
-<h1 class="ba-hero-main"><span class="hl">毎月5時間</span> の手作業が <span class="hl">1クリック</span> で終わる</h1>
-<p class="ba-hero-sub">大成・清水・大林からの Scope 3 データ要求に、自動対応</p>
-<h2>建機 CO2 レポートが<br><span class="hl">自動的に生成される</span></h2>
-<div class="cta-btns">
-<a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="btn btn-g">&yen;9,800 で今すぐ始める</a>
-<button class="btn btn-outline" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">料金を見る</button>
-</div>
+<h1>毎月 <span class="hl">5時間</span> の手作業が<br><span class="hl">1分</span> で終わる</h1>
+<p class="hero-sub">大成・清水・大林からの Scope 3 データ報告に、自動対応</p>
+<a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="hero-btn">14日無料で始める</a>
 <div class="trust">
 <span><strong>初期費用なし</strong></span>
-<span><strong>14日間無料</strong></span>
+<span><strong>&yen;9,800/月</strong></span>
 <span><strong>いつでも解約可</strong></span>
-</div>
 </div>
 </section>
 
 <section class="sec alt" id="problem">
-<div class="container">
+<div class="sec-inner">
 <h2>建設業が直面している課題</h2>
 <div class="grid">
 <div class="card">
-<div class="card-icon">&#x1F4CB;</div>
 <h3>毎月の報告義務</h3>
-<p>ゼネコンからの Scope 3 データ要求は増えるばかり。大成・清水・大林それぞれ異なる形式で、毎月の報告が義務化されています。</p>
+<p>ゼネコンからの Scope 3 データ要求は必須。大成・清水・大林それぞれ異なる形式で、月ごとに対応が必要です。</p>
 </div>
 <div class="card">
-<div class="card-icon">&#x23F1;</div>
-<h3>5～10時間の手作業</h3>
-<p>建機使用時間を Excel で入力 → CO2 係数で計算 → ゼネコン様式に手作業で変換。毎月この作業に数時間が消えます。</p>
+<h3>5〜10時間の手作業</h3>
+<p>建機使用時間を手入力、CO2 係数で計算、ゼネコン形式に変換。毎月この繰り返しに数時間が費やされます。</p>
 </div>
 <div class="card">
-<div class="card-icon">&#x274C;</div>
-<h3>計算ミスと監査対応</h3>
-<p>手計算なので誤差が生じます。ゼネコンからの指摘で信用を失い、監査対応にも時間がかかります。</p>
+<h3>計算ミスと信用喪失</h3>
+<p>手計算での誤差。ゼネコンからの指摘で信用を失い、監査対応にも予期しない時間がかかります。</p>
 </div>
 </div>
 </div>
 </section>
 
 <section class="sec" id="solution">
-<div class="container">
-<h2>GreenOps が解決する</h2>
+<div class="sec-inner">
+<h2>GreenOps で解決する</h2>
 <div class="two-col">
 <div>
-<h3>ANDPAD の現場データから、自動的に CO2 が計算される</h3>
+<h3>ANDPAD のデータから自動計算・レポート生成</h3>
 <div class="features">
 <div class="feature">
-<div class="feature-check">&#x2713;</div>
-<p><strong>自動計算：</strong> 現場に入力されている建機名と使用時間から、環境省公開係数で自動計算します。</p>
+<div class="check">1</div>
+<p><strong>自動計算：</strong>現場に入力されている建機と使用時間から、環境省公開係数で自動計算。新しいツール導入の手間はありません。</p>
 </div>
 <div class="feature">
-<div class="feature-check">&#x2713;</div>
-<p><strong>自動レポート生成：</strong> 月次レポートを 1クリックで自動生成。大成・清水・大林の 3 社すべてのフォーマットに自動対応。</p>
+<div class="check">2</div>
+<p><strong>自動レポート生成：</strong>月次レポートを 1クリックで自動生成。大成・清水・大林すべてのフォーマットに対応します。</p>
 </div>
 <div class="feature">
-<div class="feature-check">&#x2713;</div>
-<p><strong>監査対応も完璧：</strong> 計算履歴は自動記録。「いつ誰が何を計算したのか」がすべて残ります。</p>
+<div class="check">3</div>
+<p><strong>監査対応：</strong>計算履歴がすべて記録される。「いつ誰が何を計算したのか」の証跡が残るので、監査対応も確実です。</p>
 </div>
 </div>
 </div>
-<div class="before-after">
-<div class="ba before">
+<div class="compare">
+<div class="comp before">
 <h4>現在（手作業）</h4>
 <ul>
-<li>毎月 5～10時間</li>
+<li>毎月 5〜10時間</li>
 <li>計算ミスのリスク</li>
-<li>3社フォーマット対応が煩雑</li>
+<li>3社対応が煩雑</li>
 <li>監査準備に時間</li>
 </ul>
 </div>
-<div class="ba after">
+<div class="comp after">
 <h4>導入後</h4>
 <ul>
 <li>毎月 1分で完結</li>
 <li>ミスゼロ</li>
-<li>3社フォーマット自動対応</li>
-<li>履歴で即対応可能</li>
+<li>3社自動対応</li>
+<li>履歴で即対応</li>
 </ul>
 </div>
 </div>
@@ -187,31 +172,31 @@ footer a:hover{color:#fff}
 </section>
 
 <section class="sec alt">
-<div class="container">
+<div class="sec-inner">
 <h2>5つの機能</h2>
 <div class="feature-grid">
-<div class="feature-card">
-<div class="feature-num">1</div>
+<div class="fcard">
+<div class="fcard-num">1</div>
 <h4>CO2 自動計算</h4>
-<p>環境省係数準拠。誤差 ±5%。</p>
+<p>環境省係数準拠。誤差 &plusmn;5%。</p>
 </div>
-<div class="feature-card">
-<div class="feature-num">2</div>
+<div class="fcard">
+<div class="fcard-num">2</div>
 <h4>レポート自動生成</h4>
-<p>PDF で即出力。3社対応。</p>
+<p>PDF 即時出力。3社対応。</p>
 </div>
-<div class="feature-card">
-<div class="feature-num">3</div>
-<h4>ゼネコン別自動変換</h4>
+<div class="fcard">
+<div class="fcard-num">3</div>
+<h4>ゼネコン別対応</h4>
 <p>大成・清水・大林に自動対応。</p>
 </div>
-<div class="feature-card">
-<div class="feature-num">4</div>
-<h4>マルチユーザー管理</h4>
+<div class="fcard">
+<div class="fcard-num">4</div>
+<h4>マルチユーザー</h4>
 <p>最大 10 ユーザー。権限設定可。</p>
 </div>
-<div class="feature-card">
-<div class="feature-num">5</div>
+<div class="fcard">
+<div class="fcard-num">5</div>
 <h4>計算履歴記録</h4>
 <p>誰が何をいつ計算したか記録。</p>
 </div>
@@ -220,13 +205,12 @@ footer a:hover{color:#fff}
 </section>
 
 <section class="sec pricing" id="pricing">
-<div class="container">
-<div class="pricing-wrap">
-<h2>シンプルな料金</h2>
-<div class="pricing-card">
-<div class="price-tag">&yen;9,800</div>
-<div class="price-period">毎月 / 14日後に自動課金</div>
-<ul class="price-list">
+<div class="sec-inner">
+<h2>料金</h2>
+<div class="pcard">
+<div class="price">&yen;9,800</div>
+<div class="period">毎月 / 14日後に自動課金</div>
+<ul class="plist">
 <li>CO2 自動計算</li>
 <li>レポート自動生成</li>
 <li>大成・清水・大林対応</li>
@@ -235,14 +219,14 @@ footer a:hover{color:#fff}
 <li>24時間メールサポート</li>
 <li>環境省準拠</li>
 </ul>
-<a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="btn btn-g" style="display:inline-block;width:100%;padding:14px 32px;margin-bottom:20px;text-align:center">14日無料で始める</a>
+<a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="hero-btn" style="display:inline-block;width:100%;padding:12px 32px;text-align:center">14日無料で始める</a>
 </div>
 
-<h2 style="margin-top:60px;margin-bottom:50px">外部コンサルとの比較</h2>
+<h2 style="margin-top:60px;margin-bottom:40px">外部コンサルとの比較</h2>
 <table class="comp-table">
 <thead>
 <tr>
-<th>項目</th>
+<th style="width:40%">項目</th>
 <th class="green">GreenOps</th>
 <th>外部コンサル</th>
 </tr>
@@ -251,27 +235,27 @@ footer a:hover{color:#fff}
 <tr>
 <td style="font-weight:700">月額費用</td>
 <td class="green">&yen;9,800</td>
-<td>&yen;100,000 ～</td>
+<td>&yen;100,000 〜</td>
 </tr>
 <tr>
 <td style="font-weight:700">初期費用</td>
 <td class="green">&yen;0</td>
-<td>&yen;300万 ～</td>
+<td>&yen;300万 〜</td>
 </tr>
 <tr>
 <td style="font-weight:700">導入期間</td>
 <td class="green">即日</td>
-<td>2～6ヶ月</td>
+<td>2〜6ヶ月</td>
 </tr>
 <tr>
-<td style="font-weight:700">計算の自動化</td>
+<td style="font-weight:700">自動化</td>
 <td class="green">100%</td>
 <td>手動が中心</td>
 </tr>
 <tr>
 <td style="font-weight:700">レポート生成</td>
 <td class="green">1分</td>
-<td>1～2週間</td>
+<td>1〜2週間</td>
 </tr>
 </tbody>
 </table>
@@ -279,33 +263,40 @@ footer a:hover{color:#fff}
 </section>
 
 <section class="sec alt">
-<div class="container">
+<div class="sec-inner">
 <h2>よくある質問</h2>
-<div class="ck-box">
-<h3>ANDPAD を使っていないと使えない？</h3>
-<p>ANDPAD ユーザーを対象としています。API 連携での直営導入も検討中です。</p>
+<div class="qa" onclick="this.classList.toggle('active')">
+<div class="qa-q">
+<span>ANDPAD を使っていないと使えない？</span>
+<span>+</span>
 </div>
-<div class="ck-box">
-<h3>14日後に自動課金されるのは本当？</h3>
-<p>はい。14日目に月額&yen;9,800が自動課金されます。ただし、14日以内に解約すれば課金されません。</p>
+<div class="qa-a">ANDPAD ユーザーを対象としています。API 連携での直営導入も検討中です。</div>
 </div>
-<div class="ck-box">
-<h3>環境省基準で本当に大丈夫？</h3>
-<p>すべての CO2 係数は環境省公開の GHG プロトコルに基づいています。</p>
+<div class="qa" onclick="this.classList.toggle('active')">
+<div class="qa-q">
+<span>14日後に本当に課金される？</span>
+<span>+</span>
+</div>
+<div class="qa-a">はい。14日目に月額&yen;9,800が課金されます。14日以内に解約すれば課金されません。</div>
+</div>
+<div class="qa" onclick="this.classList.toggle('active')">
+<div class="qa-q">
+<span>環境省基準で本当に大丈夫？</span>
+<span>+</span>
+</div>
+<div class="qa-a">すべての CO2 係数は環境省公開の GHG プロトコルに基づいています。</div>
 </div>
 </div>
 </section>
 
-<section class="cta-sec">
-<div class="container">
+<section class="cta">
 <h2>毎月 5 時間を取り戻す</h2>
 <p>手作業から解放されて、本来の仕事に集中する時間を作る。</p>
-<a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="btn btn-g">今すぐ始める</a>
-</div>
+<a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="hero-btn">今すぐ始める</a>
 </section>
 
 <footer>
-<p>&copy; 2026 GreenOps Inc. All rights reserved.</p>
+<p>&copy; 2026 GreenOps Inc.</p>
 <a href="/tokutei.html">特定商取引法</a> | <a href="/privacy.html">プライバシー</a> | <a href="/terms.html">利用規約</a>
 </footer>
 </body>
