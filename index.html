@@ -3,125 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GreenOps - 建設業向けSaaS | 日報→給与自動化</title>
+    <title>GreenOps - 建設業向けSaaS</title>
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',sans-serif;line-height:1.6;color:#333}
-        header{background:linear-gradient(135deg,#0052cc 0%,#0066ff 100%);color:white;padding:60px 20px;text-align:center}
-        .logo{font-size:40px;font-weight:800;margin-bottom:20px}
-        .tagline{font-size:24px;font-weight:600;margin-bottom:10px}
-        .subtitle{font-size:16px;opacity:0.9;max-width:600px;margin:0 auto 40px}
-        .cta-button{display:inline-block;padding:16px 48px;background:white;color:#0052cc;border:none;border-radius:6px;font-weight:700;font-size:16px;cursor:pointer;transition:transform 200ms;text-decoration:none}
-        .cta-button:hover{transform:translateY(-2px)}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#fff;color:#333}
+        header{background:linear-gradient(135deg,#0052cc 0%,#0066ff 100%);color:white;padding:80px 20px;text-align:center}
+        h1{font-size:48px;font-weight:800;margin-bottom:20px}
+        .subtitle{font-size:20px;margin-bottom:10px;opacity:0.95}
+        .description{font-size:16px;max-width:600px;margin:20px auto 40px;opacity:0.9;line-height:1.6}
+        .btn{display:inline-block;padding:16px 48px;background:white;color:#0052cc;border:none;border-radius:6px;font-weight:700;font-size:16px;cursor:pointer;text-decoration:none;transition:all 200ms}
+        .btn:hover{transform:translateY(-2px);box-shadow:0 8px 16px rgba(0,0,0,0.2)}
         main{max-width:1000px;margin:0 auto;padding:60px 20px}
         section{margin-bottom:80px}
-        h2{font-size:32px;font-weight:800;margin-bottom:40px;padding-bottom:20px;border-bottom:3px solid #0052cc;text-align:center}
-        .problem-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:30px;margin-bottom:50px}
-        .problem-card{background:#f9f9f9;padding:30px;border-radius:8px;border-left:4px solid #0052cc}
-        .problem-card h3{font-size:18px;font-weight:700;margin-bottom:15px;color:#0052cc}
-        .problem-card p{font-size:14px;color:#666;line-height:1.8}
-        .features-list{background:white;border-radius:8px;padding:40px;box-shadow:0 2px 8px rgba(0,0,0,0.1);margin-bottom:50px}
-        .features-list ul{list-style:none}
-        .features-list li{padding:15px 0;border-bottom:1px solid #eee;font-size:15px}
-        .features-list li:last-child{border-bottom:none}
-        table{width:100%;border-collapse:collapse;background:white;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.1);margin-bottom:50px}
-        th{background:#f0f0f0;padding:15px;text-align:left;font-weight:700;font-size:14px;border-bottom:2px solid #0052cc}
+        h2{font-size:32px;font-weight:800;margin-bottom:40px;text-align:center;padding-bottom:20px;border-bottom:3px solid #0052cc}
+        .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px;margin-bottom:50px}
+        .card{background:#f9f9f9;padding:30px;border-radius:8px;border-left:4px solid #0052cc}
+        .card h3{font-size:18px;font-weight:700;margin-bottom:15px;color:#0052cc}
+        .card p{font-size:14px;color:#666;line-height:1.8}
+        table{width:100%;border-collapse:collapse;background:white;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);margin-bottom:50px}
+        th{background:#f0f0f0;padding:15px;text-align:left;font-weight:700;border-bottom:2px solid #0052cc;font-size:14px}
         td{padding:15px;border-bottom:1px solid #eee;font-size:14px}
-        tr:hover{background:#f9f9f9}
-        .timeline{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:30px}
-        .timeline-item{background:white;padding:30px;border-radius:8px;border-top:4px solid #d1242f;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
-        .timeline-item.warning{border-top-color:#b08500}
-        .timeline-item.success{border-top-color:#2da44e}
-        .timeline-item h3{font-size:16px;font-weight:700;margin-bottom:10px}
-        .timeline-item p{font-size:13px;color:#666;line-height:1.6}
-        .pricing-section{background:white;padding:50px 40px;border-radius:8px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.1);margin-bottom:50px}
+        .pricing{background:white;padding:50px;border-radius:8px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.1);margin-bottom:50px}
         .price{font-size:48px;font-weight:800;color:#0052cc;margin:20px 0}
-        .price-description{font-size:14px;color:#666;margin-bottom:30px}
-        .roi{font-size:24px;font-weight:700;color:#2da44e;margin:20px 0 10px 0}
-        footer{background:#0a0e27;color:white;padding:40px 20px;text-align:center;font-size:13px}
+        .roi{font-size:24px;font-weight:700;color:#2da44e;margin:20px 0}
+        footer{background:#0a0e27;color:white;padding:40px 20px;text-align:center;font-size:12px}
         footer a{color:#8b949e;text-decoration:none;margin:0 8px}
         footer a:hover{color:white}
-        @media(max-width:768px){.logo{font-size:32px}.tagline{font-size:18px}h2{font-size:24px}.price{font-size:36px}}
+        @media(max-width:768px){h1{font-size:32px}.cards{grid-template-columns:1fr}main{padding:40px 16px}}
     </style>
 </head>
 <body>
 <header>
-    <div class="logo">GreenOps</div>
-    <div class="tagline">建設業向けSaaS</div>
-    <div class="subtitle">日報→工事台帳→原価→給与→会計まで。<br>月末地獄を4日で解消する完全自動化パイプライン。</div>
-    <a href="/service_starter.html" class="cta-button">14日間無料で試す</a>
+    <h1>GreenOps</h1>
+    <div class="subtitle">建設業向けSaaS</div>
+    <div class="description">日報→工事台帳→原価→給与→会計まで。<br>月末地獄を4日で解消する完全自動化。</div>
+    <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="btn">14日間無料で試す</a>
 </header>
 
 <main>
 <section>
-    <h2>ANDPADユーザーが直面している課題</h2>
-    <div class="problem-cards">
-        <div class="problem-card"><h3>毎月の手作業</h3><p>日報→工事台帳→原価→給与→会計の転記作業。月20〜40時間をExcelで費やしている。</p></div>
-        <div class="problem-card"><h3>残業管理の未対応</h3><p>2024年4月施行の残業上限規制。対応率22%で大多数の企業が非準拠。給与システムの自動化が急務。</p></div>
-        <div class="problem-card"><h3>赤字工事の早期発見ができない</h3><p>月末に初めて赤字に気づく。日次のAI判定がなく、対応が遅れる。</p></div>
+    <h2>ANDPADユーザーの課題</h2>
+    <div class="cards">
+        <div class="card"><h3>毎月の手作業</h3><p>日報→工事台帳→原価→給与→会計の転記。月20〜40時間をExcelで費やしている。</p></div>
+        <div class="card"><h3>残業管理が未対応</h3><p>2024年4月施行の残業上限規制。対応率22%で大多数が非準拠。給与システム自動化が急務。</p></div>
+        <div class="card"><h3>赤字工事の早期発見ができない</h3><p>月末に初めて赤字に気づく。日次AI判定がなく、対応が遅れる。</p></div>
     </div>
 </section>
 
 <section>
-    <h2>GreenOpsが実現する5つの機能</h2>
-    <div class="features-list">
-        <ul>
-            <li><strong>日報入力</strong> - ANDPADから自動取得、または手入力。工事名・工種・人員・時間を記録。</li>
-            <li><strong>工事台帳自動転記</strong> - 日報から工事台帳へ自動で転記。ダブル入力をなくす。</li>
-            <li><strong>原価自動計算＋AI赤字判定</strong> - 毎日、自動で赤字工事を検知。警告を送信。</li>
-            <li><strong>給与基礎データ自動生成</strong> - 出面数から基本給・残業代・手当を自動計算。</li>
-            <li><strong>会計仕訳の自動生成</strong> - freee・弥生向けのCSVを自動生成。ダウンロード可能。</li>
-        </ul>
+    <h2>GreenOps 5つの機能</h2>
+    <div class="cards">
+        <div class="card"><h3>日報入力</h3><p>工事名・工種・人員・時間を記録。データはブラウザに自動保存。</p></div>
+        <div class="card"><h3>工事台帳</h3><p>日報から自動転記。工事ごとの原価がリアルタイムで可視化。</p></div>
+        <div class="card"><h3>原価管理</h3><p>予算vs実績を自動比較。赤字工事をAIが検知。</p></div>
+        <div class="card"><h3>給与計算</h3><p>基本給・残業代・手当を自動生成。ワンクリック。</p></div>
+        <div class="card"><h3>会計連携</h3><p>freee・弥生向けCSVを自動生成。ダウンロード可能。</p></div>
     </div>
 </section>
 
 <section>
     <h2>月間削減効果</h2>
     <table>
-        <thead><tr><th>処理内容</th><th>従来（月間）</th><th>GreenOps</th><th>削減時間</th></tr></thead>
+        <thead><tr><th>処理</th><th>従来（月間）</th><th>GreenOps</th><th>削減</th></tr></thead>
         <tbody>
-            <tr><td>日報→工事台帳転記</td><td>手入力 5〜10時間</td><td>自動転記</td><td><strong>8時間</strong></td></tr>
-            <tr><td>出面集計→給与基礎データ</td><td>Excel手作業 8〜12時間</td><td>自動生成</td><td><strong>10時間</strong></td></tr>
-            <tr><td>原価管理→赤字検知</td><td>月末手集計 6〜8時間</td><td>日次AI判定</td><td><strong>7時間</strong></td></tr>
-            <tr><td>工事台帳→会計仕訳</td><td>CSV作成→入力 10〜15時間</td><td>自動仕訳生成</td><td><strong>12時間</strong></td></tr>
-            <tr style="background:#f0f0f0;font-weight:700"><td colspan="3">月間削減時間の合計</td><td><strong>37〜47時間</strong></td></tr>
+            <tr><td>日報→工事台帳</td><td>手入力 5-10時間</td><td>自動転記</td><td><strong>8時間</strong></td></tr>
+            <tr><td>出面集計→給与</td><td>Excel手作業 8-12時間</td><td>自動生成</td><td><strong>10時間</strong></td></tr>
+            <tr><td>原価→赤字検知</td><td>月末手集計 6-8時間</td><td>日次AI判定</td><td><strong>7時間</strong></td></tr>
+            <tr><td>台帳→会計仕訳</td><td>CSV作成→入力 10-15時間</td><td>自動生成</td><td><strong>12時間</strong></td></tr>
+            <tr style="background:#f0f0f0;font-weight:700"><td colspan="3">月間削減時間</td><td>37〜47時間</td></tr>
         </tbody>
     </table>
-    <div class="pricing-section">
-        <h3>料金と効果</h3>
+    <div class="pricing">
+        <h3>料金</h3>
         <div class="price">&yen;9,800/月</div>
-        <div class="price-description">基本プラン（1工事あたり月15〜30件の日報対応）</div>
-        <div class="roi">ROI: 1,634%</div>
-        <p style="color:#666">プロプラン（月額&yen;29,800）なら月&yen;522,700の削減効果</p>
-    </div>
-</section>
-
-<section>
-    <h2>なぜ今なのか - 建設業の法規制ラッシュ</h2>
-    <div class="timeline">
-        <div class="timeline-item"><h3>2024年4月（既に施行）</h3><p><strong>時間外労働上限規制</strong><br>月40時間を超える残業禁止。対応率わずか22%。給与システムの自動化が急務。</p></div>
-        <div class="timeline-item warning"><h3>2025年12月（迫っている）</h3><p><strong>改正建設業法完全施行</strong><br>原価割れ禁止。経審スコア要件厳格化。日次の赤字検知が必須に。</p></div>
-        <div class="timeline-item success"><h3>2027年3月期（近い将来）</h3><p><strong>SSBJ義務化</strong><br>工事別CO2排出量の開示義務。自動算出機能が必須。</p></div>
-    </div>
-</section>
-
-<section>
-    <h2>14日間無料トライアルに含まれる機能</h2>
-    <div class="features-list">
-        <ul>
-            <li>日報入力・工事台帳・原価管理・給与計算・会計連携、すべて無制限</li>
-            <li>赤字工事の日次AI自動検知</li>
-            <li>freee・弥生向けCSV自動生成＆ダウンロード</li>
-            <li>データはブラウザに自動保存（ローカルストレージ）</li>
-            <li>初期セットアップサポート（無料）</li>
-        </ul>
+        <p style="color:#666;margin-bottom:30px">1工事あたり月15〜30件の日報に対応</p>
+        <h3>削減効果</h3>
+        <p style="font-size:18px;color:#666;margin-bottom:10px">月47.5時間削減 = <strong>&yen;142,500相当</strong></p>
+        <div class="roi">ROI: 1,453%</div>
+        <p style="color:#666">月額&yen;9,800で月&yen;142,500の削減効果</p>
     </div>
 </section>
 
 <section style="text-align:center;background:#f9f9f9;padding:60px 20px;border-radius:8px">
-    <h2 style="border:none;margin-bottom:30px">今すぐ始めましょう</h2>
-    <p style="font-size:16px;margin-bottom:30px;color:#666">建設業者が実際に使ってみて、削減効果を体感できます。<br>クレジットカード不要。すべての機能が14日間、完全無料です。</p>
-    <a href="/service_starter.html" class="cta-button" style="font-size:18px;padding:18px 60px;background:#0052cc;color:white">14日間無料トライアルを開始</a>
+    <h2 style="border:none">今すぐ始めましょう</h2>
+    <p style="font-size:16px;color:#666;margin:30px 0">建設業者が実際に使って、削減効果を体感できます。<br>クレジットカード不要。14日間、すべての機能が無料です。</p>
+    <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="btn" style="background:#0052cc;color:white">14日間無料トライアルを開始</a>
 </section>
 </main>
 
