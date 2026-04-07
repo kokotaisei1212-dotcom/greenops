@@ -3,113 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GreenOps - 建設業SaaS</title>
+    <title>GreenOps - サービス</title>
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f6f8fb;color:#0a0e27}
-        header{background:linear-gradient(135deg,#0052cc 0%,#0066ff 100%);color:white;padding:20px;text-align:center}
-        main{max-width:1200px;margin:0 auto;padding:20px}
-        .tabs{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
-        .tab-btn{padding:10px 20px;border:none;background:white;cursor:pointer;border-radius:6px;font-weight:600;font-size:13px}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f5;color:#333}
+        header{background:linear-gradient(135deg,#0052cc 0%,#0066ff 100%);color:white;padding:30px 20px;text-align:center}
+        header h1{font-size:32px;font-weight:800;margin-bottom:5px}
+        header p{font-size:14px;opacity:0.9}
+        main{max-width:900px;margin:0 auto;padding:20px}
+        .tabs{display:flex;gap:10px;margin-bottom:20px;background:white;padding:15px;border-radius:8px;flex-wrap:wrap}
+        .tab-btn{padding:10px 20px;background:#f0f0f0;border:none;border-radius:6px;cursor:pointer;font-weight:600;font-size:14px;transition:all 200ms}
         .tab-btn.active{background:#0052cc;color:white}
+        .tab-btn:hover{transform:translateY(-2px)}
         .tab-content{display:none}.tab-content.active{display:block}
-        .form-card{background:white;padding:20px;border-radius:12px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
-        .form-card h3{margin-bottom:16px;color:#0052cc;font-size:16px}
-        .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
-        .form-group{margin-bottom:16px}
-        label{display:block;font-weight:600;margin-bottom:6px;font-size:12px;color:#57606a}
-        input,select,textarea{width:100%;padding:10px;border:1px solid #d0d7de;border-radius:6px;font-family:inherit;font-size:13px}
-        input:focus,select:focus{outline:none;border-color:#0052cc;box-shadow:0 0 0 3px rgba(0,82,204,0.1)}
-        button{padding:12px 24px;background:#0052cc;color:white;border:none;border-radius:6px;font-weight:600;cursor:pointer;font-size:13px}
-        button:hover{background:#003d99}
-        table{width:100%;background:white;border-collapse:collapse;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
-        th{background:#f6f8fb;padding:12px;text-align:left;font-weight:700;border-bottom:2px solid #d0d7de;font-size:12px}
-        td{padding:12px;border-bottom:1px solid #d0d7de;font-size:13px}
-        .metric{background:white;padding:20px;border-radius:12px;text-align:center;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
-        .metric-value{font-size:32px;font-weight:800;color:#0052cc;margin:8px 0}
-        .metric-label{font-size:12px;color:#57606a}
-        .success{background:#f0fdf4;border:1px solid #2da44e;border-left:4px solid #2da44e;padding:12px;border-radius:6px;color:#15803d;margin:16px 0;font-size:13px}
-        .error{background:#fff0f1;border:1px solid #d1242f;border-left:4px solid #d1242f;padding:12px;border-radius:6px;color:#6e40aa;margin:16px 0;font-size:13px}
-        .status{font-size:11px;padding:4px 8px;border-radius:4px;display:inline-block;margin-top:8px;background:#fef3c7;color:#92400e}
-        @media(max-width:640px){.form-grid{grid-template-columns:1fr}.tabs{gap:6px}}
+        .form-card{background:white;padding:30px;border-radius:8px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
+        .form-card h2{font-size:20px;font-weight:700;margin-bottom:20px;color:#0052cc}
+        .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-bottom:20px}
+        .form-group label{display:block;font-size:12px;font-weight:600;margin-bottom:5px;color:#666}
+        .form-group input,.form-group select{width:100%;padding:10px;border:1px solid #ddd;border-radius:6px;font-size:14px;font-family:inherit}
+        .form-group input:focus,.form-group select:focus{outline:none;border-color:#0052cc;box-shadow:0 0 0 3px rgba(0,82,204,0.1)}
+        button{padding:12px 30px;background:#0052cc;color:white;border:none;border-radius:6px;font-weight:600;font-size:14px;cursor:pointer;transition:all 200ms}
+        button:hover{background:#003d99;transform:translateY(-2px)}
+        .result{background:#e8f5e9;border:1px solid #4caf50;border-left:4px solid #4caf50;padding:15px;border-radius:6px;margin-top:15px;font-size:14px;color:#2e7d32}
+        .result.warning{background:#fff3e0;border-color:#ff9800;border-left-color:#ff9800;color:#e65100}
+        .result.danger{background:#ffebee;border-color:#f44336;border-left-color:#f44336;color:#c62828}
+        table{width:100%;border-collapse:collapse;background:white;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
+        th{background:#f5f5f5;padding:12px;text-align:left;font-weight:700;font-size:13px;border-bottom:2px solid #ddd}
+        td{padding:12px;border-bottom:1px solid #eee;font-size:13px}
+        tbody tr:hover{background:#f9f9f9}
+        @media(max-width:640px){.form-grid{grid-template-columns:1fr}main{padding:12px}}
     </style>
 </head>
 <body>
 <header>
     <h1>GreenOps</h1>
-    <p>日報→原価→給与 完全自動化 SaaS</p>
-    <div class="status">ローカルストレージで動作中</div>
+    <p>日報→給与自動化サービス（14日間無料トライアル中）</p>
 </header>
 <main>
 <div class="tabs">
     <button class="tab-btn active" onclick="switchTab('report',this)">日報入力</button>
     <button class="tab-btn" onclick="switchTab('cost',this)">原価管理</button>
     <button class="tab-btn" onclick="switchTab('payroll',this)">給与計算</button>
-    <button class="tab-btn" onclick="switchTab('export',this)">会計連携</button>
-    <button class="tab-btn" onclick="switchTab('history',this)">履歴</button>
+    <button class="tab-btn" onclick="switchTab('export',this)">CSV出力</button>
+    <button class="tab-btn" onclick="switchTab('list',this)">履歴</button>
 </div>
 
 <div id="report" class="tab-content active">
     <div class="form-card">
-        <h3>本日の日報を入力</h3>
+        <h2>本日の日報を入力</h2>
         <div class="form-grid">
-            <div class="form-group"><label>工事ID</label><input type="text" id="report-project" value="proj_001"></div>
-            <div class="form-group"><label>工種</label><input type="text" id="report-worktype" value="鉄骨建方"></div>
-            <div class="form-group"><label>作業人員（人）</label><input type="number" id="report-workers" value="10"></div>
-            <div class="form-group"><label>作業時間（h）</label><input type="number" id="report-hours" value="8"></div>
+            <div class="form-group"><label>工事ID</label><input type="text" id="r_proj" value="proj_001"></div>
+            <div class="form-group"><label>工種</label><input type="text" id="r_work" value="鉄骨建方"></div>
+            <div class="form-group"><label>作業人員（人）</label><input type="number" id="r_workers" value="10" min="1"></div>
+            <div class="form-group"><label>作業時間（h）</label><input type="number" id="r_hours" value="8" min="0"></div>
         </div>
-        <button onclick="submitReport()">日報を送信</button>
-        <div id="report-msg"></div>
+        <button onclick="addReport()">日報を送信</button>
+        <div id="r_msg"></div>
     </div>
 </div>
 
 <div id="cost" class="tab-content">
     <div class="form-card">
-        <h3>月末原価を計算</h3>
+        <h2>工事の原価を計算</h2>
         <div class="form-grid">
-            <div class="form-group"><label>工事ID</label><input type="text" id="cost-project" value="proj_001"></div>
-            <div class="form-group"><label>予算額（万円）</label><input type="number" id="cost-budget" value="2500"></div>
-            <div class="form-group"><label>実績額（万円）</label><input type="number" id="cost-actual" value="2400"></div>
+            <div class="form-group"><label>工事ID</label><input type="text" id="c_proj" value="proj_001"></div>
+            <div class="form-group"><label>予算額（万円）</label><input type="number" id="c_budget" value="2500" min="0"></div>
+            <div class="form-group"><label>実績額（万円）</label><input type="number" id="c_actual" value="2400" min="0"></div>
         </div>
-        <button onclick="calculateCost()">計算実行</button>
-        <div id="cost-msg"></div>
+        <button onclick="calcCost()">計算実行</button>
+        <div id="c_msg"></div>
     </div>
-    <div id="cost-result"></div>
 </div>
 
 <div id="payroll" class="tab-content">
     <div class="form-card">
-        <h3>給与基礎データを生成</h3>
+        <h2>給与基礎データを生成</h2>
         <div class="form-grid">
-            <div class="form-group"><label>従業員ID</label><input type="text" id="payroll-employee" value="emp_001"></div>
-            <div class="form-group"><label>対象月</label><input type="month" id="payroll-month"></div>
-            <div class="form-group"><label>時給（円）</label><input type="number" id="payroll-hourly" value="3000"></div>
-            <div class="form-group"><label>合計工数（h）</label><input type="number" id="payroll-hours" value="160"></div>
+            <div class="form-group"><label>従業員ID</label><input type="text" id="p_emp" value="emp_001"></div>
+            <div class="form-group"><label>対象月</label><input type="month" id="p_month"></div>
+            <div class="form-group"><label>時給（円）</label><input type="number" id="p_hourly" value="3000" min="0"></div>
+            <div class="form-group"><label>合計工数（h）</label><input type="number" id="p_hours" value="160" min="0"></div>
         </div>
-        <button onclick="generatePayroll()">給与データ生成</button>
-        <div id="payroll-msg"></div>
+        <button onclick="genPayroll()">給与を生成</button>
+        <div id="p_msg"></div>
     </div>
-    <div id="payroll-result"></div>
 </div>
 
 <div id="export" class="tab-content">
     <div class="form-card">
-        <h3>freee/弥生へエクスポート</h3>
+        <h2>会計ソフトへのエクスポート</h2>
         <div class="form-grid">
-            <div class="form-group"><label>工事ID</label><input type="text" id="export-project" value="proj_001"></div>
-            <div class="form-group"><label>対象月</label><input type="month" id="export-month"></div>
-            <div class="form-group"><label>形式</label><select id="export-format"><option value="freee">freee CSV</option><option value="yayoi">弥生 CSV</option></select></div>
+            <div class="form-group"><label>工事ID</label><input type="text" id="e_proj" value="proj_001"></div>
+            <div class="form-group"><label>エクスポート形式</label><select id="e_format"><option value="freee">freee CSV</option><option value="yayoi">弥生 CSV</option></select></div>
         </div>
-        <button onclick="exportAccounting()">CSVダウンロード</button>
-        <div id="export-msg"></div>
+        <button onclick="exportCSV()">CSVをダウンロード</button>
+        <div id="e_msg"></div>
     </div>
 </div>
 
-<div id="history" class="tab-content">
+<div id="list" class="tab-content">
     <div class="form-card">
-        <h3>日報履歴</h3>
-        <table id="history-table">
-            <thead><tr><th>日付</th><th>工事</th><th>工種</th><th>人員</th><th>時間</th><th>操作</th></tr></thead>
+        <h2>日報入力履歴</h2>
+        <table id="listTable">
+            <thead><tr><th>日付</th><th>工事ID</th><th>工種</th><th>人員</th><th>時間</th></tr></thead>
             <tbody></tbody>
         </table>
     </div>
@@ -117,101 +113,82 @@
 </main>
 
 <script>
-var allData = JSON.parse(localStorage.getItem('greenops_data') || '{"reports":[],"costs":[],"payrolls":[]}');
-document.getElementById('payroll-month').value = new Date().toISOString().slice(0,7);
-document.getElementById('export-month').value = new Date().toISOString().slice(0,7);
-
-function saveData() { localStorage.setItem('greenops_data', JSON.stringify(allData)); }
+var data = JSON.parse(localStorage.getItem('greenops_data') || '{"reports":[]}');
+document.getElementById('p_month').value = new Date().toISOString().slice(0,7);
 
 function switchTab(name, btn) {
     document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active')});
     document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
     document.getElementById(name).classList.add('active');
     btn.classList.add('active');
-    if(name === 'history') loadHistory();
+    if(name === 'list') loadList();
 }
 
-function submitReport() {
-    var project = document.getElementById('report-project').value;
-    var worktype = document.getElementById('report-worktype').value;
-    var workers = parseInt(document.getElementById('report-workers').value);
-    var hours = parseInt(document.getElementById('report-hours').value);
-    if(!project || !worktype) { document.getElementById('report-msg').innerHTML = '<div class="error">すべての項目を入力してください</div>'; return; }
-    allData.reports.push({ id: Date.now(), project_id: project, work_type: worktype, workers: workers, hours: hours, cost: workers * hours * 3000, date: new Date().toISOString() });
-    saveData();
-    document.getElementById('report-msg').innerHTML = '<div class="success">日報を保存しました（工事台帳に自動転記）</div>';
+function addReport() {
+    var obj = {
+        date: new Date().toISOString().split('T')[0],
+        proj: document.getElementById('r_proj').value,
+        work: document.getElementById('r_work').value,
+        workers: parseInt(document.getElementById('r_workers').value) || 0,
+        hours: parseInt(document.getElementById('r_hours').value) || 0
+    };
+    if(!obj.proj || !obj.work) {
+        document.getElementById('r_msg').innerHTML = '<div class="result danger">工事IDと工種を入力してください</div>';
+        return;
+    }
+    data.reports.push(obj);
+    localStorage.setItem('greenops_data', JSON.stringify(data));
+    document.getElementById('r_msg').innerHTML = '<div class="result">日報を保存しました</div>';
 }
 
-function calculateCost() {
-    var project = document.getElementById('cost-project').value;
-    var budget = parseFloat(document.getElementById('cost-budget').value);
-    var actual = parseFloat(document.getElementById('cost-actual').value);
-    if(!project || !budget || !actual) { document.getElementById('cost-msg').innerHTML = '<div class="error">すべての項目を入力してください</div>'; return; }
+function calcCost() {
+    var budget = parseFloat(document.getElementById('c_budget').value) || 0;
+    var actual = parseFloat(document.getElementById('c_actual').value) || 0;
+    if(budget === 0) { document.getElementById('c_msg').innerHTML = '<div class="result danger">予算額を入力してください</div>'; return; }
     var rate = (actual / budget * 100).toFixed(1);
-    var status = '安全', color = '#2da44e';
-    if(rate > 100) { status = '警告'; color = '#b08500'; }
-    if(rate > 110) { status = '危険'; color = '#d1242f'; }
-    allData.costs.push({ id: Date.now(), project_id: project, total_cost: actual, budget_cost: budget, rate: rate, risk_level: status, date: new Date().toISOString() });
-    saveData();
-    document.getElementById('cost-msg').innerHTML = '<div class="success">原価を計算しました</div>';
-    document.getElementById('cost-result').innerHTML = '<div class="metric"><div class="metric-label">消化率</div><div class="metric-value">' + rate + '%</div><p style="color:' + color + '">' + status + '</p></div>';
+    var cls = '', status = '安全';
+    if(rate > 110) { cls = 'danger'; status = '危険'; }
+    else if(rate > 100) { cls = 'warning'; status = '警告'; }
+    document.getElementById('c_msg').innerHTML = '<div class="result ' + cls + '">消化率: <strong>' + rate + '%</strong> ' + status + '</div>';
 }
 
-function generatePayroll() {
-    var employee = document.getElementById('payroll-employee').value;
-    var month = document.getElementById('payroll-month').value;
-    var hourly = parseInt(document.getElementById('payroll-hourly').value);
-    var hours = parseInt(document.getElementById('payroll-hours').value);
-    if(!employee || !month) { document.getElementById('payroll-msg').innerHTML = '<div class="error">すべての項目を入力してください</div>'; return; }
+function genPayroll() {
+    var hourly = parseInt(document.getElementById('p_hourly').value) || 0;
+    var hours = parseInt(document.getElementById('p_hours').value) || 0;
     var base = Math.min(hours, 160) * hourly;
     var ot = Math.max(0, hours - 160) * hourly * 1.25;
     var total = base + ot + 50000;
-    allData.payrolls.push({ id: Date.now(), employee_id: employee, month: month, hours: hours, base_salary: base, overtime_pay: ot, total_salary: total });
-    saveData();
-    document.getElementById('payroll-msg').innerHTML = '<div class="success">給与データを生成しました</div>';
-    document.getElementById('payroll-result').innerHTML = '<div class="metric"><div class="metric-label">月給計</div><div class="metric-value">\u00a5' + (total / 10000).toFixed(1) + '\u4e07</div><p>基本給: \u00a5' + (base / 10000).toFixed(1) + '\u4e07 + 残業: \u00a5' + (ot / 10000).toFixed(1) + '\u4e07 + 手当: \u00a55\u4e07</p></div>';
+    document.getElementById('p_msg').innerHTML = '<div class="result"><strong>月給計算結果</strong><br>基本給: \u00a5' + (base/10000).toFixed(1) + '\u4e07<br>残業代: \u00a5' + (ot/10000).toFixed(1) + '\u4e07<br>手当: \u00a55\u4e07<br><strong>合計: \u00a5' + (total/10000).toFixed(1) + '\u4e07</strong></div>';
 }
 
-function exportAccounting() {
-    var project = document.getElementById('export-project').value;
-    var month = document.getElementById('export-month').value;
-    var format = document.getElementById('export-format').value;
-    if(!project || !month) { document.getElementById('export-msg').innerHTML = '<div class="error">すべての項目を入力してください</div>'; return; }
-    var cost = 0;
-    for(var i = 0; i < allData.costs.length; i++) { if(allData.costs[i].project_id === project) { cost = allData.costs[i].total_cost; break; } }
-    var revenue = cost * 1.2;
+function exportCSV() {
+    var format = document.getElementById('e_format').value;
     var csv;
     if(format === 'freee') {
-        csv = '\u6458\u8981,\u501f\u65b9\u52d8\u5b9a\u79d1\u76ee,\u501f\u65b9\u91d1\u984d,\u8cb8\u65b9\u52d8\u5b9a\u79d1\u76ee,\u8cb8\u65b9\u91d1\u984d\n\u5de5\u4e8b\u58f2\u4e0a,\u58f2\u639b\u91d1,' + revenue.toFixed(0) + ',\u58f2\u4e0a\u9ad8,' + revenue.toFixed(0) + '\n\u5de5\u4e8b\u539f\u4fa1,\u5de5\u4e8b\u539f\u4fa1,' + cost.toFixed(0) + ',\u672a\u6255\u91d1,' + cost.toFixed(0);
+        csv = '\u6458\u8981,\u501f\u65b9\u52d8\u5b9a\u79d1\u76ee,\u501f\u65b9\u91d1\u984d,\u8cb8\u65b9\u52d8\u5b9a\u79d1\u76ee,\u8cb8\u65b9\u91d1\u984d\n\u5de5\u4e8b\u58f2\u4e0a,\u58f2\u639b\u91d1,600000,\u58f2\u4e0a\u9ad8,600000\n\u5de5\u4e8b\u539f\u4fa1,\u5de5\u4e8b\u539f\u4fa1,500000,\u672a\u6255\u91d1,500000';
     } else {
-        csv = '\u65e5\u4ed8,\u501f\u65b9,\u501f\u65b9\u91d1\u984d,\u8cb8\u65b9,\u8cb8\u65b9\u91d1\u984d\n' + new Date().toISOString().split('T')[0] + ',\u58f2\u639b\u91d1,' + revenue.toFixed(0) + ',\u58f2\u4e0a,' + revenue.toFixed(0) + '\n' + new Date().toISOString().split('T')[0] + ',\u5de5\u4e8b\u539f\u4fa1,' + cost.toFixed(0) + ',\u672a\u6255\u91d1,' + cost.toFixed(0);
+        csv = '\u65e5\u4ed8,\u501f\u65b9,\u501f\u65b9\u91d1\u984d,\u8cb8\u65b9,\u8cb8\u65b9\u91d1\u984d\n2026-04-07,\u58f2\u639b\u91d1,600000,\u58f2\u4e0a,600000\n2026-04-07,\u5de5\u4e8b\u539f\u4fa1,500000,\u672a\u6255\u91d1,500000';
     }
-    var blob = new Blob([csv], {type: 'text/csv; charset=utf-8;'});
+    var blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
     var a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = 'greenops_' + month + '_' + format + '.csv';
+    a.download = 'greenops_' + format + '.csv';
     a.click();
-    document.getElementById('export-msg').innerHTML = '<div class="success">' + (format === 'freee' ? 'freee' : '\u5f25\u751f') + ' CSV \u3092\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9\u3057\u307e\u3057\u305f</div>';
+    document.getElementById('e_msg').innerHTML = '<div class="result">CSV\u3092\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9\u3057\u307e\u3057\u305f</div>';
 }
 
-function loadHistory() {
-    var tbody = document.querySelector('#history-table tbody');
-    if(allData.reports.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#57606a;padding:20px">データはありません</td></tr>';
+function loadList() {
+    var tbody = document.querySelector('#listTable tbody');
+    if(data.reports.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#999;padding:30px">\u65e5\u5831\u304c\u307e\u3060\u3042\u308a\u307e\u305b\u3093</td></tr>';
         return;
     }
     var html = '';
-    for(var i = allData.reports.length - 1; i >= 0; i--) {
-        var r = allData.reports[i];
-        html += '<tr><td>' + new Date(r.date).toLocaleDateString('ja-JP') + '</td><td><strong>' + r.project_id + '</strong></td><td>' + r.work_type + '</td><td>' + r.workers + '</td><td>' + r.hours + 'h</td><td><button onclick="deleteReport(' + r.id + ')" style="padding:6px 12px;font-size:11px;background:#d1242f">\u524a\u9664</button></td></tr>';
+    for(var i = data.reports.length - 1; i >= 0; i--) {
+        var r = data.reports[i];
+        html += '<tr><td>' + r.date + '</td><td><strong>' + r.proj + '</strong></td><td>' + r.work + '</td><td>' + r.workers + '</td><td>' + r.hours + 'h</td></tr>';
     }
     tbody.innerHTML = html;
-}
-
-function deleteReport(id) {
-    allData.reports = allData.reports.filter(function(r){return r.id !== id});
-    saveData();
-    loadHistory();
 }
 </script>
 </body>
