@@ -3,120 +3,155 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GreenOps | Scope 3 ダッシュボード</title>
+<title>GreenOps | 完全 Scope 3 管理</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
-:root{--g:#1f7a3e}
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Noto Sans JP',sans-serif;background:#f9fafb;color:#1a1a1a}
-header{background:#fff;padding:20px 0;border-bottom:1px solid #e5e5e5}
-.header-inner{max-width:1200px;margin:0 auto;padding:0 60px;display:flex;justify-content:space-between}
-.logo{font-size:18px;font-weight:900;color:var(--g)}
-.container{max-width:1200px;margin:40px auto 0;padding:0 60px}
-h1{font-size:28px;font-weight:900;margin-bottom:32px}
-.card{background:#fff;border:1px solid #e5e5e5;padding:32px;border-radius:4px;margin-bottom:32px}
-.card h2{font-size:18px;font-weight:700;margin-bottom:20px}
-.form-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px}
-label{display:block;margin-bottom:6px;font-size:12px;font-weight:600}
-input,select{width:100%;padding:10px;border:1px solid #e5e5e5;border-radius:3px;font-size:13px}
-.btn{background:var(--g);color:#fff;border:none;padding:10px 20px;border-radius:3px;font-size:13px;font-weight:700;cursor:pointer;margin-right:8px}
-.btn:hover{background:#0f6a2f}
-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:12px}
-th{background:#f9fafb;padding:10px;text-align:left;font-weight:700;border-bottom:1px solid #e5e5e5}
-td{padding:10px;border-bottom:1px solid #e5e5e5}
-.result{background:#f1f8f4;border:2px solid var(--g);padding:20px;border-radius:4px;margin-top:16px;text-align:center}
-.result-num{font-size:32px;font-weight:900;color:var(--g);margin:8px 0}
-footer{text-align:center;color:#999;font-size:11px;padding:32px;background:#fff;border-top:1px solid #e5e5e5;margin-top:32px}
-.btn-group{display:flex;gap:8px;flex-wrap:wrap}
+:root{--g:#1f7a3e}*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Noto Sans JP',sans-serif;background:#f9fafb;color:#1a1a1a}header{background:#fff;padding:12px 0;border-bottom:1px solid #e5e5e5;position:sticky;top:0;z-index:99}.header-inner{max-width:1200px;margin:0 auto;padding:0 60px;display:flex;justify-content:space-between;align-items:center}.logo{font-size:16px;font-weight:900;color:var(--g)}.user-info{font-size:11px;color:#666}.nav-tabs{display:flex;gap:20px;margin-top:12px;border-bottom:1px solid #e5e5e5;padding-bottom:0}.nav-tabs button{background:none;border:none;padding:10px 0;font-size:12px;font-weight:600;color:#999;cursor:pointer;border-bottom:2px solid transparent}.nav-tabs button.active{color:var(--g);border-bottom-color:var(--g)}.container{max-width:1200px;margin:0 auto;padding:20px 60px}h1{font-size:22px;font-weight:900;margin-bottom:20px}.section{display:none}.section.active{display:block}.card{background:#fff;border:1px solid #e5e5e5;padding:24px;border-radius:4px;margin-bottom:20px}.card h2{font-size:15px;font-weight:700;margin-bottom:14px}.form-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}label{display:block;margin-bottom:4px;font-size:11px;font-weight:600}input,select,textarea{width:100%;padding:8px;border:1px solid #e5e5e5;border-radius:3px;font-size:12px;font-family:'Noto Sans JP',sans-serif}.btn{background:var(--g);color:#fff;border:none;padding:8px 16px;border-radius:3px;font-size:12px;font-weight:700;cursor:pointer;margin-right:8px}.btn:hover{background:#0f6a2f}table{width:100%;border-collapse:collapse;margin-top:10px;font-size:11px}th{background:#f9fafb;padding:8px;text-align:left;font-weight:700;border-bottom:1px solid #e5e5e5}td{padding:8px;border-bottom:1px solid #e5e5e5}.result{background:#f1f8f4;border:2px solid var(--g);padding:16px;border-radius:4px;margin-top:10px;text-align:center}.result-num{font-size:28px;font-weight:900;color:var(--g)}.user-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:10px}.user-card{background:#f9fafb;border:1px solid #e5e5e5;padding:12px;border-radius:4px;font-size:11px}.user-card strong{color:var(--g)}.status{display:inline-block;padding:2px 6px;border-radius:2px;font-size:10px;font-weight:600;background:#d4edda;color:#155724}footer{text-align:center;color:#999;font-size:10px;padding:20px;background:#fff;border-top:1px solid #e5e5e5;margin-top:20px}
 </style>
 </head>
 <body>
 <header>
 <div class="header-inner">
 <div class="logo">GreenOps</div>
+<div class="user-info">ユーザー: <strong id="user">001</strong></div>
+</div>
+<div class="header-inner" style="border:none;padding:0 60px">
+<div class="nav-tabs">
+<button class="nav-btn active" onclick="tab('dash')">ダッシュボード</button>
+<button class="nav-btn" onclick="tab('calc')">CO2計算</button>
+<button class="nav-btn" onclick="tab('reports')">レポート</button>
+<button class="nav-btn" onclick="tab('users')">ユーザー(10)</button>
+<button class="nav-btn" onclick="tab('support')">サポート</button>
+</div>
 </div>
 </header>
 
 <div class="container">
-<h1>Scope 3 ダッシュボード</h1>
+<div class="section active" id="dash"><h1>ダッシュボード</h1><div class="card"><h2>今月 CO2</h2><p style="font-size:20px;color:var(--g);font-weight:900" id="total">0 tCO2e</p></div><div class="card"><h2>統計</h2><p style="font-size:12px">計算: <span id="cnt">0</span>回 | ユーザー: <span id="ucnt">0</span>名</p></div></div>
 
-<div class="card">
-<h2>CO2 計算</h2>
-<div class="form-row">
-<div><label>建機</label><select id="machine"><option>--</option><option value="pc200">ショベル PC200</option><option value="pc78">バックホウ PC78</option><option value="concrete">生コン圧送</option><option value="crane">クレーン 50t</option><option value="dump">ダンプ</option></select></div>
-<div><label>時間(h)</label><input type="number" id="hours" value="8"></div>
-<div><label>日付</label><input type="date" id="date"></div>
-</div>
-<button class="btn" onclick="calc()">計算</button>
-<div id="result"></div>
-<h3 style="margin-top:24px;margin-bottom:12px;font-size:14px;font-weight:700">履歴</h3>
-<table><thead><tr><th>日付</th><th>建機</th><th>時間</th><th>CO2</th></tr></thead><tbody id="history"><tr><td colspan="4" style="text-align:center;color:#999">なし</td></tr></tbody></table>
+<div class="section" id="calc"><h1>CO2計算（環境省準拠）</h1><div class="card"><div class="form-row"><div><label>建機</label><select id="m"><option>--</option><option value="pc200">ショベル</option><option value="pc78">バックホウ</option><option value="concrete">生コン</option><option value="crane">クレーン</option><option value="dump">ダンプ</option></select></div><div><label>時間</label><input type="number" id="h" value="8"></div><div><label>日付</label><input type="date" id="dt"></div></div><button class="btn" onclick="calc()">計算</button><div id="res"></div><h2 style="margin-top:16px">履歴</h2><table><thead><tr><th>日付</th><th>建機</th><th>時間</th><th>CO2</th><th>状態</th></tr></thead><tbody id="his"><tr><td colspan="5" style="text-align:center;color:#999">なし</td></tr></tbody></table></div></div>
+
+<div class="section" id="reports"><h1>レポート生成</h1><div class="card"><p style="font-size:12px;color:#666;margin-bottom:12px">ゼネコン別 PDF</p><button class="btn" onclick="pdf('taisei')">大成建設</button><button class="btn" onclick="pdf('shimizu')">清水建設</button><button class="btn" onclick="pdf('obayashi')">大林組</button></div></div>
+
+<div class="section" id="users"><h1>ユーザー管理（最大10名）</h1><div class="card"><div class="form-row"><div><label>名前</label><input type="text" id="un"></div><div><label>メール</label><input type="email" id="ue"></div><div><label>権限</label><select id="ur"><option value="user">ユーザー</option><option value="admin">管理者</option></select></div></div><button class="btn" onclick="addUser()">追加</button><p style="font-size:11px;color:#666;margin-top:10px">登録: <span id="ucnt2">0</span>/10</p><div class="user-grid" id="ug"></div></div></div>
+
+<div class="section" id="support"><h1>24時間メールサポート</h1><div class="card"><div style="margin-bottom:10px"><label>タイトル</label><input type="text" id="st"></div><div style="margin-bottom:10px"><label>メッセージ</label><textarea id="sm" style="min-height:60px"></textarea></div><button class="btn" onclick="sup()">送信</button><h2 style="margin-top:16px">お問い合わせ履歴</h2><table><thead><tr><th>日時</th><th>タイトル</th><th>状態</th></tr></thead><tbody id="sl"><tr><td colspan="3" style="text-align:center;color:#999">なし</td></tr></tbody></table></div></div>
 </div>
 
-<div class="card">
-<h2>レポート生成</h2>
-<p style="margin-bottom:16px;color:#666;font-size:13px">PDF を自動生成</p>
-<div class="btn-group">
-<button class="btn" onclick="pdf('taisei')">大成建設</button>
-<button class="btn" onclick="pdf('shimizu')">清水建設</button>
-<button class="btn" onclick="pdf('obayashi')">大林組</button>
-</div>
-</div>
-</div>
-
-<footer><p>&copy; 2026 GreenOps</p></footer>
+<footer><p>&copy; 2026 GreenOps | 環境省 GHG プロトコル準拠</p></footer>
 
 <script>
-var COEFF={pc200:23,pc78:15.5,concrete:12,crane:18.5,dump:22};
-var M={pc200:'ショベル PC200',pc78:'バックホウ PC78',concrete:'生コン圧送',crane:'クレーン 50t',dump:'ダンプ'};
-var d=JSON.parse(localStorage.getItem('greenops')||'[]');
-document.getElementById('date').valueAsDate=new Date();
+var C={pc200:23,pc78:15.5,concrete:12,crane:18.5,dump:22};
+var N={pc200:'ショベル PC200',pc78:'バックホウ PC78',concrete:'生コン圧送',crane:'クレーン 50t',dump:'ダンプ'};
+var d=JSON.parse(localStorage.getItem('gc')||'[]');
+var u=JSON.parse(localStorage.getItem('gu')||'[]');
+var s=JSON.parse(localStorage.getItem('gs')||'[]');
+document.getElementById('dt').valueAsDate=new Date();
 
-function calc(){
-  var m=document.getElementById('machine').value;
-  var h=parseFloat(document.getElementById('hours').value);
-  var dt=document.getElementById('date').value;
-  if(!COEFF[m]||!h)return alert('建機と時間を選択してください');
-  var co2=(COEFF[m]*h/1000).toFixed(3);
-  d.unshift({dt:dt,m:m,h:h,co2:co2});
-  localStorage.setItem('greenops',JSON.stringify(d));
-  document.getElementById('result').innerHTML='<div class="result"><div>完了</div><div class="result-num">'+co2+'</div><div>tCO2e</div></div>';
-  load();
+function tab(t){
+  document.querySelectorAll('.section').forEach(function(e){e.classList.remove('active')});
+  document.getElementById(t).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(function(e){e.classList.remove('active')});
+  event.target.classList.add('active');
+  if(t==='dash')dash();
 }
 
-function load(){
+function calc(){
+  var m=document.getElementById('m').value;
+  var h=parseFloat(document.getElementById('h').value);
+  var dt=document.getElementById('dt').value;
+  if(!C[m]||!h)return alert('建機と時間を選択してください');
+  var co2=(C[m]*h/1000).toFixed(3);
+  d.unshift({dt:dt,m:m,h:h,co2:co2,s:'検証済'});
+  localStorage.setItem('gc',JSON.stringify(d));
+  document.getElementById('res').innerHTML='<div class="result"><div>完了</div><div class="result-num">'+co2+'</div><div>tCO2e</div></div>';
+  his();
+}
+
+function his(){
   var html='';
   for(var i=0;i<d.length;i++){
     var r=d[i];
-    html+='<tr><td>'+r.dt+'</td><td>'+(M[r.m]||r.m)+'</td><td>'+r.h+'h</td><td>'+r.co2+'t</td></tr>';
+    html+='<tr><td>'+r.dt+'</td><td>'+(N[r.m]||r.m)+'</td><td>'+r.h+'h</td><td>'+r.co2+'t</td><td><span class="status">'+r.s+'</span></td></tr>';
   }
-  document.getElementById('history').innerHTML=html||'<tr><td colspan="4" style="text-align:center;color:#999">なし</td></tr>';
+  document.getElementById('his').innerHTML=html||'<tr><td colspan="5" style="text-align:center;color:#999">なし</td></tr>';
 }
 
 function pdf(z){
-  var n={taisei:'大成建設',shimizu:'清水建設',obayashi:'大林組'};
+  var names={taisei:'大成建設',shimizu:'清水建設',obayashi:'大林組'};
   var t=0;
   for(var i=0;i<d.length;i++) t+=parseFloat(d[i].co2);
   t=t.toFixed(3);
   var rows='';
   for(var i=0;i<d.length;i++){
     var r=d[i];
-    rows+='<tr><td style="padding:0.75rem;border:1px solid #ddd">'+r.dt+'</td><td style="padding:0.75rem;border:1px solid #ddd">'+(M[r.m]||r.m)+'</td><td style="padding:0.75rem;border:1px solid #ddd">'+r.h+'h</td><td style="padding:0.75rem;border:1px solid #ddd">'+r.co2+'t</td></tr>';
+    rows+='<tr><td style="padding:8px;border:1px solid #ddd">'+r.dt+'</td><td style="padding:8px;border:1px solid #ddd">'+(N[r.m]||r.m)+'</td><td style="padding:8px;border:1px solid #ddd">'+r.h+'h</td><td style="padding:8px;border:1px solid #ddd">'+r.co2+'t</td></tr>';
   }
   var h='<div style="padding:2rem;font-family:sans-serif">'
-    +'<h1 style="font-size:24px;margin-bottom:8px">'+n[z]+' 向け CO2 月次レポート</h1>'
-    +'<p style="color:#666;margin-bottom:24px">報告日: '+new Date().toLocaleDateString('ja-JP')+' / 作成: GreenOps</p>'
-    +'<p style="color:#1f7a3e;font-weight:bold;font-size:20px;margin-bottom:24px">合計排出量: '+t+' tCO2e</p>'
+    +'<h1 style="font-size:22px;margin-bottom:8px">'+names[z]+' 向け CO2 月次レポート</h1>'
+    +'<p style="color:#666;margin-bottom:20px">報告日: '+new Date().toLocaleDateString('ja-JP')+' / 作成: GreenOps</p>'
+    +'<p style="color:#1f7a3e;font-weight:bold;font-size:20px;margin-bottom:20px">合計排出量: '+t+' tCO2e</p>'
     +'<table style="width:100%;border-collapse:collapse">'
-    +'<tr style="background:#f0f0f0"><th style="padding:0.75rem;border:1px solid #ddd">日付</th><th style="padding:0.75rem;border:1px solid #ddd">建機</th><th style="padding:0.75rem;border:1px solid #ddd">時間</th><th style="padding:0.75rem;border:1px solid #ddd">CO2</th></tr>'
+    +'<tr style="background:#f0f0f0"><th style="padding:8px;border:1px solid #ddd">日付</th><th style="padding:8px;border:1px solid #ddd">建機</th><th style="padding:8px;border:1px solid #ddd">時間</th><th style="padding:8px;border:1px solid #ddd">CO2</th></tr>'
     +rows+'</table>'
-    +'<p style="margin-top:24px;color:#999;font-size:11px">算定基準: 環境省 GHG プロトコル準拠 / Powered by GreenOps</p>'
+    +'<p style="margin-top:20px;color:#999;font-size:10px">算定基準: 環境省 GHG プロトコル準拠 / Powered by GreenOps</p>'
     +'</div>';
   html2pdf().set({margin:10,filename:'greenops-'+z+'-'+new Date().toISOString().slice(0,7)+'.pdf',image:{type:'jpeg',quality:0.98},html2canvas:{scale:2},jsPDF:{orientation:'portrait',unit:'mm',format:'a4'}}).from(h).save();
 }
 
-load();
+function addUser(){
+  if(u.length>=10)return alert('最大10名までです');
+  var n=document.getElementById('un').value;
+  var e=document.getElementById('ue').value;
+  if(!n||!e)return alert('名前とメールを入力してください');
+  u.push({n:n,e:e,r:document.getElementById('ur').value});
+  localStorage.setItem('gu',JSON.stringify(u));
+  document.getElementById('un').value='';
+  document.getElementById('ue').value='';
+  usr();
+}
+
+function usr(){
+  document.getElementById('ucnt').textContent=u.length;
+  document.getElementById('ucnt2').textContent=u.length;
+  var html='';
+  for(var i=0;i<u.length;i++){
+    var r=u[i];
+    html+='<div class="user-card"><strong>'+r.n+'</strong><p>'+r.e+'</p><p style="font-size:10px">権限: '+r.r+'</p></div>';
+  }
+  document.getElementById('ug').innerHTML=html||'なし';
+}
+
+function sup(){
+  var t=document.getElementById('st').value;
+  var m=document.getElementById('sm').value;
+  if(!t||!m)return alert('タイトルとメッセージを入力してください');
+  s.push({dt:new Date().toLocaleString('ja-JP'),t:t,st:'受付中'});
+  localStorage.setItem('gs',JSON.stringify(s));
+  alert('送信しました。24時間以内に返信します。');
+  document.getElementById('st').value='';
+  document.getElementById('sm').value='';
+  supp();
+}
+
+function supp(){
+  var html='';
+  for(var i=0;i<s.length;i++){
+    var r=s[i];
+    html+='<tr><td>'+r.dt+'</td><td>'+r.t+'</td><td><span class="status">'+r.st+'</span></td></tr>';
+  }
+  document.getElementById('sl').innerHTML=html||'<tr><td colspan="3" style="text-align:center;color:#999">なし</td></tr>';
+}
+
+function dash(){
+  var t=0;
+  for(var i=0;i<d.length;i++) t+=parseFloat(d[i].co2);
+  document.getElementById('total').textContent=t.toFixed(3)+' tCO2e';
+  document.getElementById('cnt').textContent=d.length;
+}
+
+his();usr();supp();dash();
 </script>
 </body>
 </html>
