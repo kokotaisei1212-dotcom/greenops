@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GreenOps - 赤字工事救済AI</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh}
+    .container{max-width:900px;margin:0 auto;padding:40px 20px}
+    .header{text-align:center;color:white;margin-bottom:40px}
+    .header h1{font-size:32px;margin-bottom:10px}
+    .header p{font-size:18px;opacity:0.9}
+    .main-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-bottom:40px}
+    .card{background:white;border-radius:12px;padding:30px;box-shadow:0 10px 40px rgba(0,0,0,0.2)}
+    .card h2{color:#333;margin-bottom:20px;font-size:20px;border-bottom:2px solid #667eea;padding-bottom:10px}
+    .metric{background:#f9f9f9;padding:20px;border-radius:8px;margin-bottom:15px;border-left:4px solid #667eea}
+    .metric-label{color:#666;font-size:13px;font-weight:600;text-transform:uppercase;margin-bottom:8px}
+    .metric-value{font-size:28px;font-weight:700;color:#333}
+    .metric.critical{border-left-color:#ff4757;background:#fff5f5}
+    .metric.warning{border-left-color:#ffa502;background:#fffbf0}
+    .metric.safe{border-left-color:#2ed573;background:#f0fff4}
+    .loading{text-align:center;padding:60px 20px}
+    .spinner{display:inline-block;width:50px;height:50px;border:4px solid rgba(255,255,255,0.3);border-top:4px solid white;border-radius:50%;animation:spin 1s linear infinite}
+    @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+    .loading p{color:white;margin-top:20px;font-size:18px;font-weight:600}
+    .rec-item{background:white;padding:12px;margin-bottom:10px;border-radius:6px;border-left:3px solid #667eea;font-size:14px;color:#333}
+    .error{background:#ffe0e0;border:2px solid #ff4757;color:#ff4757;padding:20px;border-radius:8px;text-align:center;font-weight:600;display:none}
+    @media(max-width:768px){.main-grid{grid-template-columns:1fr}.header h1{font-size:24px}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>GreenOps - 赤字工事救済AI</h1>
+      <p>ANDPADプロジェクトをAIが自動分析 - リアルタイム赤字検知</p>
+    </div>
+    <div class="loading" id="loading"><div class="spinner"></div><p>プロジェクトを分析中...</p></div>
+    <div id="resultsContainer" style="display:none">
+      <div class="main-grid">
+        <div class="card">
+          <h2>原価分析</h2>
+          <div class="metric" id="lossMetric"><div class="metric-label">赤字化確率</div><div class="metric-value" id="lossProb">0%</div></div>
+          <div class="metric"><div class="metric-label">推定赤字額</div><div class="metric-value" id="lossAmount">&yen;0</div></div>
+        </div>
+        <div class="card">
+          <h2>工期・安全分析</h2>
+          <div class="metric"><div class="metric-label">工期遅延予測</div><div class="metric-value" id="delay">0日</div></div>
+          <div class="metric" id="safetyMetric"><div class="metric-label">安全スコア</div><div class="metric-value" id="safetyScore">0/100</div></div>
+        </div>
+      </div>
+      <div class="card"><h2>推奨対応</h2><div id="recommendations"></div></div>
+    </div>
+    <div id="error" class="error"></div>
+  </div>
+  <script>
+    window.addEventListener('load', function(){
+      var params = new URLSearchParams(window.location.search);
+      var sessionId = params.get('session_id');
+      if (!sessionId) { showError('セッションIDが指定されていません'); return; }
+      analyze(sessionId);
+    });
+
+    function analyze(projectId) {
+      fetch('/api/analyze-project', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ project_id: projectId })
+      })
+      .then(function(res){ return res.json(); })
+      .then(function(data){
+        if (data.error) throw new Error(data.error);
+        displayResults(data);
+      })
+      .catch(function(err){ showError(err.message); });
+    }
+
+    function displayResults(data) {
+      var a = data.ai_analysis || {};
+      var c = a.cost || {};
+      var s = a.schedule || {};
+      var sf = a.safety || {};
+
+      var lossProb = (c.loss_probability || 0) * 100;
+      var severity = (c.severity || 'SAFE').toLowerCase();
+      document.getElementById('lossProb').textContent = lossProb.toFixed(1) + '%';
+      document.getElementById('lossMetric').className = 'metric ' + severity;
+      document.getElementById('lossAmount').textContent = '\u00a5' + Math.floor(c.estimated_loss_yen || 0).toLocaleString();
+      document.getElementById('delay').textContent = (s.predicted_delay_days || 0) + '\u65e5';
+
+      var score = sf.overall_score || 0;
+      document.getElementById('safetyScore').textContent = score + '/100';
+      var riskClass = sf.risk_level === 'CRITICAL' ? 'critical' : sf.risk_level === 'HIGH' ? 'warning' : 'safe';
+      document.getElementById('safetyMetric').className = 'metric ' + riskClass;
+
+      var recs = a.recommendations || [];
+      var html = '';
+      for (var i = 0; i < recs.length; i++) {
+        html += '<div class="rec-item"><strong>' + (i+1) + '.</strong> ' + recs[i] + '</div>';
+      }
+      document.getElementById('recommendations').innerHTML = html;
+
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('resultsContainer').style.display = 'block';
+    }
+
+    function showError(msg) {
+      document.getElementById('loading').style.display = 'none';
+      var el = document.getElementById('error');
+      el.textContent = msg;
+      el.style.display = 'block';
+    }
+  </script>
+</body>
+</html>
