@@ -3,167 +3,231 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GreenOps - 赤字工事救済AI</title>
+  <title>GreenOps - 赤字工事AI分析</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh}
-    .container{max-width:1000px;margin:0 auto;padding:40px 20px}
-    .header{text-align:center;color:white;margin-bottom:40px}
-    .header h1{font-size:32px;margin-bottom:10px}
+    .container{max-width:700px;margin:0 auto;padding:40px 20px}
+    .header{text-align:center;color:white;margin-bottom:30px}
+    .header h1{font-size:28px;margin-bottom:5px}
+    .header p{font-size:14px;opacity:0.9}
     .card{background:white;border-radius:12px;padding:30px;box-shadow:0 10px 40px rgba(0,0,0,0.2);margin-bottom:20px}
-    .card h2{color:#333;margin-bottom:20px;font-size:20px;border-bottom:2px solid #667eea;padding-bottom:10px}
+    .card h2{color:#333;margin-bottom:20px;font-size:18px;padding-bottom:10px;border-bottom:2px solid #667eea}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px}
     .form-group{margin-bottom:15px}
-    label{display:block;color:#333;margin-bottom:5px;font-weight:500}
-    input{width:100%;padding:12px;border:1px solid #ddd;border-radius:4px;font-size:16px}
-    input:focus{outline:none;border-color:#667eea;box-shadow:0 0 0 2px rgba(102,126,234,0.1)}
-    .button-group{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
-    .btn{padding:12px 20px;border:none;border-radius:4px;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.3s}
-    .btn-primary{background:#667eea;color:white;flex:1;min-width:150px}
-    .btn-primary:hover{background:#5568d3}
-    .btn-primary:disabled{background:#ccc;cursor:not-allowed}
-    .btn-secondary{background:#f0f0f0;color:#333;padding:8px 15px;font-size:13px}
-    .btn-secondary:hover{background:#e0e0e0}
-    .metric{background:#f9f9f9;padding:20px;border-radius:8px;margin-bottom:15px;border-left:4px solid #667eea}
-    .metric-label{color:#666;font-size:12px;font-weight:600;text-transform:uppercase;margin-bottom:5px}
-    .metric-value{font-size:28px;font-weight:700;color:#333}
+    .form-group label{display:block;color:#555;margin-bottom:5px;font-weight:500;font-size:13px}
+    .form-group input,.form-group textarea,.form-group select{width:100%;padding:10px;border:1px solid #ddd;border-radius:6px;font-size:14px;font-family:inherit}
+    .form-group input:focus,.form-group textarea:focus{outline:none;border-color:#667eea;box-shadow:0 0 0 2px rgba(102,126,234,0.15)}
+    textarea{resize:vertical;min-height:60px}
+    .btn{width:100%;padding:14px;border:none;border-radius:6px;font-size:15px;font-weight:600;cursor:pointer;transition:all 200ms}
+    .btn-primary{background:#667eea;color:white}
+    .btn-primary:hover{background:#5568d3;transform:translateY(-1px)}
+    .btn-primary:disabled{background:#ccc;cursor:not-allowed;transform:none}
+    .btn-sm{padding:8px 15px;font-size:12px;width:auto;border-radius:4px}
+    .btn-ghost{background:#f0f0f0;color:#333}
+    .btn-ghost:hover{background:#e0e0e0}
+    .btn-row{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap}
+    .loading{text-align:center;padding:50px;display:none}
+    .spinner{display:inline-block;width:40px;height:40px;border:4px solid #f3f3f3;border-top:4px solid #667eea;border-radius:50%;animation:spin 1s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .loading p{margin-top:15px;color:#667eea;font-weight:600}
+    .metric{background:#f9f9f9;padding:18px;border-radius:8px;margin-bottom:12px;border-left:4px solid #667eea}
+    .metric-label{color:#666;font-size:12px;font-weight:600;text-transform:uppercase;margin-bottom:4px}
+    .metric-value{font-size:26px;font-weight:700;color:#333}
     .metric.critical{border-left-color:#ff4757;background:#fff5f5}
     .metric.warning{border-left-color:#ffa502;background:#fffbf0}
     .metric.safe{border-left-color:#2ed573;background:#f0fff4}
-    .loading{text-align:center;padding:40px;display:none}
-    .spinner{display:inline-block;width:40px;height:40px;border:4px solid #f3f3f3;border-top:4px solid #667eea;border-radius:50%;animation:spin 1s linear infinite}
-    @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
-    .loading p{margin-top:15px;color:#667eea;font-weight:600}
-    .rec-item{background:#f0f8ff;padding:12px;margin:8px 0;border-left:3px solid #667eea;border-radius:4px;font-size:13px}
-    .results-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+    .results-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .rec-item{background:#f0f8ff;padding:12px;margin:8px 0;border-left:3px solid #667eea;border-radius:4px;font-size:13px;line-height:1.6}
     .hidden{display:none}
-    @media(max-width:768px){.results-grid{grid-template-columns:1fr}}
+    @media(max-width:640px){.form-row,.results-grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header"><h1>GreenOps</h1><p style="font-size:18px;opacity:0.9">赤字工事救済AI</p></div>
-    <div class="card" id="inputCard">
-      <h2>プロジェクト分析</h2>
-      <div class="form-group"><label>プロジェクトID</label><input type="text" id="projectId" placeholder="プロジェクトIDを入力" autofocus></div>
-      <div class="button-group"><button class="btn btn-primary" id="analyzeBtn" onclick="analyze()">分析を開始</button></div>
-      <div class="loading" id="loading"><div class="spinner"></div><p>分析中...</p></div>
+<div class="container">
+  <div class="header"><h1>GreenOps</h1><p>赤字工事AI分析</p></div>
+
+  <div class="card" id="inputCard">
+    <h2>プロジェクト情報を入力</h2>
+    <div class="form-row">
+      <div class="form-group"><label>会社名</label><input type="text" id="company" placeholder="例: 山田建設"></div>
+      <div class="form-group"><label>プロジェクト名</label><input type="text" id="project" placeholder="例: 渋谷再開発A棟"></div>
     </div>
-    <div class="card hidden" id="resultsCard">
-      <h2>分析結果</h2>
-      <div class="results-grid">
-        <div class="metric" id="lossMetric"><div class="metric-label">赤字化確率</div><div class="metric-value" id="lossProb">0%</div></div>
-        <div class="metric"><div class="metric-label">推定赤字額</div><div class="metric-value" id="lossAmount">&yen;0</div></div>
-        <div class="metric"><div class="metric-label">工期遅延</div><div class="metric-value" id="delay">0日</div></div>
-        <div class="metric" id="safetyMetric"><div class="metric-label">安全スコア</div><div class="metric-value" id="safetyScore">0/100</div></div>
-      </div>
-      <h3 style="color:#333;margin-top:30px;margin-bottom:15px">推奨対応</h3>
-      <div id="recommendations"></div>
-      <div class="button-group" style="margin-top:30px">
-        <button class="btn btn-secondary" onclick="dl('txt')">TXT</button>
-        <button class="btn btn-secondary" onclick="dl('csv')">CSV</button>
-        <button class="btn btn-secondary" onclick="dl('json')">JSON</button>
-        <button class="btn btn-secondary" onclick="speak()">音声</button>
-        <button class="btn btn-secondary" onclick="reset()">戻る</button>
-      </div>
+    <div class="form-row">
+      <div class="form-group"><label>契約額（万円）</label><input type="number" id="contract" placeholder="例: 25000" value="25000"></div>
+      <div class="form-group"><label>予定工期（ヶ月）</label><input type="number" id="duration" placeholder="例: 24" value="24"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>進捗率（%）</label><input type="number" id="progress" placeholder="例: 65" value="65" min="0" max="100"></div>
+      <div class="form-group"><label>コスト消化率（%）</label><input type="number" id="costRate" placeholder="例: 72" value="72" min="0" max="200"></div>
+    </div>
+    <div class="form-group"><label>現場の課題（任意）</label><textarea id="issues" placeholder="例: 杭打ちが3日遅延、PPE着用率が低下、資材の納期遅れ"></textarea></div>
+    <button class="btn btn-primary" id="analyzeBtn" onclick="analyze()">分析を開始</button>
+    <div class="loading" id="loading"><div class="spinner"></div><p>AIが分析中...</p></div>
+  </div>
+
+  <div class="card hidden" id="resultsCard">
+    <h2 id="resultTitle">分析結果</h2>
+    <div class="results-grid">
+      <div class="metric" id="lossMetric"><div class="metric-label">赤字化確率</div><div class="metric-value" id="lossProb">-</div></div>
+      <div class="metric"><div class="metric-label">推定赤字額</div><div class="metric-value" id="lossAmt">-</div></div>
+      <div class="metric"><div class="metric-label">工期遅延予測</div><div class="metric-value" id="delay">-</div></div>
+      <div class="metric" id="safetyMetric"><div class="metric-label">安全スコア</div><div class="metric-value" id="safety">-</div></div>
+    </div>
+    <h3 style="color:#333;margin:20px 0 10px;font-size:15px">推奨対応</h3>
+    <div id="recs"></div>
+    <div class="btn-row">
+      <button class="btn btn-sm btn-ghost" onclick="dl('txt')">TXT</button>
+      <button class="btn btn-sm btn-ghost" onclick="dl('csv')">CSV</button>
+      <button class="btn btn-sm btn-ghost" onclick="dl('json')">JSON</button>
+      <button class="btn btn-sm btn-ghost" onclick="speak()">音声再生</button>
+      <button class="btn btn-sm btn-ghost" onclick="reset()">新しい分析</button>
     </div>
   </div>
-  <script>
-    var analysisData = null;
-    window.addEventListener('load', function(){
-      var params = new URLSearchParams(window.location.search);
-      var id = params.get('session_id') || params.get('project_id');
-      if (id) { document.getElementById('projectId').value = id; analyze(); }
-    });
-    document.getElementById('projectId').addEventListener('keypress', function(e){ if(e.key==='Enter') analyze(); });
+</div>
 
-    function analyze(){
-      var pid = document.getElementById('projectId').value.trim() || 'default_project';
-      document.getElementById('analyzeBtn').disabled = true;
-      document.getElementById('loading').style.display = 'block';
-      fetch('/api/analyze-project', {
-        method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({project_id: pid})
-      })
-      .then(function(r){return r.json()})
-      .then(function(data){
-        if(data.error) throw new Error(data.error);
-        analysisData = data;
-        displayResults(data);
-      })
-      .catch(function(err){alert(err.message)})
-      .finally(function(){
-        document.getElementById('analyzeBtn').disabled = false;
-        document.getElementById('loading').style.display = 'none';
-      });
-    }
+<script>
+var result = null;
 
-    function displayResults(data){
-      var a = data.ai_analysis || {};
-      var c = a.cost || {};
-      var s = a.schedule || {};
-      var sf = a.safety || {};
-      var lp = (c.loss_probability || 0) * 100;
-      document.getElementById('lossProb').textContent = lp.toFixed(1) + '%';
-      document.getElementById('lossMetric').className = 'metric ' + (c.severity || 'safe').toLowerCase();
-      document.getElementById('lossAmount').textContent = '\u00a5' + Math.floor(c.estimated_loss_yen || 0).toLocaleString();
-      document.getElementById('delay').textContent = (s.predicted_delay_days || 0) + '\u65e5';
-      document.getElementById('safetyScore').textContent = (sf.overall_score || 0) + '/100';
-      var rc = sf.risk_level === 'CRITICAL' ? 'critical' : sf.risk_level === 'HIGH' ? 'warning' : 'safe';
-      document.getElementById('safetyMetric').className = 'metric ' + rc;
-      var recs = a.recommendations || [];
-      var html = '';
-      for(var i=0;i<recs.length;i++) html += '<div class="rec-item"><strong>'+(i+1)+'.</strong> '+recs[i]+'</div>';
-      document.getElementById('recommendations').innerHTML = html;
-      document.getElementById('inputCard').style.display = 'none';
-      document.getElementById('resultsCard').classList.remove('hidden');
-    }
+window.addEventListener('load', function(){
+  var p = new URLSearchParams(window.location.search);
+  if(p.get('session_id')) sessionStorage.setItem('go','1');
+});
 
-    function reset(){
-      document.getElementById('projectId').value = '';
-      document.getElementById('inputCard').style.display = 'block';
-      document.getElementById('resultsCard').classList.add('hidden');
-      analysisData = null;
-    }
+function analyze(){
+  var company = document.getElementById('company').value.trim();
+  var project = document.getElementById('project').value.trim();
+  var contract = document.getElementById('contract').value;
+  var duration = document.getElementById('duration').value;
+  var progress = document.getElementById('progress').value;
+  var costRate = document.getElementById('costRate').value;
+  var issues = document.getElementById('issues').value.trim();
 
-    function dl(type){
-      if(!analysisData) return;
-      var a = analysisData.ai_analysis || {};
-      var c = a.cost || {};
-      var s = a.schedule || {};
-      var sf = a.safety || {};
-      var content, filename, mime;
-      if(type==='csv'){
-        content = '\u9805\u76ee,\u5024\n\u30d7\u30ed\u30b8\u30a7\u30af\u30c8ID,'+analysisData.project_id+'\n\u8d64\u5b57\u5316\u78ba\u7387,'+((c.loss_probability||0)*100).toFixed(1)+'%\n\u63a8\u5b9a\u8d64\u5b57\u984d,\u00a5'+Math.floor(c.estimated_loss_yen||0).toLocaleString()+'\n\u5de5\u671f\u9045\u5ef6,'+(s.predicted_delay_days||0)+'\u65e5\n\u5b89\u5168\u30b9\u30b3\u30a2,'+(sf.overall_score||0)+'/100';
-        filename = 'greenops_'+analysisData.project_id+'.csv';
-        mime = 'text/csv;charset=utf-8;';
-      }else if(type==='json'){
-        content = JSON.stringify(analysisData, null, 2);
-        filename = 'greenops_'+analysisData.project_id+'.json';
-        mime = 'application/json';
-      }else{
-        content = 'GreenOps \u5206\u6790\u7d50\u679c\n\n\u30d7\u30ed\u30b8\u30a7\u30af\u30c8: '+analysisData.project_id+'\n\u8d64\u5b57\u5316\u78ba\u7387: '+((c.loss_probability||0)*100).toFixed(1)+'%\n\u63a8\u5b9a\u8d64\u5b57\u984d: \u00a5'+Math.floor(c.estimated_loss_yen||0).toLocaleString()+'\n\u5de5\u671f\u9045\u5ef6: '+(s.predicted_delay_days||0)+'\u65e5\n\u5b89\u5168\u30b9\u30b3\u30a2: '+(sf.overall_score||0)+'/100\n\n\u63a8\u5968\u5bfe\u5fdc:\n'+(a.recommendations||[]).map(function(r,i){return(i+1)+'. '+r}).join('\n');
-        filename = 'greenops_'+analysisData.project_id+'.txt';
-        mime = 'text/plain;charset=utf-8;';
-      }
-      var blob = new Blob([content],{type:mime});
-      var link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = filename;
-      link.click();
-    }
+  if(!project || !contract) { alert('プロジェクト名と契約額を入力してください'); return; }
 
-    function speak(){
-      if(!analysisData) return;
-      var a = analysisData.ai_analysis || {};
-      var c = a.cost || {};
-      var s = a.schedule || {};
-      var sf = a.safety || {};
-      var text = '\u8d64\u5b57\u5316\u78ba\u7387\u306f'+((c.loss_probability||0)*100).toFixed(1)+'\u30d1\u30fc\u30bb\u30f3\u30c8\u3002\u63a8\u5b9a\u8d64\u5b57\u984d\u306f'+Math.floor(c.estimated_loss_yen||0).toLocaleString()+'\u5186\u3002\u5de5\u671f\u9045\u5ef6\u306f'+(s.predicted_delay_days||0)+'\u65e5\u3002\u5b89\u5168\u30b9\u30b3\u30a2\u306f'+(sf.overall_score||0)+'\u3067\u3059\u3002';
-      var u = new SpeechSynthesisUtterance(text);
-      u.lang = 'ja-JP';
-      speechSynthesis.speak(u);
-    }
-  </script>
+  document.getElementById('analyzeBtn').disabled = true;
+  document.getElementById('loading').style.display = 'block';
+
+  var projectData = {
+    company: company || '未入力',
+    project_name: project,
+    contract_amount: parseInt(contract) * 10000,
+    duration_months: parseInt(duration) || 24,
+    progress_rate: parseInt(progress) || 0,
+    cost_consumption_rate: parseInt(costRate) || 0,
+    issues: issues || 'なし'
+  };
+
+  fetch('/api/analyze-project', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ project_id: project, project_data: projectData })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    if(data.error) throw new Error(data.error);
+    result = data;
+    result._input = projectData;
+    showResults(data);
+  })
+  .catch(function(err){ alert('エラー: ' + err.message); })
+  .finally(function(){
+    document.getElementById('analyzeBtn').disabled = false;
+    document.getElementById('loading').style.display = 'none';
+  });
+}
+
+function showResults(data){
+  var a = data.ai_analysis || {};
+  var c = a.cost || {};
+  var s = a.schedule || {};
+  var sf = a.safety || {};
+
+  document.getElementById('resultTitle').textContent = (result._input.project_name || data.project_id) + ' - 分析結果';
+
+  var lp = (c.loss_probability || 0);
+  if(lp <= 1) lp = lp * 100;
+  document.getElementById('lossProb').textContent = lp.toFixed(1) + '%';
+  var sev = lp > 60 ? 'critical' : lp > 30 ? 'warning' : 'safe';
+  document.getElementById('lossMetric').className = 'metric ' + sev;
+
+  document.getElementById('lossAmt').textContent = '\u00a5' + Math.floor(c.estimated_loss_yen || 0).toLocaleString();
+  document.getElementById('delay').textContent = (s.predicted_delay_days || 0) + '\u65e5';
+
+  var score = sf.overall_score || 0;
+  document.getElementById('safety').textContent = score + '/100';
+  var rc = score < 40 ? 'critical' : score < 70 ? 'warning' : 'safe';
+  document.getElementById('safetyMetric').className = 'metric ' + rc;
+
+  var recs = a.recommendations || [];
+  var html = '';
+  for(var i = 0; i < recs.length; i++){
+    html += '<div class="rec-item"><strong>' + (i+1) + '.</strong> ' + recs[i] + '</div>';
+  }
+  document.getElementById('recs').innerHTML = html || '<p style="color:#666;font-size:13px">推奨対応なし</p>';
+
+  document.getElementById('inputCard').style.display = 'none';
+  document.getElementById('resultsCard').classList.remove('hidden');
+}
+
+function reset(){
+  document.getElementById('inputCard').style.display = 'block';
+  document.getElementById('resultsCard').classList.add('hidden');
+  result = null;
+}
+
+function dl(type){
+  if(!result) return;
+  var a = result.ai_analysis || {};
+  var c = a.cost || {};
+  var s = a.schedule || {};
+  var sf = a.safety || {};
+  var inp = result._input || {};
+  var lp = (c.loss_probability || 0); if(lp<=1) lp=lp*100;
+  var content, filename, mime;
+
+  if(type==='csv'){
+    content = '\u9805\u76ee,\u5024\n\u4f1a\u793e\u540d,' + (inp.company||'') + '\n\u30d7\u30ed\u30b8\u30a7\u30af\u30c8,' + (inp.project_name||result.project_id) + '\n\u8d64\u5b57\u5316\u78ba\u7387,' + lp.toFixed(1) + '%\n\u63a8\u5b9a\u8d64\u5b57\u984d,\u00a5' + Math.floor(c.estimated_loss_yen||0).toLocaleString() + '\n\u5de5\u671f\u9045\u5ef6,' + (s.predicted_delay_days||0) + '\u65e5\n\u5b89\u5168\u30b9\u30b3\u30a2,' + (sf.overall_score||0) + '/100';
+    filename = 'greenops_analysis.csv'; mime = 'text/csv;charset=utf-8;';
+  } else if(type==='json'){
+    content = JSON.stringify(result, null, 2);
+    filename = 'greenops_analysis.json'; mime = 'application/json';
+  } else {
+    content = 'GreenOps \u5206\u6790\u30ec\u30dd\u30fc\u30c8\n\n';
+    content += '\u4f1a\u793e\u540d: ' + (inp.company||'') + '\n';
+    content += '\u30d7\u30ed\u30b8\u30a7\u30af\u30c8: ' + (inp.project_name||result.project_id) + '\n';
+    content += '\u5951\u7d04\u984d: \u00a5' + (inp.contract_amount||0).toLocaleString() + '\n\n';
+    content += '\u8d64\u5b57\u5316\u78ba\u7387: ' + lp.toFixed(1) + '%\n';
+    content += '\u63a8\u5b9a\u8d64\u5b57\u984d: \u00a5' + Math.floor(c.estimated_loss_yen||0).toLocaleString() + '\n';
+    content += '\u5de5\u671f\u9045\u5ef6: ' + (s.predicted_delay_days||0) + '\u65e5\n';
+    content += '\u5b89\u5168\u30b9\u30b3\u30a2: ' + (sf.overall_score||0) + '/100\n\n';
+    content += '\u63a8\u5968\u5bfe\u5fdc:\n';
+    (a.recommendations||[]).forEach(function(r,i){ content += (i+1) + '. ' + r + '\n'; });
+    filename = 'greenops_analysis.txt'; mime = 'text/plain;charset=utf-8;';
+  }
+  var blob = new Blob([content], {type:mime});
+  var link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = filename;
+  link.click();
+}
+
+function speak(){
+  if(!result) return;
+  var a = result.ai_analysis || {};
+  var c = a.cost || {};
+  var s = a.schedule || {};
+  var sf = a.safety || {};
+  var lp = (c.loss_probability||0); if(lp<=1) lp=lp*100;
+  var text = (result._input.project_name||result.project_id) + '\u306e\u5206\u6790\u7d50\u679c\u3067\u3059\u3002';
+  text += '\u8d64\u5b57\u5316\u78ba\u7387\u306f' + lp.toFixed(0) + '\u30d1\u30fc\u30bb\u30f3\u30c8\u3002';
+  text += '\u63a8\u5b9a\u8d64\u5b57\u984d\u306f' + Math.floor(c.estimated_loss_yen||0).toLocaleString() + '\u5186\u3002';
+  text += '\u5de5\u671f\u9045\u5ef6\u306f' + (s.predicted_delay_days||0) + '\u65e5\u3002';
+  text += '\u5b89\u5168\u30b9\u30b3\u30a2\u306f' + (sf.overall_score||0) + '\u3067\u3059\u3002';
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = 'ja-JP';
+  speechSynthesis.speak(u);
+}
+</script>
 </body>
 </html>
