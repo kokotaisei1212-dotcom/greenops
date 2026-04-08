@@ -3,137 +3,113 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Genbanome - Construction Profit Intelligence</title>
+  <title>ゲンバノメ</title>
   <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    html,body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif;background:#fff;color:#111}
-    body{line-height:1.6}
-    .hero{padding:120px 24px;text-align:center}
-    h1{font-size:64px;font-weight:700;line-height:1.1;margin-bottom:24px;color:#000}
-    .hero-subtitle{font-size:20px;color:#666;margin-bottom:48px;max-width:700px;margin-left:auto;margin-right:auto;line-height:1.6}
-    .cta-button{display:inline-block;padding:16px 48px;background:#ff6b35;color:white;border:none;border-radius:4px;font-size:16px;font-weight:600;cursor:pointer;text-decoration:none;transition:background 0.2s}
-    .cta-button:hover{background:#e55a1f}
-    .hero-note{font-size:13px;color:#999;margin-top:16px}
-    .section{padding:120px 24px;border-top:1px solid #eee}
-    .section-container{max-width:1000px;margin:0 auto}
-    h2{font-size:48px;font-weight:700;margin-bottom:64px;color:#000;text-align:center;line-height:1.2}
-    .problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:48px}
-    .problem-item-title{font-size:18px;font-weight:700;margin-bottom:12px;color:#000}
-    .problem-item-desc{font-size:14px;color:#666;line-height:1.7}
-    .solution-intro{background:#f9f9f9;padding:64px 48px;border-radius:4px;margin-bottom:64px}
-    .solution-intro h3{font-size:32px;font-weight:700;margin-bottom:24px;color:#000;line-height:1.3}
-    .solution-intro p{font-size:16px;color:#666;line-height:1.8}
-    .features{display:grid;grid-template-columns:repeat(2,1fr);gap:48px;margin-bottom:64px}
-    .feature-title{font-size:18px;font-weight:700;margin-bottom:12px;color:#000}
-    .feature-desc{font-size:14px;color:#666;line-height:1.7}
-    .roi-section{background:linear-gradient(135deg,#fff9f5 0%,#fffbf8 100%);padding:80px 48px;text-align:center;border-radius:4px;margin-bottom:64px}
-    .roi-title{font-size:28px;font-weight:700;margin-bottom:48px;color:#000}
-    .roi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
-    .roi-label{font-size:12px;color:#999;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px}
-    .roi-number{font-size:48px;font-weight:700;color:#ff6b35;margin-bottom:4px}
-    .roi-desc{font-size:13px;color:#666}
-    .how-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:48px}
-    .step-number{font-size:48px;font-weight:700;color:#ff6b35;margin-bottom:16px}
-    .step-title{font-size:18px;font-weight:700;margin-bottom:12px;color:#000}
-    .step-desc{font-size:14px;color:#666;line-height:1.7}
-    .pricing-section{background:#f5f5f5;padding:120px 24px}
-    .pricing-container{max-width:500px;margin:0 auto;text-align:center}
-    .pricing-title{font-size:32px;font-weight:700;margin-bottom:48px;color:#000}
-    .price-card{background:white;padding:48px;border-radius:4px}
-    .price{font-size:64px;font-weight:700;color:#ff6b35;margin-bottom:8px}
-    .price-period{font-size:14px;color:#999;margin-bottom:32px}
-    .price-features{text-align:left;margin-bottom:32px}
-    .price-feature{padding:8px 0;font-size:14px;color:#666}
-    .price-cta{display:block;width:100%;padding:16px;background:#ff6b35;color:white;border:none;border-radius:4px;font-size:16px;font-weight:600;cursor:pointer;text-decoration:none;text-align:center}
-    .price-cta:hover{background:#e55a1f}
-    .testimonials{display:grid;grid-template-columns:repeat(2,1fr);gap:48px;margin-bottom:64px}
-    .testimonial{padding:32px;background:white;border:1px solid #eee;border-radius:4px}
-    .testimonial-text{font-size:16px;line-height:1.8;margin-bottom:16px;color:#333}
-    .testimonial-author{font-size:13px;color:#999}
-    .cta-final{padding:120px 24px;text-align:center;background:#111;color:white}
-    .cta-final h2{color:white;margin-bottom:32px}
-    .cta-final p{font-size:18px;margin-bottom:40px;color:#ccc}
-    .footer{padding:48px 24px;text-align:center;font-size:13px;color:#999;border-top:1px solid #eee}
-    .footer a{color:#999;text-decoration:none;margin:0 8px}
-    .footer a:hover{color:#ff6b35}
-    @media(max-width:768px){h1{font-size:36px}h2{font-size:28px}.problem-grid,.features,.roi-grid,.how-steps,.testimonials{grid-template-columns:1fr}.price{font-size:48px}.solution-intro{padding:32px 24px}}
+    *{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif;background:#fff;color:#1a1a1a;line-height:1.8}
+    .hero{padding:160px 40px;text-align:center;background:#fff}h1{font-size:56px;font-weight:900;line-height:1.2;margin-bottom:24px;letter-spacing:-1px}
+    .sub{font-size:18px;color:#666;margin-bottom:60px;max-width:650px;margin-left:auto;margin-right:auto;line-height:1.8}
+    .cta{display:inline-block;padding:18px 56px;background:#ff6b35;color:#fff;border:0;border-radius:6px;font-size:16px;font-weight:700;cursor:pointer;text-decoration:none;margin:0 12px;transition:background 0.2s}
+    .cta:hover{background:#f7931e}.note{font-size:12px;color:#999;margin-top:24px}.sect{padding:120px 40px;border-top:1px solid #f0f0f0}
+    .sect-in{max-width:1000px;margin:0 auto}h2{font-size:44px;font-weight:900;margin-bottom:80px;text-align:center;letter-spacing:-0.5px}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:60px;margin-bottom:100px}
+    .num{font-size:48px;font-weight:900;color:#ff6b35;margin-bottom:16px}.title{font-size:16px;font-weight:700;margin-bottom:12px}.desc{font-size:13px;color:#666;line-height:1.8}
+    .box{background:#f9f9f9;padding:80px 60px;border-radius:6px;text-align:center;margin-bottom:80px}
+    .box h3{font-size:32px;font-weight:900;margin-bottom:24px;line-height:1.4}.box p{font-size:15px;color:#666;line-height:1.9}
+    .feat{display:grid;grid-template-columns:repeat(2,1fr);gap:60px;margin-bottom:100px}.feat-t{font-size:16px;font-weight:700;margin-bottom:12px}.feat-d{font-size:13px;color:#666;line-height:1.8}
+    .roi{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;background:linear-gradient(135deg,#fff9f5,#fffbf8);padding:80px 60px;border-radius:6px;text-align:center;margin-bottom:80px}
+    .roi-l{font-size:12px;color:#999;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}.roi-n{font-size:56px;font-weight:900;color:#ff6b35;margin-bottom:8px}.roi-d{font-size:13px;color:#666}
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:60px}.step-n{font-size:44px;font-weight:900;color:#ff6b35;margin-bottom:20px}.step-t{font-size:16px;font-weight:700;margin-bottom:12px}.step-d{font-size:13px;color:#666;line-height:1.8}
+    .voices{display:grid;grid-template-columns:repeat(2,1fr);gap:60px;margin-bottom:100px}.voice{padding:40px;background:#fff;border:1px solid #f0f0f0;border-radius:6px}
+    .voice-t{font-size:15px;line-height:1.9;margin-bottom:16px;color:#333}.voice-a{font-size:12px;color:#999}
+    .pricing{background:#f5f5f5;padding:120px 40px}.pricing-in{max-width:500px;margin:0 auto;text-align:center}
+    .price-box{background:#fff;padding:60px 40px;border-radius:6px}.price{font-size:72px;font-weight:900;color:#ff6b35;margin-bottom:8px}.price-p{font-size:13px;color:#999;margin-bottom:40px}
+    .list{text-align:left;margin-bottom:40px}.item-p{padding:10px 0;font-size:13px;color:#666}
+    .cta-f{padding:140px 40px;background:#1a1a1a;color:#fff;text-align:center}.cta-f h2{color:#fff;margin-bottom:32px;font-size:48px}.cta-f p{font-size:18px;margin-bottom:48px;color:#ccc}
+    .footer{padding:40px;text-align:center;font-size:12px;color:#999;border-top:1px solid #f0f0f0}
+    .footer a{color:#999;text-decoration:none;margin:0 8px}.footer a:hover{color:#ff6b35}
+    @media(max-width:768px){h1{font-size:32px}h2{font-size:28px}.grid3,.feat,.roi,.steps,.voices{grid-template-columns:1fr;gap:40px}.price{font-size:48px}.hero{padding:80px 24px}.sect{padding:80px 24px}.box{padding:40px 24px}.roi{padding:40px 24px}}
   </style>
 </head>
 <body>
   <div class="hero">
-    <h1>Construction projects should be<br>profitable by default.</h1>
-    <p class="hero-subtitle">Daily profit visibility. Deficit detection 3 weeks early. Construction leaders get control back.</p>
-    <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="cta-button">Start free trial</a>
-    <p class="hero-note">14 days free. No credit card required. &yen;9,800/month after trial.</p>
+    <h1>赤字工事を<br>3週間前に止める。</h1>
+    <p class="sub">毎日の現場データから赤字予兆を自動検知。月末の絶望ではなく、今日の対応で黒字着地を実現するAI。</p>
+    <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="cta">14日間無料で始める</a>
+    <a href="#how" class="cta" style="background:#f5f5f5;color:#1a1a1a">使い方を見る</a>
+    <p class="note">クレジットカード不要。初期設定1分。その後 &yen;9,800/月</p>
   </div>
-  <div class="section"><div class="section-container">
-    <h2>Why projects fail financially</h2>
-    <div class="problem-grid">
-      <div><div class="problem-item-title">2 hours</div><div class="problem-item-desc">Daily site reports. Manual. Every night. &yen;163,000 annual payroll cost just for data entry.</div></div>
-      <div><div class="problem-item-title">30 days</div><div class="problem-item-desc">Time to realize a project is running at a loss. By month-end, it's too late to correct course.</div></div>
-      <div><div class="problem-item-title">85%</div><div class="problem-item-desc">Of deficits were predictable from data already being written. The data just wasn't connected.</div></div>
+
+  <div class="sect"><div class="sect-in">
+    <h2>建設現場の現実</h2>
+    <div class="grid3">
+      <div><div class="num">2時間</div><div class="title">毎晩の日報</div><div class="desc">手書き、Excel、スマホ手入力。毎日2時間。年間163万円の人件費がデータ入力に消える。</div></div>
+      <div><div class="num">30日</div><div class="title">気づくまでの日数</div><div class="desc">月末決算。その時には赤字確定。対応不可能。&yen;200万の損失が記録される。</div></div>
+      <div><div class="num">85%</div><div class="title">予測可能だった</div><div class="desc">日報に書かれたデータから判定できた赤字。接続されていなかっただけ。</div></div>
     </div>
   </div></div>
-  <div class="section"><div class="section-container">
-    <h2>Daily profit intelligence</h2>
-    <div class="solution-intro">
-      <h3>Your daily site data becomes instant profit forecast.</h3>
-      <p>Workers on site today. Progress this week. Weather impact. Budget changes. Five numbers. That's all we need. AI analyzes. You see your margin at a glance. Red, yellow, or green.</p>
+
+  <div class="sect"><div class="sect-in">
+    <h2>毎日の粗利が数字で見える</h2>
+    <div class="box">
+      <h3>5項目の日報入力が、即座にAI分析に変わる。</h3>
+      <p>人数。進捗。天候。追加工事。メモ。5つの数字をタップ。AI分析。粗利が表示される。赤、黄、緑。</p>
     </div>
-    <div class="features">
-      <div><div class="feature-title">Input takes 37 seconds</div><div class="feature-desc">Worker count. Progress percentage. Weather. Budget changes. Notes. Five fields. Done.</div></div>
-      <div><div class="feature-title">Profit appears instantly</div><div class="feature-desc">See your margin today. Not month-end. Not in a report. Now. Green margin. Yellow caution. Red alarm.</div></div>
-      <div><div class="feature-title">Deficits surface early</div><div class="feature-desc">CPI indicator triggers at day 3. Not day 30. Three weeks to act. Adjust staffing. Recover margin.</div></div>
-      <div><div class="feature-title">Zero setup required</div><div class="feature-desc">Project name. Budget. Timeline. Start. No configuration. No learning curve. No IT support needed.</div></div>
+    <div class="feat">
+      <div><div class="feat-t">37秒で日報完了</div><div class="feat-d">5項目をタップ。毎晩2時間が37秒。スマホ完結。</div></div>
+      <div><div class="feat-t">粗利が今日表示される</div><div class="feat-d">月末ではなく今日。数字で見える。赤字か安全か。</div></div>
+      <div><div class="feat-t">赤字は3週間前に分かる</div><div class="feat-d">CPI指標で日3にアラート。30日ではなく。対応できる時間がある。</div></div>
+      <div><div class="feat-t">初期設定は1分</div><div class="feat-d">工事名、予算、工期。全部で1分。複雑さなし。</div></div>
     </div>
-    <div class="roi-section">
-      <div class="roi-title">Monthly investment vs. actual value</div>
-      <div class="roi-grid">
-        <div><div class="roi-label">Investment</div><div class="roi-number">&yen;9,800</div><div class="roi-desc">Per month</div></div>
-        <div><div class="roi-label">One prevented deficit</div><div class="roi-number">&yen;2M</div><div class="roi-desc">One project saved</div></div>
-        <div><div class="roi-label">Return on investment</div><div class="roi-number">20,408%</div><div class="roi-desc">In year one</div></div>
-      </div>
+    <div class="roi">
+      <div><div class="roi-l">月額投資</div><div class="roi-n">&yen;9,800</div><div class="roi-d">月額</div></div>
+      <div><div class="roi-l">1件の赤字回避</div><div class="roi-n">&yen;200万</div><div class="roi-d">1つの工事</div></div>
+      <div><div class="roi-l">リターン</div><div class="roi-n">20,408%</div><div class="roi-d">初年度</div></div>
     </div>
   </div></div>
-  <div class="section"><div class="section-container">
-    <h2>Three steps to daily control</h2>
-    <div class="how-steps">
-      <div><div class="step-number">1</div><div class="step-title">Register project</div><div class="step-desc">Project name. Budget in yen. Planned duration. Takes 1 minute.</div></div>
-      <div><div class="step-number">2</div><div class="step-title">Daily input</div><div class="step-desc">After each day. Enter five numbers. Takes 37 seconds.</div></div>
-      <div><div class="step-number">3</div><div class="step-title">See your margin</div><div class="step-desc">Morning dashboard. Your margin today. Risk level. Act or adjust.</div></div>
+
+  <div class="sect" id="how"><div class="sect-in">
+    <h2>3ステップで開始</h2>
+    <div class="steps">
+      <div><div class="step-n">1</div><div class="step-t">工事を登録</div><div class="step-d">工事名、予算、工期。1分で完了。ダッシュボード即座に動く。</div></div>
+      <div><div class="step-n">2</div><div class="step-t">毎日、入力</div><div class="step-d">5項目をタップ。37秒。スマホ最適化。オフライン対応。</div></div>
+      <div><div class="step-n">3</div><div class="step-t">朝、粗利を見る</div><div class="step-d">推定粗利。赤字か安全か。次の判断が分かる。</div></div>
     </div>
   </div></div>
-  <div class="section"><div class="section-container">
-    <h2>From site leaders</h2>
-    <div class="testimonials">
-      <div class="testimonial"><div class="testimonial-text">"I see my margin every morning now. Red means I call the office. We stopped losing money because I caught problems at day 3, not day 30."</div><div class="testimonial-author">Site Supervisor, 40 | 12-person firm</div></div>
-      <div class="testimonial"><div class="testimonial-text">"No setup. No IT training. Site crew learned it in 5 minutes. They input five numbers. I see margin. That's it."</div><div class="testimonial-author">Construction Owner, 55</div></div>
+
+  <div class="sect"><div class="sect-in">
+    <h2>現場から</h2>
+    <div class="voices">
+      <div class="voice"><div class="voice-t">毎朝粗利が見える。赤い日は即座に本社に連絡。3週間前に気づけたから対応できた。年間200万円の損失を防いだ。</div><div class="voice-a">現場監督 M氏（40代、従業員12人の工務店）</div></div>
+      <div class="voice"><div class="voice-t">Excelから解放された。設定ゼロ。現場の職人が5分で習得。これだけでいい。複雑さはいらない。</div><div class="voice-a">建設会社経営者 T氏（50代、年間売上5億円）</div></div>
     </div>
   </div></div>
-  <div class="pricing-section"><div class="pricing-container">
-    <h3 class="pricing-title">Simple pricing</h3>
-    <div class="price-card">
+
+  <div class="pricing"><div class="pricing-in">
+    <h2>シンプルな料金</h2>
+    <div class="price-box">
       <div class="price">&yen;9,800</div>
-      <div class="price-period">per month (after 14-day free trial)</div>
-      <div class="price-features">
-        <div class="price-feature">Unlimited projects</div>
-        <div class="price-feature">Daily profit forecast</div>
-        <div class="price-feature">Deficit detection (CPI)</div>
-        <div class="price-feature">7-day trend analysis</div>
-        <div class="price-feature">CSV reports</div>
-        <div class="price-feature">Email support</div>
-        <div class="price-feature">Cancel anytime</div>
+      <div class="price-p">月額（14日間無料後）</div>
+      <div class="list">
+        <div class="item-p">工事の数は無制限</div>
+        <div class="item-p">毎日の粗利着地予測</div>
+        <div class="item-p">赤字リスク自動検知</div>
+        <div class="item-p">7日間のトレンド表示</div>
+        <div class="item-p">CSVレポート出力</div>
+        <div class="item-p">メールサポート</div>
+        <div class="item-p">いつでも解約可能</div>
       </div>
-      <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="price-cta">Start your free trial</a>
+      <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="cta" style="width:100%;display:block;text-align:center">14日間無料で始める</a>
     </div>
   </div></div>
-  <div class="cta-final">
-    <h2>Stop losing money to blind spots.</h2>
-    <p>Your margin matters. See it every day.</p>
-    <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="cta-button">Begin free trial now</a>
+
+  <div class="cta-f">
+    <h2>赤字工事を今年防ぎませんか？</h2>
+    <p>毎日の粗利が見える現場へ。</p>
+    <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="cta">今すぐ無料で始める</a>
   </div>
+
   <div class="footer">
-    <p style="margin-bottom:8px">Copyright 2026 Genbanome</p>
+    <p style="margin-bottom:8px">&copy; 2026 ゲンバノメ | 赤字工事を防ぐために。</p>
     <p><a href="/tokutei.html">特定商取引法</a> | <a href="/privacy.html">プライバシー</a> | <a href="/terms.html">利用規約</a></p>
   </div>
 </body>
