@@ -3,37 +3,132 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GreenOps - 建設業の赤字工事を救済するAI</title>
+  <title>GreenOps | 建設業の赤字工事AI分析</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;display:flex;align-items:center;justify-content:center}
-    .container{max-width:600px;width:100%;padding:40px 20px}
-    .card{background:white;border-radius:12px;padding:40px;box-shadow:0 20px 60px rgba(0,0,0,0.3);text-align:center}
-    h1{font-size:32px;color:#333;margin-bottom:15px}
-    p{font-size:16px;color:#666;margin-bottom:30px;line-height:1.6}
-    .features{text-align:left;margin:30px 0}
-    .feature{margin:15px 0;color:#555;font-size:14px;padding-left:24px;position:relative}
-    .feature::before{content:"\2713";color:#667eea;font-weight:bold;position:absolute;left:0}
-    .btn{width:100%;padding:14px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;border-radius:6px;font-size:16px;font-weight:600;cursor:pointer;margin-top:20px;display:block;text-decoration:none;text-align:center}
-    .btn:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(102,126,234,0.3)}
-    .price{font-size:24px;color:#667eea;font-weight:700;margin:20px 0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.6;color:#333}
+    .hero{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;padding:100px 20px;text-align:center}
+    .hero .container{max-width:700px;margin:0 auto}
+    .hero h1{font-size:48px;font-weight:700;margin-bottom:20px}
+    .hero p{font-size:18px;margin-bottom:15px;opacity:0.95}
+    .cta{background:white;color:#667eea;padding:14px 40px;border:none;border-radius:6px;font-size:16px;font-weight:600;cursor:pointer;margin-top:30px;text-decoration:none;display:inline-block}
+    .cta:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(0,0,0,0.2)}
+    .container{max-width:900px;margin:0 auto;padding:0 20px}
+    .section{padding:60px 20px}
+    .section h2{font-size:36px;font-weight:700;margin-bottom:40px;text-align:center}
+    .problem{background:#f9f9f9}
+    .problem-list,.solution-list{list-style:none;max-width:600px;margin:0 auto}
+    .problem-list li,.solution-list li{font-size:17px;margin-bottom:15px;padding-left:40px;position:relative}
+    .problem-list li::before{content:"\25CF";position:absolute;left:0;color:#667eea;font-size:20px}
+    .solution-list li::before{content:"\2713";position:absolute;left:0;color:#2ed573;font-weight:700}
+    .features{background:#f9f9f9}
+    .features-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+    .feature{padding:20px;background:white;border-radius:6px}
+    .feature h3{color:#667eea;margin-bottom:10px;font-weight:600}
+    .feature p{font-size:14px;color:#666}
+    .pricing{background:white}
+    .price-card{max-width:500px;margin:0 auto;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;padding:40px;border-radius:8px;text-align:center}
+    .price{font-size:48px;font-weight:700;margin-bottom:10px}
+    .price-detail{font-size:15px;opacity:0.9;margin-bottom:30px}
+    .features-list{text-align:left;margin:30px 0;font-size:14px;list-style:none}
+    .features-list li{margin:10px 0;padding-left:25px;position:relative}
+    .features-list li::before{content:"\2713";position:absolute;left:0;font-weight:700}
+    .trial{background:rgba(255,255,255,0.2);padding:15px;border-radius:6px;margin-top:20px;font-size:13px}
+    .how{background:#f9f9f9}
+    .how-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px}
+    .step{background:white;padding:25px;border-radius:6px;text-align:center}
+    .step-num{font-size:32px;color:#667eea;font-weight:700;margin-bottom:10px}
+    .step p{font-size:14px;color:#666}
+    .faq{background:white}
+    .faq-item{background:#f9f9f9;padding:20px;margin-bottom:15px;border-radius:6px;cursor:pointer}
+    .faq-item h4{color:#667eea;margin-bottom:10px}
+    .faq-item p{font-size:14px;color:#666;display:none}
+    .faq-item.open p{display:block}
+    .footer{background:#333;color:white;padding:30px 20px;text-align:center;font-size:12px}
+    .footer a{color:#999;text-decoration:none;margin:0 8px}
+    .footer a:hover{color:white}
+    @media(max-width:768px){.hero h1{font-size:32px}.features-grid{grid-template-columns:1fr}.how-steps{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="card">
-      <h1>GreenOps</h1>
-      <p>建設業の赤字工事を救済するAI</p>
-      <div class="features">
-        <div class="feature">赤字化確率をAIが自動判定</div>
-        <div class="feature">推定赤字額を可視化</div>
-        <div class="feature">工期遅延を予測</div>
-        <div class="feature">安全リスクをスコア化</div>
-        <div class="feature">対応案を自動生成</div>
-      </div>
-      <div class="price">&yen;9,800/月（14日無料）</div>
-      <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="btn">今すぐ始める</a>
+  <div class="hero"><div class="container">
+    <h1>赤字工事を AI が自動検知</h1>
+    <p>ANDPAD データから赤字化確率・工期遅延・安全リスクを分析</p>
+    <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="cta">14日無料で始める</a>
+  </div></div>
+
+  <div class="section problem"><div class="container">
+    <h2>こんな課題はありませんか</h2>
+    <ul class="problem-list">
+      <li>赤字判明が遅れて損失が拡大</li>
+      <li>原価データの手作業転記に時間を費やす</li>
+      <li>工期遅延に気づくのが遅い</li>
+      <li>安全リスクを数値化できていない</li>
+      <li>対応方針を早期に決められない</li>
+    </ul>
+  </div></div>
+
+  <div class="section"><div class="container">
+    <h2>GreenOps が実現すること</h2>
+    <ul class="solution-list">
+      <li>プロジェクト開始時に赤字リスクを判定</li>
+      <li>日報から自動で赤字化確率を算出</li>
+      <li>18日先の工期遅延を予測</li>
+      <li>現場の安全スコアを自動生成</li>
+      <li>対応案を AI が提案</li>
+    </ul>
+  </div></div>
+
+  <div class="section features"><div class="container">
+    <h2>機能</h2>
+    <div class="features-grid">
+      <div class="feature"><h3>赤字化確率判定</h3><p>契約額と進捗から赤字化リスクをパーセンテージで表示</p></div>
+      <div class="feature"><h3>工期遅延予測</h3><p>日報とチャットから工期延伸の可能性を計算</p></div>
+      <div class="feature"><h3>安全スコア</h3><p>現場のリスク状況をスコア化</p></div>
+      <div class="feature"><h3>対応案生成</h3><p>AIが打つべき対策を自動提案</p></div>
     </div>
-  </div>
+  </div></div>
+
+  <div class="section pricing"><div class="container">
+    <h2>料金</h2>
+    <div class="price-card">
+      <div class="price">&yen;9,800</div>
+      <div class="price-detail">/月（税抜）<br>14日間無料</div>
+      <ul class="features-list">
+        <li>ANDPAD 連携（無制限）</li>
+        <li>プロジェクト自動分析</li>
+        <li>赤字化確率判定</li>
+        <li>工期遅延予測</li>
+        <li>安全リスク分析</li>
+        <li>対応案の提案</li>
+        <li>PDF/CSV エクスポート</li>
+        <li>音声レポート機能</li>
+      </ul>
+      <div class="trial">クレジットカード不要 / キャンセルいつでも可</div>
+      <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="cta" style="width:100%;margin-top:20px;color:#667eea">今すぐ始める</a>
+    </div>
+  </div></div>
+
+  <div class="section how"><div class="container">
+    <h2>利用開始までの流れ</h2>
+    <div class="how-steps">
+      <div class="step"><div class="step-num">1</div><p>無料で登録<br>クレジットカード不要</p></div>
+      <div class="step"><div class="step-num">2</div><p>ANDPAD 連携<br>API キーを入力</p></div>
+      <div class="step"><div class="step-num">3</div><p>分析開始<br>即座に結果を表示</p></div>
+    </div>
+  </div></div>
+
+  <div class="section faq"><div class="container">
+    <h2>よくある質問</h2>
+    <div class="faq-item" onclick="this.classList.toggle('open')"><h4>Q: ANDPAD API キーの設定は難しいですか？</h4><p>A: ANDPAD ダッシュボードからキーをコピーして入力するだけです。3分で完了します。</p></div>
+    <div class="faq-item" onclick="this.classList.toggle('open')"><h4>Q: 14日後は自動課金されますか？</h4><p>A: はい。継続を希望される場合は自動課金されます。キャンセルは解約ボタンから即座に可能です。</p></div>
+    <div class="faq-item" onclick="this.classList.toggle('open')"><h4>Q: 複数プロジェクトを管理できますか？</h4><p>A: はい。ANDPAD のすべてのプロジェクトが自動で分析されます。</p></div>
+    <div class="faq-item" onclick="this.classList.toggle('open')"><h4>Q: サポートはありますか？</h4><p>A: メールサポートを提供しています。24時間以内に返信します。</p></div>
+  </div></div>
+
+  <div class="footer"><div class="container">
+    <p style="margin-bottom:8px">&copy; 2026 GreenOps Inc.</p>
+    <p><a href="/tokutei.html">特定商取引法</a> | <a href="/privacy.html">プライバシー</a> | <a href="/terms.html">利用規約</a></p>
+  </div></div>
 </body>
 </html>
