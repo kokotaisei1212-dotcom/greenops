@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GreenOps - 日報アプリ</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Roboto',sans-serif;background:#fff;color:#1a1a1a}
+.header{background:#fff;border-bottom:1px solid #f0f0f0;padding:20px;text-align:center}.logo{font-size:20px;font-weight:700}
+.container{max-width:600px;margin:0 auto;padding:0 20px}
+.today{text-align:center;padding:30px 0 20px;font-size:14px;color:#999}.today-date{font-size:18px;font-weight:600;color:#1a1a1a;margin-top:5px}
+.daily-input{background:#f9f9f9;border-radius:12px;padding:30px 20px;margin-bottom:40px}.input-title{font-size:16px;font-weight:700;margin-bottom:25px;text-align:center}
+.form-group{margin-bottom:25px}.form-label{display:block;font-size:14px;font-weight:600;margin-bottom:10px;color:#333}.form-input,.form-select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:8px;font-size:16px;font-family:inherit}.form-input:focus,.form-select:focus{outline:none;border-color:#000;background:#fff}.input-number{font-size:20px;font-weight:600;text-align:center}
+.submit-btn{width:100%;background:#000;color:#fff;border:none;padding:16px;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;transition:background 0.2s}.submit-btn:hover{background:#333}
+.result-box{background:#f9f9f9;border-radius:12px;padding:30px 20px;margin-bottom:40px;display:none}.result-box.show{display:block}.result-title{font-size:14px;color:#999;margin-bottom:15px}.result-value{font-size:48px;font-weight:700;margin-bottom:10px;text-align:center}.result-status{font-size:16px;font-weight:600;text-align:center;padding:15px;border-radius:8px;margin-top:15px}
+.status-safe{background:#d4edda;color:#155724}.status-warning{background:#fff3cd;color:#856404}.status-danger{background:#f8d7da;color:#721c24}
+.projects-section{margin-top:60px;padding-top:40px;border-top:1px solid #f0f0f0}.section-title{font-size:16px;font-weight:700;margin-bottom:20px}
+.project{padding:20px;border:1px solid #f0f0f0;border-radius:8px;margin-bottom:15px}.project-name{font-weight:600;margin-bottom:12px}.project-stats{display:grid;grid-template-columns:1fr 1fr;gap:15px;font-size:13px}.stat{background:#f9f9f9;padding:12px;border-radius:6px}.stat-label{color:#999;font-size:12px;margin-bottom:4px}.stat-value{font-weight:600;font-size:16px}.stat-positive{color:#2ecc71}.stat-negative{color:#e74c3c}
+.export-btn{width:100%;background:#f5f5f5;color:#000;border:1px solid #ddd;padding:14px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;margin-top:40px;margin-bottom:60px}.export-btn:hover{background:#efefef}
+@media(max-width:480px){.container{padding:0 16px}.daily-input{padding:20px 16px}.result-value{font-size:36px}.project-stats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="header"><div class="logo">GreenOps</div></div>
+<div class="container">
+<div class="today">本日の日報<div class="today-date" id="todayDate"></div></div>
+<div class="daily-input">
+<div class="input-title">5項目を入力</div>
+<form id="dailyForm" onsubmit="submitDaily(event)">
+<div class="form-group"><label class="form-label">工事</label><select class="form-select" id="projectSelect" required><option value="">選択してください</option><option value="1">ビル改修A（新宿）</option><option value="2">商業施設内装</option><option value="3">鈴木邸リノベ</option></select></div>
+<div class="form-group"><label class="form-label">人数</label><input type="number" class="form-input input-number" id="workers" placeholder="8" required></div>
+<div class="form-group"><label class="form-label">進捗</label><input type="number" class="form-input input-number" id="progress" placeholder="65" min="0" max="100" required></div>
+<div class="form-group"><label class="form-label">天候</label><select class="form-select" id="weather" required><option value="">選択してください</option><option value="晴">晴れ</option><option value="曇">曇り</option><option value="雨">雨</option></select></div>
+<div class="form-group"><label class="form-label">追加工事（万円）</label><input type="number" class="form-input input-number" id="additional" placeholder="0" required></div>
+<button type="submit" class="submit-btn">粗利を計算</button>
+</form>
+</div>
+<div class="result-box" id="resultBox"><div class="result-title">推定粗利</div><div class="result-value" id="resultValue">285万円</div><div class="result-status" id="resultStatus">安全</div></div>
+<div class="projects-section">
+<div class="section-title">工事一覧</div>
+<div class="project"><div class="project-name">ビル改修A（新宿）</div><div class="project-stats"><div class="stat"><div class="stat-label">粗利</div><div class="stat-value stat-positive">+285万</div></div><div class="stat"><div class="stat-label">進捗</div><div class="stat-value">65%</div></div><div class="stat"><div class="stat-label">粗利率</div><div class="stat-value">23.8%</div></div><div class="stat"><div class="stat-label">状態</div><div class="stat-value stat-positive">安全</div></div></div></div>
+<div class="project"><div class="project-name">商業施設内装</div><div class="project-stats"><div class="stat"><div class="stat-label">粗利</div><div class="stat-value stat-positive">+156万</div></div><div class="stat"><div class="stat-label">進捗</div><div class="stat-value">42%</div></div><div class="stat"><div class="stat-label">粗利率</div><div class="stat-value">20.0%</div></div><div class="stat"><div class="stat-label">状態</div><div class="stat-value stat-positive">安全</div></div></div></div>
+<div class="project"><div class="project-name">鈴木邸リノベ</div><div class="project-stats"><div class="stat"><div class="stat-label">粗利</div><div class="stat-value stat-negative">-85万</div></div><div class="stat"><div class="stat-label">進捗</div><div class="stat-value">78%</div></div><div class="stat"><div class="stat-label">粗利率</div><div class="stat-value stat-negative">-22.4%</div></div><div class="stat"><div class="stat-label">状態</div><div class="stat-value stat-negative">要対応</div></div></div></div>
+<button class="export-btn" onclick="alert('CSV\u3092\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9\u4e2d...')">CSVをダウンロード</button>
+</div>
+</div>
+<script>
+document.getElementById('todayDate').textContent=new Date().toLocaleDateString('ja-JP',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
+function submitDaily(event){
+event.preventDefault();
+var workers=parseInt(document.getElementById('workers').value);
+var progress=parseInt(document.getElementById('progress').value);
+var weather=document.getElementById('weather').value;
+var additional=parseInt(document.getElementById('additional').value);
+var baseProfit=300;
+if(weather==='\u96e8')baseProfit-=50;
+if(progress<30)baseProfit-=30;
+if(workers<5)baseProfit-=40;
+var totalProfit=baseProfit+(additional*10);
+var status='\u5b89\u5168',statusClass='status-safe';
+if(totalProfit<0){status='\u8981\u5bfe\u5fdc';statusClass='status-danger'}
+else if(totalProfit<100){status='\u6ce8\u610f';statusClass='status-warning'}
+document.getElementById('resultValue').textContent=totalProfit+'\u4e07\u5186';
+document.getElementById('resultStatus').textContent=status;
+document.getElementById('resultStatus').className='result-status '+statusClass;
+document.getElementById('resultBox').classList.add('show');
+window.scrollTo({top:document.getElementById('resultBox').offsetTop-100,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
