@@ -14,45 +14,65 @@
     .spinner{display:inline-block;width:40px;height:40px;border:4px solid #f3f3f3;border-top:4px solid #667eea;border-radius:50%;animation:spin 1s linear infinite}
     @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
     .loading p{margin-top:20px;color:#667eea;font-weight:600}
-    .error{background:#ffe0e0;border:1px solid #ff4757;color:#ff4757;padding:15px;border-radius:4px;margin-top:20px;display:none}
-    .result{background:#f9f9f9;padding:15px;border-radius:4px;margin-top:20px;border-left:3px solid #667eea;display:none}
-    .result h2{font-size:16px;color:#333;margin-bottom:10px}
-    .result-item{margin:8px 0;font-size:14px}
-    .result-label{color:#666;font-weight:500}
-    .result-value{color:#333;font-weight:600}
+    .result{background:#f9f9f9;padding:20px;border-radius:4px;margin-top:20px;border-left:4px solid #667eea;display:none}
+    .result-item{margin:12px 0;font-size:15px}
+    .result-label{color:#666;font-weight:500;display:block;margin-bottom:4px}
+    .result-value{color:#333;font-weight:600;font-size:18px}
+    .recommendations{margin-top:20px;border-top:1px solid #ddd;padding-top:15px}
+    .rec-item{background:#f0f8ff;padding:10px;margin:8px 0;border-left:3px solid #667eea;border-radius:3px;font-size:13px}
+    .error-msg{color:red;margin-top:20px}
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="card">
-      <h1>GreenOps AI 分析</h1>
-      <div class="loading" id="loading"><div class="spinner"></div><p>分析中...</p></div>
-      <div class="error" id="error"></div>
-      <div class="result" id="result"><h2>分析結果</h2><div id="resultContent"></div></div>
+    <div class="card" id="mainCard">
+      <h1 id="title">GreenOps AI 分析</h1>
+      <div class="loading" id="loading"><div class="spinner"></div><p>プロジェクトを分析中...</p></div>
+      <div class="result" id="result">
+        <h2 id="projectName" style="color:#333;margin-bottom:20px"></h2>
+        <div class="result-item"><span class="result-label">赤字化確率</span><span class="result-value" id="lossProb">0%</span></div>
+        <div class="result-item"><span class="result-label">推定赤字額</span><span class="result-value" id="lossAmount">&yen;0</span></div>
+        <div class="result-item"><span class="result-label">工期遅延</span><span class="result-value" id="delay">0日</span></div>
+        <div class="result-item"><span class="result-label">安全スコア</span><span class="result-value" id="safetyScore">0/100</span></div>
+        <div class="recommendations"><span class="result-label">推奨対応</span><div id="recommendations"></div></div>
+      </div>
     </div>
   </div>
   <script>
-    window.addEventListener('load', function(){ analyze(); });
+    window.addEventListener('load', function(){
+      var params = new URLSearchParams(window.location.search);
+      var projectId = params.get('project_id');
+      if (projectId) {
+        analyze(projectId);
+      } else {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('title').textContent = 'エラー';
+        var p = document.createElement('p');
+        p.className = 'error-msg';
+        p.textContent = 'プロジェクトIDが指定されていません。URLに ?project_id=xxx を追加してください。';
+        document.getElementById('mainCard').appendChild(p);
+      }
+    });
 
-    function analyze() {
+    function analyze(projectId) {
       fetch('/api/analyze-project', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ project_id: 'default_project' })
+        body: JSON.stringify({ project_id: projectId })
       })
       .then(function(res){ return res.json(); })
       .then(function(data){
-        if (data.error) { showError(data.error); return; }
+        if (data.error) throw new Error(data.error);
         displayResult(data);
       })
-      .catch(function(err){ showError(err.message || 'ネットワークエラー'); })
-      .finally(function(){ document.getElementById('loading').style.display = 'none'; });
-    }
-
-    function showError(msg) {
-      var el = document.getElementById('error');
-      el.textContent = msg;
-      el.style.display = 'block';
+      .catch(function(err){
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('title').textContent = 'エラー';
+        var p = document.createElement('p');
+        p.className = 'error-msg';
+        p.textContent = err.message;
+        document.getElementById('mainCard').appendChild(p);
+      });
     }
 
     function displayResult(data) {
@@ -60,22 +80,21 @@
       var c = a.cost || {};
       var s = a.schedule || {};
       var sf = a.safety || {};
+
+      document.getElementById('projectName').textContent = 'プロジェクト: ' + data.project_id;
+      document.getElementById('lossProb').textContent = ((c.loss_probability || 0) * 100).toFixed(1) + '%';
+      document.getElementById('lossAmount').textContent = '\u00a5' + Math.floor(c.estimated_loss_yen || 0).toLocaleString();
+      document.getElementById('delay').textContent = (s.predicted_delay_days || 0) + '\u65e5';
+      document.getElementById('safetyScore').textContent = (sf.overall_score || 0) + '/100';
+
+      var recs = a.recommendations || [];
       var html = '';
-
-      html += '<div class="result-item"><span class="result-label">赤字化確率: </span><span class="result-value">' + ((c.loss_probability || 0) * 100).toFixed(1) + '%</span></div>';
-      html += '<div class="result-item"><span class="result-label">推定赤字額: </span><span class="result-value">\u00a5' + Math.floor(c.estimated_loss_yen || 0).toLocaleString() + '</span></div>';
-      html += '<div class="result-item"><span class="result-label">工期遅延: </span><span class="result-value">' + (s.predicted_delay_days || 0) + '\u65e5</span></div>';
-      html += '<div class="result-item"><span class="result-label">安全スコア: </span><span class="result-value">' + (sf.overall_score || 0) + '/100</span></div>';
-
-      if (a.recommendations && a.recommendations.length > 0) {
-        html += '<div style="margin-top:15px;border-top:1px solid #ddd;padding-top:10px"><span class="result-label">推奨対応:</span>';
-        for (var i = 0; i < a.recommendations.length; i++) {
-          html += '<div style="margin:5px 0;color:#333;font-size:13px">' + (i+1) + '. ' + a.recommendations[i] + '</div>';
-        }
-        html += '</div>';
+      for (var i = 0; i < recs.length; i++) {
+        html += '<div class="rec-item">' + (i+1) + '. ' + recs[i] + '</div>';
       }
+      document.getElementById('recommendations').innerHTML = html;
 
-      document.getElementById('resultContent').innerHTML = html;
+      document.getElementById('loading').style.display = 'none';
       document.getElementById('result').style.display = 'block';
     }
   </script>
