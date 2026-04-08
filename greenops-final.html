@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GreenOps - プロジェクト分析</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f5}
+    .container{max-width:600px;margin:40px auto;padding:20px}
+    .card{background:white;border-radius:8px;padding:30px;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
+    h1{font-size:24px;margin-bottom:10px;color:#333}
+    p{color:#666;margin-bottom:20px;font-size:14px}
+    .form-group{margin-bottom:15px}
+    label{display:block;color:#333;margin-bottom:5px;font-weight:500}
+    input{width:100%;padding:12px;border:1px solid #ddd;border-radius:4px;font-size:16px}
+    input:focus{outline:none;border-color:#667eea;box-shadow:0 0 0 2px rgba(102,126,234,0.1)}
+    .btn{width:100%;padding:12px;background:#667eea;color:white;border:none;border-radius:4px;font-size:16px;font-weight:600;cursor:pointer;margin-top:10px}
+    .btn:hover{background:#5568d3}
+    .btn:disabled{background:#ccc;cursor:not-allowed}
+    .error{background:#ffe0e0;border:1px solid #ff4757;color:#ff4757;padding:10px;border-radius:4px;margin-top:10px;font-size:13px;display:none}
+    .result{background:#f9f9f9;padding:15px;border-radius:4px;margin-top:20px;border-left:3px solid #667eea;display:none}
+    .result h2{font-size:16px;color:#333;margin-bottom:10px}
+    .result-item{margin:8px 0;font-size:14px}
+    .result-label{color:#666;font-weight:500}
+    .result-value{color:#333;font-weight:600}
+    .loading{display:none;text-align:center;color:#667eea;font-size:14px;margin-top:10px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>GreenOps AI 分析</h1>
+      <p>ANDPADプロジェクトをAIが自動分析</p>
+      <div class="form-group">
+        <label>プロジェクトID</label>
+        <input type="text" id="projectId" placeholder="プロジェクトIDを入力" autofocus>
+      </div>
+      <button class="btn" id="analyzeBtn" onclick="analyze()">分析を開始</button>
+      <div class="loading" id="loading">分析中...</div>
+      <div class="error" id="error"></div>
+      <div class="result" id="result">
+        <h2>分析結果</h2>
+        <div id="resultContent"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.getElementById('projectId').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') analyze();
+    });
+
+    function analyze() {
+      var pid = document.getElementById('projectId').value.trim();
+      if (!pid) { showError('プロジェクトIDを入力してください'); return; }
+
+      var btn = document.getElementById('analyzeBtn');
+      btn.disabled = true;
+      document.getElementById('loading').style.display = 'block';
+      document.getElementById('error').style.display = 'none';
+      document.getElementById('result').style.display = 'none';
+
+      fetch('/api/analyze-project', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ project_id: pid })
+      })
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        if (data.error) { showError(data.error || '分析に失敗しました'); return; }
+        displayResult(data);
+      })
+      .catch(function(err) { showError(err.message || 'ネットワークエラー'); })
+      .finally(function() {
+        btn.disabled = false;
+        document.getElementById('loading').style.display = 'none';
+      });
+    }
+
+    function showError(msg) {
+      var el = document.getElementById('error');
+      el.textContent = msg;
+      el.style.display = 'block';
+    }
+
+    function displayResult(data) {
+      var a = data.ai_analysis || {};
+      var html = '';
+
+      if (a.deficit_probability !== undefined) {
+        html += '<div class="result-item"><span class="result-label">赤字化確率: </span><span class="result-value">' + a.deficit_probability + '%</span></div>';
+      }
+      if (a.estimated_deficit_yen !== undefined) {
+        html += '<div class="result-item"><span class="result-label">推定赤字額: </span><span class="result-value">\u00a5' + Number(a.estimated_deficit_yen).toLocaleString() + '</span></div>';
+      }
+      if (a.delay_days !== undefined) {
+        html += '<div class="result-item"><span class="result-label">工期遅延: </span><span class="result-value">' + a.delay_days + '\u65e5</span></div>';
+      }
+      if (a.safety_score !== undefined) {
+        html += '<div class="result-item"><span class="result-label">安全スコア: </span><span class="result-value">' + a.safety_score + '/100</span></div>';
+      }
+
+      if (a.recommendations && a.recommendations.length > 0) {
+        html += '<div style="margin-top:15px;border-top:1px solid #ddd;padding-top:10px"><span class="result-label">推奨対応:</span>';
+        for (var i = 0; i < a.recommendations.length; i++) {
+          html += '<div style="margin:5px 0;color:#333;font-size:13px">' + (i + 1) + '. ' + a.recommendations[i] + '</div>';
+        }
+        html += '</div>';
+      }
+
+      if (a.raw) {
+        html += '<div style="margin-top:10px;font-size:12px;color:#666;white-space:pre-wrap">' + a.raw + '</div>';
+      }
+
+      document.getElementById('resultContent').innerHTML = html;
+      document.getElementById('result').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
