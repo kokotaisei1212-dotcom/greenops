@@ -3,62 +3,62 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GreenOps ダッシュボード</title>
+<title>GreenOps - 赤字工事を3週間前に止める</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Roboto','Helvetica Neue',sans-serif;background:#fafafa;color:#1a1a1a;line-height:1.6}
-.header{background:#fff;border-bottom:1px solid #e8e8e8;padding:16px 32px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}.logo{font-size:18px;font-weight:700}.user-menu{display:flex;align-items:center;gap:24px}.user-info{font-size:14px;color:#666}.logout-btn{background:#f5f5f5;border:1px solid #ddd;padding:8px 16px;border-radius:6px;font-size:13px;cursor:pointer;transition:all 0.2s}.logout-btn:hover{background:#efefef}
-.container{max-width:1600px;margin:0 auto;padding:32px}.page-header{margin-bottom:32px}.page-title{font-size:28px;font-weight:700;margin-bottom:8px}.page-date{font-size:13px;color:#999}
-.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}.kpi-card{background:#fff;border:1px solid #e8e8e8;border-radius:8px;padding:24px}.kpi-label{font-size:12px;color:#999;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:12px;font-weight:600}.kpi-value{font-size:32px;font-weight:700;margin-bottom:8px;line-height:1}.kpi-change{font-size:12px;color:#666}.positive{color:#2ecc71;font-weight:600}.negative{color:#e74c3c;font-weight:600}
-.main-grid{display:grid;grid-template-columns:2.5fr 1fr;gap:16px;margin-bottom:32px}.card{background:#fff;border:1px solid #e8e8e8;border-radius:8px;padding:24px}.card-title{font-size:16px;font-weight:700;margin-bottom:20px}
-.alert{background:#fff3cd;border-left:4px solid #ffc107;padding:16px;border-radius:6px;margin-bottom:20px}.alert-title{font-size:13px;font-weight:600;color:#856404;margin-bottom:4px}.alert-message{font-size:13px;color:#856404}
-.project-list{list-style:none}.project-item{border:1px solid #e8e8e8;border-radius:6px;padding:16px;margin-bottom:12px}.project-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}.project-name{font-weight:600;font-size:14px}.project-status{font-size:12px;color:#999;margin-top:4px}.project-margin{font-size:16px;font-weight:700;line-height:1.2}.margin-green{color:#2ecc71}.margin-red{color:#e74c3c}
-.progress-bar{background:#e8e8e8;height:4px;border-radius:2px;overflow:hidden;margin-bottom:12px}.progress-fill{height:100%;background:#000;border-radius:2px}
-.project-details{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;font-size:12px}.detail-label{color:#999;margin-bottom:4px}.detail-value{font-weight:600;color:#333}
-.ai-insight{background:#f0f7ff;border:1px solid #cce5ff;border-radius:6px;padding:12px;margin-top:12px;font-size:12px;line-height:1.6;color:#0055a4}
-.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}.stat-item{background:#f9f9f9;border:1px solid #e8e8e8;border-radius:6px;padding:16px}.stat-label{font-size:12px;color:#999;margin-bottom:8px}.stat-value{font-size:18px;font-weight:700}
-.action-buttons{display:flex;flex-direction:column;gap:8px}.action-btn{background:#f5f5f5;border:1px solid #ddd;padding:12px 16px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;text-align:left}.action-btn:hover{background:#efefef}
-.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center}.modal.active{display:flex}.modal-content{background:#fff;border-radius:8px;padding:32px;max-width:500px;width:90%;max-height:90vh;overflow-y:auto}.modal-title{font-size:20px;font-weight:700;margin-bottom:24px}
-.form-group{margin-bottom:20px}.form-label{display:block;font-size:13px;font-weight:600;margin-bottom:8px}.form-input,.form-select{width:100%;padding:10px 12px;border:1px solid #ddd;border-radius:6px;font-size:13px;font-family:inherit}.form-input:focus,.form-select:focus{outline:none;border-color:#000}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.form-buttons{display:flex;gap:12px;margin-top:24px}.btn-submit{background:#000;color:#fff;border:none;padding:12px 24px;border-radius:6px;font-weight:600;cursor:pointer;flex:1}.btn-submit:hover{background:#222}.btn-cancel{background:#f5f5f5;border:1px solid #ddd;padding:12px 24px;border-radius:6px;font-weight:600;cursor:pointer;flex:1}
-@media(max-width:1200px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.main-grid{grid-template-columns:1fr}}
-@media(max-width:768px){.container{padding:16px}.header{padding:12px 16px}.kpi-grid{grid-template-columns:1fr}.project-details{grid-template-columns:1fr}}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#fff;color:#1a1a1a}
+.header{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;border-bottom:1px solid #f0f0f0}.logo{font-size:20px;font-weight:700}.user{font-size:14px;color:#666}
+.container{max-width:1200px;margin:0 auto;padding:40px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.section{padding:40px;background:#f9f9f9;border-radius:8px}
+.section-title{font-size:20px;font-weight:700;margin-bottom:30px}
+.form-group{margin-bottom:20px}.label{display:block;font-size:14px;font-weight:600;margin-bottom:8px;color:#333}.input,.select{width:100%;padding:12px;border:1px solid #ddd;border-radius:6px;font-size:14px;font-family:inherit}.input:focus,.select:focus{outline:none;border-color:#000;box-shadow:0 0 0 3px rgba(0,0,0,0.05)}
+.btn{width:100%;padding:14px;background:#000;color:#fff;border:none;border-radius:6px;font-size:16px;font-weight:600;cursor:pointer;transition:background 0.2s}.btn:hover{background:#333}
+.input-group{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.projects{display:grid;gap:20px}
+.project{padding:25px;background:#fff;border:1px solid #e0e0e0;border-radius:6px}
+.project-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:15px}
+.project-name{font-size:16px;font-weight:700}.project-margin{font-size:18px;font-weight:700}
+.margin-green{color:#2ecc71}.margin-red{color:#e74c3c}
+.project-details{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;font-size:13px;color:#666;margin-bottom:15px}
+.detail{padding:10px;background:#f9f9f9;border-radius:4px}.detail-label{color:#999;font-size:11px;margin-bottom:4px}.detail-value{font-weight:600;color:#333}
+.progress{height:6px;background:#e0e0e0;border-radius:3px;overflow:hidden;margin-bottom:10px}.progress-bar{height:100%;background:#000;border-radius:3px}
+.alert{padding:15px;background:#fff3cd;border-left:3px solid #ffc107;border-radius:4px;margin-bottom:20px;font-size:14px;color:#856404}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin-top:20px}.stat{padding:15px;background:#f9f9f9;border-radius:4px;text-align:center}.stat-value{font-size:24px;font-weight:700;margin-bottom:5px}.stat-label{font-size:12px;color:#999}
+.action-btn{padding:12px 20px;background:#f5f5f5;border:1px solid #ddd;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;margin-right:10px;margin-top:10px}.action-btn:hover{background:#efefef}
+@media(max-width:1024px){.grid{grid-template-columns:1fr}.container{padding:20px}.header{padding:20px}.input-group{grid-template-columns:1fr}.project-details{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="header"><div class="logo">GreenOps</div><div class="user-menu"><div class="user-info">建設太郎様</div><button class="logout-btn" onclick="if(confirm('\u30ed\u30b0\u30a2\u30a6\u30c8\u3057\u307e\u3059\u304b\uff1f'))location.href='/'">ログアウト</button></div></div>
+<div class="header"><div class="logo">GreenOps</div><div class="user">月額 9,800円</div></div>
 <div class="container">
-<div class="page-header"><div class="page-title">ダッシュボード</div><div class="page-date" id="currentDate"></div></div>
-<div class="kpi-grid">
-<div class="kpi-card"><div class="kpi-label">今月の粗利率</div><div class="kpi-value">18.5%</div><div class="kpi-change"><span class="positive">+2.3%</span> vs 先月</div></div>
-<div class="kpi-card"><div class="kpi-label">進行中の工事</div><div class="kpi-value">12件</div><div class="kpi-change">赤字予兆 <span class="negative">2件</span></div></div>
-<div class="kpi-card"><div class="kpi-label">3週間先リスク</div><div class="kpi-value" style="color:#2ecc71">なし</div><div class="kpi-change">回避できた損失 85万円</div></div>
-<div class="kpi-card"><div class="kpi-label">月間日報入力</div><div class="kpi-value">158時間</div><div class="kpi-change">削減率 <span class="positive">94%</span></div></div>
-</div>
-<div class="main-grid">
-<div class="card">
-<div class="card-title">進行中の工事</div>
-<div class="alert"><div class="alert-title">要確認</div><div class="alert-message">鈴木邸リノベーション：予算超過 85,000円 / 人員配置の見直しで対応可能</div></div>
-<ul class="project-list">
-<li class="project-item"><div class="project-header"><div><div class="project-name">ビル改修A (新宿)</div><div class="project-status">進捗: 65% | 残り12日</div></div><div class="project-margin margin-green">+285万</div></div><div class="progress-bar"><div class="progress-fill" style="width:65%"></div></div><div class="project-details"><div><div class="detail-label">予算</div><div class="detail-value">1,200万</div></div><div><div class="detail-label">予想支出</div><div class="detail-value">915万</div></div><div><div class="detail-label">粗利率</div><div class="detail-value">23.8%</div></div></div><div class="ai-insight">AI判定: 現在の進捗ペースと人員数から、予定通り完工できると推定。赤字化の兆候なし。安全圏。</div></li>
-<li class="project-item"><div class="project-header"><div><div class="project-name">商業施設内装</div><div class="project-status">進捗: 42% | 残り28日</div></div><div class="project-margin margin-green">+156万</div></div><div class="progress-bar"><div class="progress-fill" style="width:42%"></div></div><div class="project-details"><div><div class="detail-label">予算</div><div class="detail-value">780万</div></div><div><div class="detail-label">予想支出</div><div class="detail-value">624万</div></div><div><div class="detail-label">粗利率</div><div class="detail-value">20.0%</div></div></div><div class="ai-insight">AI判定: 予算内で推移。残工程の人員が十分。リスクレベル: 低。</div></li>
-<li class="project-item"><div class="project-header"><div><div class="project-name">鈴木邸リノベーション</div><div class="project-status">進捗: 78% | 残り6日</div></div><div class="project-margin margin-red">-85万</div></div><div class="progress-bar"><div class="progress-fill" style="width:78%;background:#e74c3c"></div></div><div class="project-details"><div><div class="detail-label">予算</div><div class="detail-value">380万</div></div><div><div class="detail-label">予想支出</div><div class="detail-value">465万</div></div><div><div class="detail-label">粗利率</div><div class="detail-value">-22.4%</div></div></div><div class="ai-insight">AI判定: 人員日数が実績から10日オーバー推定。現在ペースだと85万超過。残工程6日で完工不可能の可能性。現場会議で追加手配検討必須。</div></li>
-<li class="project-item"><div class="project-header"><div><div class="project-name">事務所改修（渋谷）</div><div class="project-status">進捗: 28% | 残り43日</div></div><div class="project-margin margin-green">+42万</div></div><div class="progress-bar"><div class="progress-fill" style="width:28%"></div></div><div class="project-details"><div><div class="detail-label">予算</div><div class="detail-value">520万</div></div><div><div class="detail-label">予想支出</div><div class="detail-value">478万</div></div><div><div class="detail-label">粗利率</div><div class="detail-value">8.1%</div></div></div><div class="ai-insight">AI判定: 初期段階。十分な余裕あり。ただし粗利率が8%と低め。後工程での効率化が重要。</div></li>
-</ul>
-</div>
-<div>
-<div class="card" style="margin-bottom:16px"><div class="card-title">同期ステータス</div><div class="stats-grid"><div class="stat-item"><div class="stat-label">本日の日報</div><div class="stat-value">8件</div></div><div class="stat-item"><div class="stat-label">未入力工事</div><div class="stat-value">3件</div></div><div class="stat-item"><div class="stat-label">CSVエクスポート</div><div class="stat-value">今月 2回</div></div><div class="stat-item"><div class="stat-label">最終更新</div><div class="stat-value">5分前</div></div></div></div>
-<div class="card"><div class="card-title">操作</div><div class="action-buttons"><button class="action-btn" onclick="openModal('newProjectModal')">新規工事を登録</button><button class="action-btn" onclick="openModal('dailyInputModal')">本日の日報を入力</button><button class="action-btn" onclick="alert('CSV\u3092\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9\u4e2d...')">CSVでエクスポート</button><button class="action-btn" onclick="alert('7\u65e5\u9593\u30c8\u30ec\u30f3\u30c9\u3092\u8868\u793a\u3057\u307e\u3059')">7日間トレンドを見る</button></div></div>
+<div class="grid">
+<div class="section">
+<div class="section-title">新規工事を登録</div>
+<div class="form-group"><label class="label">工事名</label><input type="text" class="input" placeholder="例: 田中邸リノベーション"></div>
+<div class="form-group"><label class="label">予算（万円）</label><input type="number" class="input" placeholder="500"></div>
+<div class="form-group"><label class="label">工期（日数）</label><input type="number" class="input" placeholder="30"></div>
+<button class="btn" onclick="alert('\u5de5\u4e8b\u3092\u767b\u9332\u3057\u307e\u3057\u305f')">工事を登録</button>
+<div style="margin-top:40px;padding-top:40px;border-top:1px solid #ddd">
+<div class="section-title">本日の日報</div>
+<div class="form-group"><label class="label">工事を選択</label><select class="select"><option>ビル改修A（新宿）</option><option>商業施設内装</option><option>鈴木邸リノベーション</option><option>事務所改修（渋谷）</option></select></div>
+<div class="input-group"><div class="form-group"><label class="label">人数</label><input type="number" class="input" placeholder="8"></div><div class="form-group"><label class="label">進捗</label><input type="number" class="input" placeholder="65"></div></div>
+<div class="input-group"><div class="form-group"><label class="label">天候</label><select class="select"><option>晴れ</option><option>曇り</option><option>雨</option></select></div><div class="form-group"><label class="label">追加工事（万円）</label><input type="number" class="input" placeholder="0"></div></div>
+<button class="btn" onclick="alert('\u65e5\u5831\u3092\u4fdd\u5b58\u3057\u307e\u3057\u305f\u3002\u7c97\u5229\u304c\u66f4\u65b0\u3055\u308c\u307e\u3059\u3002')">日報を保存</button>
 </div>
 </div>
+<div class="section">
+<div class="section-title">進行中の工事</div>
+<div class="alert">要確認: 鈴木邸が予算超過85万円。現場と本社で打ち合わせが必要。</div>
+<div class="projects">
+<div class="project"><div class="project-header"><div><div class="project-name">ビル改修A（新宿）</div><div style="font-size:12px;color:#999;margin-top:4px">進捗 65% | 残り12日</div></div><div class="project-margin margin-green">+285万</div></div><div class="progress"><div class="progress-bar" style="width:65%"></div></div><div class="project-details"><div class="detail"><div class="detail-label">予算</div><div class="detail-value">1,200万</div></div><div class="detail"><div class="detail-label">見込支出</div><div class="detail-value">915万</div></div><div class="detail"><div class="detail-label">粗利率</div><div class="detail-value">23.8%</div></div></div></div>
+<div class="project"><div class="project-header"><div><div class="project-name">商業施設内装</div><div style="font-size:12px;color:#999;margin-top:4px">進捗 42% | 残り28日</div></div><div class="project-margin margin-green">+156万</div></div><div class="progress"><div class="progress-bar" style="width:42%"></div></div><div class="project-details"><div class="detail"><div class="detail-label">予算</div><div class="detail-value">780万</div></div><div class="detail"><div class="detail-label">見込支出</div><div class="detail-value">624万</div></div><div class="detail"><div class="detail-label">粗利率</div><div class="detail-value">20.0%</div></div></div></div>
+<div class="project"><div class="project-header"><div><div class="project-name">鈴木邸リノベーション</div><div style="font-size:12px;color:#999;margin-top:4px">進捗 78% | 残り6日</div></div><div class="project-margin margin-red">-85万</div></div><div class="progress"><div class="progress-bar" style="width:78%;background:#e74c3c"></div></div><div class="project-details"><div class="detail"><div class="detail-label">予算</div><div class="detail-value">380万</div></div><div class="detail"><div class="detail-label">見込支出</div><div class="detail-value">465万</div></div><div class="detail"><div class="detail-label">粗利率</div><div class="detail-value">-22.4%</div></div></div></div>
+<div class="project"><div class="project-header"><div><div class="project-name">事務所改修（渋谷）</div><div style="font-size:12px;color:#999;margin-top:4px">進捗 28% | 残り43日</div></div><div class="project-margin margin-green">+42万</div></div><div class="progress"><div class="progress-bar" style="width:28%"></div></div><div class="project-details"><div class="detail"><div class="detail-label">予算</div><div class="detail-value">520万</div></div><div class="detail"><div class="detail-label">見込支出</div><div class="detail-value">478万</div></div><div class="detail"><div class="detail-label">粗利率</div><div class="detail-value">8.1%</div></div></div></div>
 </div>
-<div class="modal" id="newProjectModal"><div class="modal-content"><div class="modal-title">新規工事を登録</div><form onsubmit="event.preventDefault();alert('\u5de5\u4e8b\u3092\u767b\u9332\u3057\u307e\u3057\u305f');closeModal('newProjectModal')"><div class="form-group"><label class="form-label">工事名</label><input type="text" class="form-input" placeholder="例: 〇〇邸リノベーション" required></div><div class="form-grid"><div class="form-group"><label class="form-label">予算（万円）</label><input type="number" class="form-input" placeholder="500" required></div><div class="form-group"><label class="form-label">工期（日数）</label><input type="number" class="form-input" placeholder="30" required></div></div><div class="form-group"><label class="form-label">開始日</label><input type="date" class="form-input" required></div><div class="form-buttons"><button type="submit" class="btn-submit">登録</button><button type="button" class="btn-cancel" onclick="closeModal('newProjectModal')">キャンセル</button></div></form></div></div>
-<div class="modal" id="dailyInputModal"><div class="modal-content"><div class="modal-title">本日の日報を入力</div><form onsubmit="event.preventDefault();alert('\u65e5\u5831\u3092\u4fdd\u5b58\u3057\u307e\u3057\u305f\u3002AI\u304c\u5206\u6790\u3092\u958b\u59cb\u3057\u307e\u3059\u3002');closeModal('dailyInputModal')"><div class="form-group"><label class="form-label">工事を選択</label><select class="form-select" required><option value="">選択してください</option><option>ビル改修A (新宿)</option><option>商業施設内装</option><option>鈴木邸リノベーション</option><option>事務所改修（渋谷）</option></select></div><div class="form-grid"><div class="form-group"><label class="form-label">本日の人数</label><input type="number" class="form-input" placeholder="8" required></div><div class="form-group"><label class="form-label">進捗率（%）</label><input type="number" class="form-input" placeholder="65" min="0" max="100" required></div></div><div class="form-grid"><div class="form-group"><label class="form-label">天候</label><select class="form-select" required><option value="">選択</option><option>晴れ</option><option>曇り</option><option>雨</option><option>雪</option></select></div><div class="form-group"><label class="form-label">追加工事（万円）</label><input type="number" class="form-input" placeholder="0" value="0"></div></div><div class="form-group"><label class="form-label">メモ</label><input type="text" class="form-input" placeholder="特記事項"></div><div class="form-buttons"><button type="submit" class="btn-submit">保存</button><button type="button" class="btn-cancel" onclick="closeModal('dailyInputModal')">キャンセル</button></div></form></div></div>
-<script>
-function openModal(id){document.getElementById(id).classList.add('active')}
-function closeModal(id){document.getElementById(id).classList.remove('active')}
-document.querySelectorAll('.modal').forEach(function(m){m.addEventListener('click',function(e){if(e.target===this)this.classList.remove('active')})});
-document.addEventListener('keydown',function(e){if(e.key==='Escape')document.querySelectorAll('.modal.active').forEach(function(m){m.classList.remove('active')})});
-document.getElementById('currentDate').textContent=new Date().toLocaleDateString('ja-JP',{year:'numeric',month:'long',day:'numeric'});
-</script>
+<div class="stats"><div class="stat"><div class="stat-value">18.5%</div><div class="stat-label">今月の粗利率</div></div><div class="stat"><div class="stat-value">赤字なし</div><div class="stat-label">3ヶ月先CF</div></div></div>
+<div style="margin-top:20px"><button class="action-btn" onclick="alert('CSV\u3092\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9\u4e2d...')">CSVダウンロード</button></div>
+</div>
+</div>
+</div>
 </body>
 </html>
