@@ -1,116 +1,37 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GreenOps</title>
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif;background:#fff;color:#1a1a1a;line-height:1.8}
-    .hero{padding:160px 40px;text-align:center;background:#fff}h1{font-size:56px;font-weight:900;line-height:1.2;margin-bottom:24px;letter-spacing:-1px}
-    .sub{font-size:18px;color:#666;margin-bottom:60px;max-width:650px;margin-left:auto;margin-right:auto;line-height:1.8}
-    .cta{display:inline-block;padding:18px 56px;background:#ff6b35;color:#fff;border:0;border-radius:6px;font-size:16px;font-weight:700;cursor:pointer;text-decoration:none;margin:0 12px;transition:background 0.2s}
-    .cta:hover{background:#f7931e}.note{font-size:12px;color:#999;margin-top:24px}.sect{padding:120px 40px;border-top:1px solid #f0f0f0}
-    .sect-in{max-width:1000px;margin:0 auto}h2{font-size:44px;font-weight:900;margin-bottom:80px;text-align:center;letter-spacing:-0.5px}
-    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:60px;margin-bottom:100px}
-    .num{font-size:48px;font-weight:900;color:#ff6b35;margin-bottom:16px}.title{font-size:16px;font-weight:700;margin-bottom:12px}.desc{font-size:13px;color:#666;line-height:1.8}
-    .box{background:#f9f9f9;padding:80px 60px;border-radius:6px;text-align:center;margin-bottom:80px}
-    .box h3{font-size:32px;font-weight:900;margin-bottom:24px;line-height:1.4}.box p{font-size:15px;color:#666;line-height:1.9}
-    .feat{display:grid;grid-template-columns:repeat(2,1fr);gap:60px;margin-bottom:100px}.feat-t{font-size:16px;font-weight:700;margin-bottom:12px}.feat-d{font-size:13px;color:#666;line-height:1.8}
-    .roi{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;background:linear-gradient(135deg,#fff9f5,#fffbf8);padding:80px 60px;border-radius:6px;text-align:center;margin-bottom:80px}
-    .roi-l{font-size:12px;color:#999;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}.roi-n{font-size:56px;font-weight:900;color:#ff6b35;margin-bottom:8px}.roi-d{font-size:13px;color:#666}
-    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:60px}.step-n{font-size:44px;font-weight:900;color:#ff6b35;margin-bottom:20px}.step-t{font-size:16px;font-weight:700;margin-bottom:12px}.step-d{font-size:13px;color:#666;line-height:1.8}
-    .voices{display:grid;grid-template-columns:repeat(2,1fr);gap:60px;margin-bottom:100px}.voice{padding:40px;background:#fff;border:1px solid #f0f0f0;border-radius:6px}
-    .voice-t{font-size:15px;line-height:1.9;margin-bottom:16px;color:#333}.voice-a{font-size:12px;color:#999}
-    .pricing{background:#f5f5f5;padding:120px 40px}.pricing-in{max-width:500px;margin:0 auto;text-align:center}
-    .price-box{background:#fff;padding:60px 40px;border-radius:6px}.price{font-size:72px;font-weight:900;color:#ff6b35;margin-bottom:8px}.price-p{font-size:13px;color:#999;margin-bottom:40px}
-    .list{text-align:left;margin-bottom:40px}.item-p{padding:10px 0;font-size:13px;color:#666}
-    .cta-f{padding:140px 40px;background:#1a1a1a;color:#fff;text-align:center}.cta-f h2{color:#fff;margin-bottom:32px;font-size:48px}.cta-f p{font-size:18px;margin-bottom:48px;color:#ccc}
-    .footer{padding:40px;text-align:center;font-size:12px;color:#999;border-top:1px solid #f0f0f0}
-    .footer a{color:#999;text-decoration:none;margin:0 8px}.footer a:hover{color:#ff6b35}
-    @media(max-width:768px){h1{font-size:32px}h2{font-size:28px}.grid3,.feat,.roi,.steps,.voices{grid-template-columns:1fr;gap:40px}.price{font-size:48px}.hero{padding:80px 24px}.sect{padding:80px 24px}.box{padding:40px 24px}.roi{padding:40px 24px}}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GreenOps - 毎日の現場データから赤字工事を3週間前に発見。AI粗利予測で黒字着地を実現。">
+    <title>GreenOps - 赤字工事を3週間前に止める</title>
+    <style>
+        :root{--color-primary:#000;--color-secondary:#666;--color-border:#e5e5e5;--color-bg:#fafafa;--font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;--spacing-xs:8px;--spacing-sm:16px;--spacing-md:24px;--spacing-lg:32px;--spacing-xl:48px}
+        *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:var(--font-sans);color:var(--color-primary);background:#fff;line-height:1.6}.container{max-width:1280px;margin:0 auto;padding:0 var(--spacing-md)}
+        header{border-bottom:1px solid var(--color-border);padding:var(--spacing-md) 0;position:sticky;top:0;background:#fff;z-index:100}header .container{display:flex;justify-content:space-between;align-items:center}.logo{font-size:20px;font-weight:700;letter-spacing:-0.3px}nav ul{display:flex;list-style:none;gap:var(--spacing-lg)}nav a{text-decoration:none;color:var(--color-secondary);font-size:14px;transition:color 0.2s}nav a:hover{color:var(--color-primary)}
+        .hero{padding:var(--spacing-xl) 0;text-align:center}.hero h1{font-size:56px;line-height:1.2;letter-spacing:-1px;margin-bottom:var(--spacing-md);font-weight:700}.hero .tagline{font-size:18px;color:var(--color-secondary);margin-bottom:var(--spacing-lg);max-width:640px;margin-left:auto;margin-right:auto}
+        .cta-group{display:flex;gap:var(--spacing-sm);justify-content:center;margin-bottom:var(--spacing-lg)}.btn{padding:14px 32px;border:none;border-radius:6px;font-size:16px;font-weight:600;cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block;font-family:var(--font-sans)}.btn-primary{background:var(--color-primary);color:#fff}.btn-primary:hover{background:#333}.btn-secondary{background:var(--color-bg);color:var(--color-primary);border:1px solid var(--color-border)}.btn-secondary:hover{background:#f0f0f0}.pricing-note{font-size:13px;color:var(--color-secondary);margin-top:var(--spacing-md)}
+        .problems{padding:var(--spacing-xl) 0;border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border)}.problems .container>div{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--spacing-lg)}.problem{text-align:center}.problem-stat{font-size:48px;font-weight:700;margin-bottom:var(--spacing-sm)}.problem-label{font-size:12px;color:var(--color-secondary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:var(--spacing-sm);font-weight:600}.problem-description{font-size:14px;color:var(--color-secondary);line-height:1.8}
+        .features{padding:var(--spacing-xl) 0}.section-title{font-size:40px;font-weight:700;margin-bottom:var(--spacing-xl);text-align:center}.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--spacing-lg);margin-bottom:var(--spacing-xl)}.feature-card{padding:var(--spacing-lg);background:var(--color-bg);border-radius:8px;border:1px solid var(--color-border)}.feature-card h3{font-size:18px;margin-bottom:var(--spacing-sm);font-weight:700}.feature-card p{font-size:14px;color:var(--color-secondary);line-height:1.8}
+        .process{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--spacing-lg)}.process-step{text-align:center}.step-number{font-size:48px;font-weight:700;color:#ddd;margin-bottom:var(--spacing-md)}.process-step h4{font-size:18px;font-weight:700;margin-bottom:var(--spacing-sm)}.process-step p{font-size:14px;color:var(--color-secondary);line-height:1.8}
+        .testimonials{padding:var(--spacing-xl) 0;border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border)}.testimonial-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--spacing-lg)}.testimonial{padding:var(--spacing-lg);background:var(--color-bg);border-radius:8px;border:1px solid var(--color-border)}.testimonial-text{font-size:15px;line-height:1.8;margin-bottom:var(--spacing-md)}.testimonial-author{font-size:13px;font-weight:600;color:var(--color-secondary)}
+        .pricing{padding:var(--spacing-xl) 0}.pricing-tiers{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--spacing-lg);max-width:960px;margin:0 auto}.tier{padding:var(--spacing-xl);border:1px solid var(--color-border);border-radius:8px}.tier.featured{border:2px solid var(--color-primary)}.tier-name{font-size:20px;font-weight:700;margin-bottom:var(--spacing-sm)}.tier-price{font-size:48px;font-weight:700;margin-bottom:var(--spacing-sm)}.tier-price small{font-size:16px;color:var(--color-secondary)}.tier-description{font-size:14px;color:var(--color-secondary);margin-bottom:var(--spacing-lg);line-height:1.6}.tier-features{list-style:none;margin-bottom:var(--spacing-lg)}.tier-features li{padding:var(--spacing-sm) 0;font-size:14px;border-bottom:1px solid var(--color-border)}.tier-features li:last-child{border-bottom:none}.tier .btn{width:100%;text-align:center}
+        .cta-final{padding:var(--spacing-xl) 0;text-align:center}.cta-final h2{font-size:40px;font-weight:700;margin-bottom:var(--spacing-md)}.cta-final p{font-size:18px;color:var(--color-secondary);margin-bottom:var(--spacing-lg)}
+        footer{border-top:1px solid var(--color-border);padding:var(--spacing-lg) 0;font-size:13px;color:var(--color-secondary)}footer .container{display:flex;justify-content:space-between;align-items:center}footer a{color:var(--color-secondary);text-decoration:none;margin:0 var(--spacing-md)}footer a:hover{color:var(--color-primary)}
+        @media(max-width:1024px){.problems .container>div,.features-grid,.process,.testimonial-grid,.pricing-tiers{grid-template-columns:1fr}.hero h1{font-size:40px}.section-title{font-size:32px}nav ul{display:none}}
+        @media(max-width:640px){.container{padding:0 var(--spacing-sm)}.hero h1{font-size:32px}.cta-group{flex-direction:column}.btn{width:100%}}
+    </style>
 </head>
 <body>
-  <div class="hero">
-    <h1>赤字工事を<br>3週間前に止める。</h1>
-    <p class="sub">毎日の現場データから赤字予兆を自動検知。月末の絶望ではなく、今日の対応で黒字着地を実現するAI。</p>
-    <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="cta">14日間無料で始める</a>
-    <a href="#how" class="cta" style="background:#f5f5f5;color:#1a1a1a">使い方を見る</a>
-    <p class="note">クレジットカード不要。初期設定1分。その後 &yen;9,800/月</p>
-  </div>
-
-  <div class="sect"><div class="sect-in">
-    <h2>建設現場の現実</h2>
-    <div class="grid3">
-      <div><div class="num">2時間</div><div class="title">毎晩の日報</div><div class="desc">手書き、Excel、スマホ手入力。毎日2時間。年間163万円の人件費がデータ入力に消える。</div></div>
-      <div><div class="num">30日</div><div class="title">気づくまでの日数</div><div class="desc">月末決算。その時には赤字確定。対応不可能。&yen;200万の損失が記録される。</div></div>
-      <div><div class="num">85%</div><div class="title">予測可能だった</div><div class="desc">日報に書かれたデータから判定できた赤字。接続されていなかっただけ。</div></div>
-    </div>
-  </div></div>
-
-  <div class="sect"><div class="sect-in">
-    <h2>毎日の粗利が数字で見える</h2>
-    <div class="box">
-      <h3>5項目の日報入力が、即座にAI分析に変わる。</h3>
-      <p>人数。進捗。天候。追加工事。メモ。5つの数字をタップ。AI分析。粗利が表示される。赤、黄、緑。</p>
-    </div>
-    <div class="feat">
-      <div><div class="feat-t">37秒で日報完了</div><div class="feat-d">5項目をタップ。毎晩2時間が37秒。スマホ完結。</div></div>
-      <div><div class="feat-t">粗利が今日表示される</div><div class="feat-d">月末ではなく今日。数字で見える。赤字か安全か。</div></div>
-      <div><div class="feat-t">赤字は3週間前に分かる</div><div class="feat-d">CPI指標で日3にアラート。30日ではなく。対応できる時間がある。</div></div>
-      <div><div class="feat-t">初期設定は1分</div><div class="feat-d">工事名、予算、工期。全部で1分。複雑さなし。</div></div>
-    </div>
-    <div class="roi">
-      <div><div class="roi-l">月額投資</div><div class="roi-n">&yen;9,800</div><div class="roi-d">月額</div></div>
-      <div><div class="roi-l">1件の赤字回避</div><div class="roi-n">&yen;200万</div><div class="roi-d">1つの工事</div></div>
-      <div><div class="roi-l">リターン</div><div class="roi-n">20,408%</div><div class="roi-d">初年度</div></div>
-    </div>
-  </div></div>
-
-  <div class="sect" id="how"><div class="sect-in">
-    <h2>3ステップで開始</h2>
-    <div class="steps">
-      <div><div class="step-n">1</div><div class="step-t">工事を登録</div><div class="step-d">工事名、予算、工期。1分で完了。ダッシュボード即座に動く。</div></div>
-      <div><div class="step-n">2</div><div class="step-t">毎日、入力</div><div class="step-d">5項目をタップ。37秒。スマホ最適化。オフライン対応。</div></div>
-      <div><div class="step-n">3</div><div class="step-t">朝、粗利を見る</div><div class="step-d">推定粗利。赤字か安全か。次の判断が分かる。</div></div>
-    </div>
-  </div></div>
-
-  <div class="sect"><div class="sect-in">
-    <h2>現場から</h2>
-    <div class="voices">
-      <div class="voice"><div class="voice-t">毎朝粗利が見える。赤い日は即座に本社に連絡。3週間前に気づけたから対応できた。年間200万円の損失を防いだ。</div><div class="voice-a">現場監督 M氏（40代、従業員12人の工務店）</div></div>
-      <div class="voice"><div class="voice-t">Excelから解放された。設定ゼロ。現場の職人が5分で習得。これだけでいい。複雑さはいらない。</div><div class="voice-a">建設会社経営者 T氏（50代、年間売上5億円）</div></div>
-    </div>
-  </div></div>
-
-  <div class="pricing"><div class="pricing-in">
-    <h2>シンプルな料金</h2>
-    <div class="price-box">
-      <div class="price">&yen;9,800</div>
-      <div class="price-p">月額（14日間無料後）</div>
-      <div class="list">
-        <div class="item-p">工事の数は無制限</div>
-        <div class="item-p">毎日の粗利着地予測</div>
-        <div class="item-p">赤字リスク自動検知</div>
-        <div class="item-p">7日間のトレンド表示</div>
-        <div class="item-p">CSVレポート出力</div>
-        <div class="item-p">メールサポート</div>
-        <div class="item-p">いつでも解約可能</div>
-      </div>
-      <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="cta" style="width:100%;display:block;text-align:center">14日間無料で始める</a>
-    </div>
-  </div></div>
-
-  <div class="cta-f">
-    <h2>赤字工事を今年防ぎませんか？</h2>
-    <p>毎日の粗利が見える現場へ。</p>
-    <a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="cta">今すぐ無料で始める</a>
-  </div>
-
-  <div class="footer">
-    <p style="margin-bottom:8px">&copy; 2026 GreenOps | 赤字工事を防ぐために。</p>
-    <p><a href="/tokutei.html">特定商取引法</a> | <a href="/privacy.html">プライバシー</a> | <a href="/terms.html">利用規約</a></p>
-  </div>
+    <header><div class="container"><div class="logo">GreenOps</div><nav><ul><li><a href="#features">使い方</a></li><li><a href="#testimonials">実績</a></li><li><a href="#pricing">料金</a></li><li><a href="https://greenops-vert.vercel.app/service_starter.html">ダッシュボード</a></li></ul></nav></div></header>
+    <main>
+        <section class="hero"><div class="container"><h1>赤字工事を 3週間前に止める。</h1><p class="tagline">毎日の現場データから赤字予兆を自動検知。月末の絶望ではなく、今日の対応で黒字着地を実現。</p><div class="cta-group"><a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="btn btn-primary">14日間無料で始める</a><a href="#features" class="btn btn-secondary">使い方を見る</a></div><p class="pricing-note">クレジットカード不要。初期設定1分。その後 9,800円/月</p></div></section>
+        <section class="problems"><div class="container"><div><div class="problem"><div class="problem-label">毎晩の日報</div><div class="problem-stat">2時間</div><div class="problem-description">手書き、Excel、スマホ手入力。毎日2時間。年間163万円の人件費がデータ入力に消える。</div></div><div class="problem"><div class="problem-label">気づくまでの日数</div><div class="problem-stat">30日</div><div class="problem-description">月末決算。その時には赤字確定。対応不可能。200万円の損失が記録される。</div></div><div class="problem"><div class="problem-label">予測可能だった</div><div class="problem-stat">85%</div><div class="problem-description">日報に書かれたデータから判定できた赤字。接続されていなかっただけ。</div></div></div></div></section>
+        <section id="features" class="features"><div class="container"><h2 class="section-title">毎日の粗利が数字で見える</h2><div class="features-grid"><div class="feature-card"><h3>37秒で日報完了</h3><p>5項目をタップ。毎晩2時間が37秒。スマホ完結。人数。進捗。天候。追加工事。メモ。</p></div><div class="feature-card"><h3>粗利が今日表示される</h3><p>月末ではなく今日。数字で見える。赤字か安全か。AI分析。即座に判断できる根拠が手元にある。</p></div><div class="feature-card"><h3>赤字は3週間前に分かる</h3><p>CPI指標で異常検知。30日ではなく。対応できる時間がある。工事内容を見直す。協力業者と調整する。</p></div></div><h2 class="section-title" style="margin-top:var(--spacing-xl)">3ステップで開始</h2><div class="process"><div class="process-step"><div class="step-number">1</div><h4>工事を登録</h4><p>工事名、予算、工期。1分で完了。ダッシュボード即座に動く。</p></div><div class="process-step"><div class="step-number">2</div><h4>毎日、5項目入力</h4><p>人数、進捗、天候、追加工事、メモ。37秒。スマホ最適化。</p></div><div class="process-step"><div class="step-number">3</div><h4>朝、粗利を見る</h4><p>推定粗利。赤字か安全か。次の判断が分かる。3週間前に気づける。</p></div></div></div></section>
+        <section id="testimonials" class="testimonials"><div class="container"><h2 class="section-title">現場から</h2><div class="testimonial-grid"><div class="testimonial"><div class="testimonial-text">毎朝粗利が見える。赤い日は即座に本社に連絡。3週間前に気づけたから対応できた。年間200万円の損失を防いだ。</div><div class="testimonial-author">現場監督 M氏（40代、従業員12人の工務店）</div></div><div class="testimonial"><div class="testimonial-text">Excelから解放された。設定ゼロ。現場の職人が5分で習得。これだけでいい。複雑さはいらない。月9,800円で年間200万の効果。</div><div class="testimonial-author">建設会社経営者 T氏（50代、年間売上5億円）</div></div></div></div></section>
+        <section id="pricing" class="pricing"><div class="container"><h2 class="section-title">シンプルな料金</h2><div class="pricing-tiers"><div class="tier"><div class="tier-name">Starter</div><div class="tier-price">9,800<small>円/月</small></div><div class="tier-description">小規模工務店向け。工事管理と粗利予測に特化。</div><ul class="tier-features"><li>工事管理（無制限）</li><li>毎日の粗利着地予測</li><li>赤字リスク自動検知</li><li>7日間トレンド表示</li><li>CSVレポート出力</li><li>メールサポート</li><li>14日間無料トライアル</li></ul><a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="btn btn-primary">無料で始める</a></div><div class="tier featured"><div class="tier-name">Professional</div><div class="tier-price">29,800<small>円/月</small></div><div class="tier-description">中規模建設業向け。複数工事の一括管理。チーム機能。</div><ul class="tier-features"><li>Starterの全機能</li><li>複数工事の一括分析</li><li>チーム管理（5ユーザーまで）</li><li>3ヶ月先CF予測</li><li>月間レポート自動生成</li><li>優先サポート</li><li>カスタム連携相談</li></ul><a href="https://buy.stripe.com/00wcN55hg8fgb399UHfQI05" target="_blank" class="btn btn-primary">無料で始める</a></div></div></div></section>
+        <section class="cta-final"><div class="container"><h2>赤字工事を今年防ぎませんか？</h2><p>毎日の粗利が見える現場へ。</p><a href="https://buy.stripe.com/7sYaEX8ts3Z01sz1obfQI06" target="_blank" class="btn btn-primary">今すぐ無料で始める</a></div></section>
+    </main>
+    <footer><div class="container"><div>&copy; 2026 GreenOps</div><div><a href="https://greenops-vert.vercel.app/tokutei.html">特定商取引法</a><a href="https://greenops-vert.vercel.app/privacy.html">プライバシー</a><a href="https://greenops-vert.vercel.app/terms.html">利用規約</a></div></div></footer>
 </body>
 </html>
