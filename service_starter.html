@@ -1,305 +1,213 @@
 <!DOCTYPE html>
-<html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GreenOps</title>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>GreenOps - 建設業向けAI原価管理</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,"Hiragino Sans",sans-serif}
-body{background:#f0f4f0;color:#1a3a1a;padding:16px}
-.c{max-width:1100px;margin:0 auto}
-header{background:linear-gradient(135deg,#0f5132,#1a7a4a);color:#fff;padding:24px;border-radius:14px;margin-bottom:20px}
-h1{font-size:26px}.sub{font-size:13px;opacity:.95;margin-top:4px}
-nav{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
-nav button{padding:11px 18px;border:2px solid #0f5132;background:#fff;border-radius:10px;cursor:pointer;font-weight:700;color:#0f5132;font-size:14px}
-nav button.act{background:#0f5132;color:#fff}
-.tab{display:none;background:#fff;padding:24px;border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
-.tab.act{display:block}
-h2{color:#0f5132;margin-bottom:18px;border-bottom:3px solid #0f5132;padding-bottom:10px}
-h3{color:#0f5132;margin-bottom:12px;font-size:16px}
-.f{margin-bottom:14px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;-webkit-tap-highlight-color:transparent}
+html,body{background:#fff;color:#000;min-height:100vh}
+body{padding:16px;padding-bottom:120px;font-size:14px;line-height:1.6}
+.container{max-width:1100px;margin:0 auto}
+header{border:2px solid #000;padding:18px;margin-bottom:18px;background:#000;color:#fff}
+header h1{font-size:22px;font-weight:900;letter-spacing:-.5px}
+header p{font-size:12px;margin-top:4px;opacity:.85}
+nav{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap;border-bottom:2px solid #000;padding-bottom:0}
+nav button{padding:12px 16px;border:2px solid #000;background:#fff;color:#000;cursor:pointer;font-weight:700;font-size:13px;border-bottom:none;transition:all .15s}
+nav button:hover{background:#f0f0f0}
+nav button.active{background:#000;color:#fff}
+.tab{display:none;border:2px solid #000;border-top:none;padding:24px;background:#fff;animation:fade .2s}
+.tab.active{display:block}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+h2{font-size:20px;font-weight:900;margin-bottom:18px;padding-bottom:10px;border-bottom:2px solid #000}
+h3{font-size:15px;font-weight:800;margin-bottom:10px}
+.field{margin-bottom:14px}
 label{display:block;font-weight:700;margin-bottom:6px;font-size:13px}
-input,select,textarea{width:100%;padding:11px;border:2px solid #d0e0d0;border-radius:8px;font-size:14px;font-family:inherit}
-input:focus,select:focus,textarea:focus{outline:none;border-color:#0f5132}
-.btn{background:#0f5132;color:#fff;padding:13px 24px;border:none;border-radius:10px;cursor:pointer;font-weight:700;font-size:15px;width:100%}
-.btn:hover{background:#0a3a22}
-.btn-d{background:#c0392b}.btn-s{background:#fff;color:#0f5132;border:2px solid #0f5132}
-.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:24px}
-.k{background:linear-gradient(135deg,#f0f8f0,#e0f0e0);padding:18px;border-radius:12px;border-left:5px solid #0f5132}
-.k-l{font-size:11px;color:#666;font-weight:600;margin-bottom:6px}
-.k-v{font-size:24px;font-weight:800;color:#0f5132}
-.card{background:#f8fbf8;border:1px solid #d0e0d0;padding:16px;border-radius:10px;margin-bottom:12px}
-.card h4{color:#0f5132;margin-bottom:8px}
-.alert{padding:14px;border-radius:10px;margin-bottom:10px;font-weight:600;font-size:14px}
-.a-c{background:#fee;color:#c0392b;border-left:5px solid #c0392b}
-.a-w{background:#fff8e1;color:#8a6d00;border-left:5px solid #f39c12}
-.empty{text-align:center;padding:40px;color:#999}
+input,select,textarea{width:100%;padding:11px 12px;border:2px solid #000;background:#fff;color:#000;font-size:14px;font-family:inherit;border-radius:0}
+input:focus,select:focus,textarea:focus{outline:none;background:#f5f5f5}
+input[type="range"]{padding:0;height:30px;border:none;background:transparent}
+input[type="range"]::-webkit-slider-runnable-track{height:6px;background:#000}
+input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;background:#000;border:2px solid #000;border-radius:50%;margin-top:-9px;cursor:pointer}
+button.btn{padding:13px 22px;border:2px solid #000;background:#000;color:#fff;cursor:pointer;font-weight:800;font-size:14px;width:100%;margin-top:6px;transition:all .15s;border-radius:0}
+button.btn:hover{background:#fff;color:#000}
+button.btn-out{background:#fff;color:#000}
+button.btn-out:hover{background:#000;color:#fff}
+button.btn-sm{padding:8px 14px;font-size:12px;width:auto}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px}
+.kpi{border:2px solid #000;padding:16px}
+.kpi-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.kpi-value{font-size:26px;font-weight:900;line-height:1.1}
+.kpi-sub{font-size:11px;margin-top:4px;color:#666}
+.alert{border:2px solid #000;padding:14px;margin-bottom:10px;font-size:13px;font-weight:700}
+.alert-c{background:#000;color:#fff}
+.alert-w{background:#fff;color:#000;border-style:dashed}
+.alert-s{background:#f5f5f5;color:#000}
+.proj-card{border:2px solid #000;padding:16px;margin-bottom:12px;background:#fff}
+.proj-card h3{font-size:16px;margin-bottom:6px}
+.proj-meta{font-size:12px;color:#444;margin-bottom:10px}
+.proj-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:10px;padding-top:10px;border-top:1px solid #000}
+.stat{font-size:11px}
+.stat-v{font-size:16px;font-weight:900;display:block}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:600px){.row{grid-template-columns:1fr}}
-.rdv{text-align:center;font-size:22px;font-weight:800;color:#0f5132;margin-top:6px}
-table{width:100%;font-size:13px;border-collapse:collapse}
-table td{padding:8px;border-bottom:1px solid #e0e8e0}
+@media(max-width:600px){.row{grid-template-columns:1fr}.kpi-value{font-size:22px}header h1{font-size:18px}}
+.range-d{text-align:center;font-size:18px;font-weight:900;margin-top:4px}
+.empty{text-align:center;padding:40px 20px;border:2px dashed #000;font-weight:700}
+.trend-chart{border:2px solid #000;padding:14px;margin-top:14px;background:#fff}
+.trend-bar{display:flex;align-items:flex-end;height:120px;gap:4px;margin-top:10px;border-bottom:2px solid #000;padding-bottom:0}
+.trend-bar div{flex:1;background:#000;position:relative;min-height:4px;transition:height .3s}
+.trend-bar div::after{content:attr(data-d);position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:9px;white-space:nowrap}
+.ai-reason{background:#f5f5f5;border:2px solid #000;padding:12px;margin-top:10px;font-size:12px;line-height:1.7}
+.ai-reason strong{display:block;margin-bottom:6px;font-size:13px}
+.warning-3w{border:3px solid #000;padding:14px;margin-top:14px;background:#000;color:#fff;font-weight:700}
+.section{margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid #ccc}
+.section:last-child{border-bottom:none;padding-bottom:0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+table td{padding:8px;border-bottom:1px solid #ccc}
 table td:last-child{text-align:right;font-weight:700}
-.trend{display:flex;align-items:flex-end;gap:6px;height:140px;margin:14px 0;padding:10px 10px 30px;background:#fff;border-radius:8px;border:1px solid #d0e0d0}
-.bar{flex:1;border-radius:4px 4px 0 0;position:relative;min-height:8px}
-.bar-l{position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);font-size:9px;color:#666;white-space:nowrap}
-.warn-3w{background:linear-gradient(135deg,#fff3cd,#ffe69c);padding:16px;border-radius:10px;border:2px solid #f39c12;margin:14px 0}
-.reason{background:#f0f8f0;padding:12px;border-radius:8px;margin-top:10px;font-size:13px;border-left:3px solid #0f5132;line-height:1.7}
-.del{background:#fff;color:#c0392b;border:1px solid #c0392b;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;margin-top:8px}
-</style></head><body><div class="c">
-<header><h1>🟢 GreenOps</h1><div class="sub">建設業向け原価管理SaaS / 赤字工事を3週間前に止める</div></header>
+.pill{display:inline-block;padding:3px 10px;border:2px solid #000;font-size:10px;font-weight:800;text-transform:uppercase}
+.pill-c{background:#000;color:#fff}
+.pill-w{background:#fff;color:#000}
+.pill-s{background:#f0f0f0;color:#000}
+#chatBtn{position:fixed;bottom:20px;right:20px;width:60px;height:60px;border-radius:50%;background:#000;color:#fff;border:3px solid #000;cursor:pointer;font-size:24px;z-index:998;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+#chatBtn:hover{background:#fff;color:#000}
+#chatWin{position:fixed;bottom:90px;right:20px;width:340px;max-width:calc(100vw - 40px);height:480px;max-height:calc(100vh - 120px);background:#fff;border:3px solid #000;display:none;flex-direction:column;z-index:999;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+#chatWin.open{display:flex}
+.chat-h{background:#000;color:#fff;padding:14px;font-weight:800;display:flex;justify-content:space-between;align-items:center}
+.chat-h button{background:none;border:none;color:#fff;font-size:20px;cursor:pointer;padding:0;width:24px;height:24px}
+.chat-body{flex:1;overflow-y:auto;padding:14px;background:#f5f5f5}
+.msg{margin-bottom:10px;max-width:85%;padding:10px 12px;font-size:13px;line-height:1.5;border:2px solid #000}
+.msg-ai{background:#fff;color:#000;margin-right:auto}
+.msg-u{background:#000;color:#fff;margin-left:auto}
+.chat-in{display:flex;border-top:2px solid #000}
+.chat-in input{border:none;flex:1;padding:12px;font-size:13px}
+.chat-in button{background:#000;color:#fff;border:none;padding:0 18px;font-weight:800;cursor:pointer}
+select option:disabled{color:#999}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<h1>🟢 GreenOps</h1>
+<p>建設業向け AI原価管理 / 赤字工事を3週間前に止める</p>
+</header>
 <nav>
-<button class="act" data-t="dash">📊 ダッシュボード</button>
-<button data-t="proj">🏗️ 工事管理</button>
-<button data-t="rep">📝 日報入力</button>
-<button data-t="ana">📈 AI分析</button>
-<button data-t="set">⚙️ 設定</button>
+<button class="navbtn active" data-tab="dash">📊 ダッシュボード</button>
+<button class="navbtn" data-tab="proj">🏗️ 工事管理</button>
+<button class="navbtn" data-tab="rep">📝 日報入力</button>
+<button class="navbtn" data-tab="ana">📈 AI分析</button>
+<button class="navbtn" data-tab="set">⚙️ 設定</button>
 </nav>
-<div id="dash" class="tab act">
+<div id="dash" class="tab active">
 <h2>ダッシュボード</h2>
-<div class="kpi">
-<div class="k"><div class="k-l">進行中の工事</div><div class="k-v" id="k1">0件</div></div>
-<div class="k"><div class="k-l">合計予算</div><div class="k-v" id="k2">¥0万</div></div>
-<div class="k"><div class="k-l">予測粗利合計</div><div class="k-v" id="k3">¥0万</div></div>
-<div class="k"><div class="k-l">赤字リスク</div><div class="k-v" id="k4">0件</div></div>
+<div class="kpi-grid">
+<div class="kpi"><div class="kpi-label">進行中の工事</div><div class="kpi-value" id="kp1">0</div><div class="kpi-sub">件</div></div>
+<div class="kpi"><div class="kpi-label">合計予算</div><div class="kpi-value" id="kp2">¥0</div><div class="kpi-sub">万円</div></div>
+<div class="kpi"><div class="kpi-label">予測粗利</div><div class="kpi-value" id="kp3">¥0</div><div class="kpi-sub" id="kp3s">粗利率 0%</div></div>
+<div class="kpi"><div class="kpi-label">赤字リスク</div><div class="kpi-value" id="kp4">0</div><div class="kpi-sub">件の警告</div></div>
 </div>
-<div id="al"></div><div id="pl"></div>
+<div id="alertList"></div>
+<h3 style="margin-top:24px">進行中工事一覧</h3>
+<div id="projList"></div>
 </div>
 <div id="proj" class="tab">
-<h2>工事管理(無制限登録可能)</h2>
-<div class="f"><label>工事名 *</label><input id="pn" placeholder="例: 〇〇邸新築工事"></div>
-<div class="f"><label>クライアント名 *</label><input id="pc" placeholder="例: 山田建設"></div>
+<h2>工事管理</h2>
+<div class="section">
+<h3>新規工事登録</h3>
+<div class="field"><label>工事名 *</label><input id="i_name" placeholder="例:山田邸新築工事"></div>
+<div class="field"><label>クライアント名 *</label><input id="i_client" placeholder="例:山田太郎"></div>
 <div class="row">
-<div class="f"><label>予算(万円)*</label><input type="number" id="pb" placeholder="5000"></div>
-<div class="f"><label>工期(日数)*</label><input type="number" id="pd" placeholder="100"></div>
+<div class="field"><label>予算(万円) *</label><input type="number" id="i_budget" placeholder="5000"></div>
+<div class="field"><label>工期(日数) *</label><input type="number" id="i_days" placeholder="100"></div>
 </div>
-<div class="f"><label>開始日 *</label><input type="date" id="ps"></div>
-<button class="btn" id="addP">＋ 工事を登録</button>
-<div id="pjList" style="margin-top:24px"></div>
+<div class="field"><label>開始日 *</label><input type="date" id="i_start"></div>
+<button class="btn" onclick="addProject()">工事を登録</button>
+</div>
+<div class="section">
+<h3>登録済み工事</h3>
+<div id="projMgr"></div>
+</div>
 </div>
 <div id="rep" class="tab">
 <h2>日報入力</h2>
-<div class="f"><label>工事を選択 *</label><select id="rp"><option value="">-- 先に工事を登録 --</option></select></div>
-<div class="f"><label>日付 *</label><input type="date" id="rd"></div>
-<div class="f"><label>進捗率(%) *</label><input type="range" id="rpr" min="0" max="100" value="0"><div class="rdv" id="rprv">0%</div></div>
+<div class="field"><label>工事を選択 *</label><select id="i_pid"><option value="">-- 工事を登録してください --</option></select></div>
+<div class="field"><label>日付 *</label><input type="date" id="i_date"></div>
+<div class="field"><label>進捗率(%) *</label><input type="range" id="i_prog" min="0" max="100" value="0"><div class="range-d" id="i_progv">0%</div></div>
 <div class="row">
-<div class="f"><label>作業人数 *</label><input type="number" id="rw" placeholder="10"></div>
-<div class="f"><label>追加費用(万円)</label><input type="number" id="rc" placeholder="0"></div>
+<div class="field"><label>作業人数 *</label><input type="number" id="i_work" placeholder="10"></div>
+<div class="field"><label>追加費用(万円)</label><input type="number" id="i_cost" placeholder="0" step="0.1"></div>
 </div>
-<div class="f"><label>天候</label><select id="rwt"><option>晴れ</option><option>曇り</option><option>雨</option><option>雪</option></select></div>
-<div class="f"><label>備考</label><textarea id="rm" rows="3"></textarea></div>
-<button class="btn" id="addR">日報を保存</button>
+<div class="field"><label>天候</label><select id="i_wx"><option>晴れ</option><option>曇り</option><option>雨</option><option>雪</option></select></div>
+<div class="field"><label>備考</label><textarea id="i_memo" rows="3" placeholder="作業内容や気付き"></textarea></div>
+<button class="btn" onclick="addReport()">日報を保存</button>
 </div>
 <div id="ana" class="tab">
-<h2>AI粗利分析</h2>
-<div id="anaC"><p class="empty">工事を登録して日報を入力するとAI分析が表示されます</p></div>
+<h2>AI分析</h2>
+<div id="anaContent"></div>
 </div>
 <div id="set" class="tab">
 <h2>設定</h2>
-<div style="margin-bottom:24px">
+<div class="section">
 <h3>📥 CSVレポート出力</h3>
-<p style="font-size:13px;color:#666;margin-bottom:10px">全工事の粗利分析をCSVで出力</p>
-<button class="btn" id="csvB">CSVをダウンロード</button>
+<p style="margin-bottom:10px;font-size:12px">全工事と日報データをCSV形式でダウンロードします</p>
+<button class="btn" onclick="exportCSV()">CSVをダウンロード</button>
 </div>
-<div style="margin-bottom:24px">
-<h3>🔗 連携サービス問い合わせ</h3>
-<p style="font-size:13px;color:#666;margin-bottom:10px">freee / マネーフォワード / ANDPAD 連携</p>
-<button class="btn btn-s" id="ctcB">連携について問い合わせる</button>
+<div class="section">
+<h3>🔗 連携サービスお問い合わせ</h3>
+<p style="margin-bottom:10px;font-size:12px">freee / マネーフォワード / ANDPAD との連携をご希望の方</p>
+<button class="btn btn-out" onclick="contactInquiry()">連携について問い合わせる</button>
 </div>
-<div>
-<h3 style="color:#c0392b">⚠️ いつでも解約可能</h3>
-<p style="font-size:13px;color:#666;margin-bottom:10px">全データを完全に削除します</p>
-<button class="btn btn-d" id="rstB">全データを削除して解約</button>
+<div class="section">
+<h3>💾 データ保存</h3>
+<p style="margin-bottom:10px;font-size:12px">データはブラウザに自動保存されます</p>
+<button class="btn btn-out btn-sm" onclick="saveData();alert('✅ 保存しました')">手動保存</button>
+</div>
+<div class="section">
+<h3>⚠️ 解約 / 全データ削除</h3>
+<p style="margin-bottom:10px;font-size:12px">いつでも解約可能。全データを完全削除します</p>
+<button class="btn" onclick="resetAll()">解約してすべて削除</button>
 </div>
 </div>
+</div>
+<button id="chatBtn" onclick="toggleChat()">💬</button>
+<div id="chatWin">
+<div class="chat-h"><span>💬 GreenOps サポート</span><button onclick="toggleChat()">✕</button></div>
+<div class="chat-body" id="chatBody"></div>
+<div class="chat-in"><input id="chatInput" placeholder="質問を入力..." onkeypress="if(event.key==='Enter')sendChat()"><button onclick="sendChat()">送信</button></div>
 </div>
 <script>
+'use strict';
 let projects=[],reports=[];
-document.querySelectorAll('nav button').forEach(b=>{
-  b.addEventListener('click',()=>{
-    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('act'));
-    document.querySelectorAll('nav button').forEach(x=>x.classList.remove('act'));
-    document.getElementById(b.dataset.t).classList.add('act');
-    b.classList.add('act');
-    if(b.dataset.t==='dash')renderDash();
-    if(b.dataset.t==='ana')renderAna();
-    if(b.dataset.t==='proj')renderPjList();
-  });
-});
-document.getElementById('rpr').addEventListener('input',function(){document.getElementById('rprv').textContent=this.value+'%';});
-function fmt(n){return '¥'+Math.round(n).toLocaleString()+'万'}
-function save(){try{localStorage.setItem('go_p',JSON.stringify(projects));localStorage.setItem('go_r',JSON.stringify(reports));}catch(e){}}
-function load(){try{projects=JSON.parse(localStorage.getItem('go_p')||'[]');reports=JSON.parse(localStorage.getItem('go_r')||'[]');}catch(e){}}
-function updateSel(){
-  const s=document.getElementById('rp');
-  s.innerHTML='<option value="">-- 工事を選択 --</option>';
-  projects.forEach(p=>s.innerHTML+='<option value="'+p.id+'">'+p.name+'</option>');
-}
-function calcProfit(p){
-  const rs=reports.filter(r=>r.pid===p.id).sort((a,b)=>a.date.localeCompare(b.date));
-  const baseCost=p.budget*0.8;
-  const extraCost=rs.reduce((s,r)=>s+(r.cost||0),0);
-  const lastProgress=rs.length?rs[rs.length-1].progress:0;
-  const daysElapsed=rs.length;
-  const daysRemaining=Math.max(p.days-daysElapsed,0);
-  const avgDailyExtra=rs.length?extraCost/rs.length:0;
-  const projectedExtra=avgDailyExtra*daysRemaining;
-  const totalCost=baseCost+extraCost+projectedExtra;
-  const profit=p.budget-totalCost;
-  const rate=(profit/p.budget)*100;
-  let risk='safe';
-  if(profit<0)risk='critical';
-  else if(rate<10)risk='warning';
-  const confidence=Math.min(rs.length*10+30,95);
-  return{profit,rate,risk,cost:totalCost,baseCost,extraCost,projectedExtra,confidence,reportCount:rs.length,daysRemaining,lastProgress,avgDailyExtra};
-}
-function calc7DayTrend(p){
-  const rs=reports.filter(r=>r.pid===p.id).sort((a,b)=>a.date.localeCompare(b.date));
-  if(rs.length===0)return[];
-  const trend=[];
-  for(let i=1;i<=Math.min(rs.length,7);i++){
-    const sub=rs.slice(0,i);
-    const extra=sub.reduce((s,r)=>s+(r.cost||0),0);
-    const avgDaily=extra/i;
-    const remaining=Math.max(p.days-i,0);
-    const projExtra=avgDaily*remaining;
-    const total=p.budget*0.8+extra+projExtra;
-    trend.push({date:sub[i-1].date,profit:p.budget-total});
-  }
-  return trend;
-}
-function check3WeekRisk(p){
-  const rs=reports.filter(r=>r.pid===p.id);
-  if(rs.length<2)return null;
-  const recent=rs.slice(-Math.min(rs.length,5)).map(r=>r.cost||0);
-  const recentAvg=recent.reduce((a,b)=>a+b,0)/recent.length;
-  const projected21=recentAvg*21;
-  const c=calcProfit(p);
-  const futureProfit=c.profit-projected21;
-  if(futureProfit<0&&c.profit>=0)return{projectedLoss:futureProfit};
-  return null;
-}
-document.getElementById('addP').addEventListener('click',function(){
-  const n=document.getElementById('pn').value.trim();
-  const c=document.getElementById('pc').value.trim();
-  const b=parseFloat(document.getElementById('pb').value);
-  const d=parseInt(document.getElementById('pd').value);
-  const s=document.getElementById('ps').value;
-  if(!n||!c||!b||!d||!s){alert('全項目を入力してください');return;}
-  projects.push({id:Date.now(),name:n,client:c,budget:b,days:d,start:s});
-  save();
-  ['pn','pc','pb','pd'].forEach(x=>document.getElementById(x).value='');
-  updateSel();renderPjList();
-  alert('✅ 工事を登録しました: '+n);
-});
-document.getElementById('addR').addEventListener('click',function(){
-  const pid=document.getElementById('rp').value;
-  const d=document.getElementById('rd').value;
-  const pr=parseInt(document.getElementById('rpr').value);
-  const w=parseInt(document.getElementById('rw').value);
-  const c=parseFloat(document.getElementById('rc').value)||0;
-  if(!pid||!d||!w){alert('工事・日付・人数は必須です');return;}
-  reports.push({pid:parseInt(pid),date:d,progress:pr,workers:w,cost:c,weather:document.getElementById('rwt').value,memo:document.getElementById('rm').value});
-  save();
-  document.getElementById('rc').value='';document.getElementById('rm').value='';
-  alert('✅ 日報を保存しました');
-});
-function renderDash(){
-  document.getElementById('k1').textContent=projects.length+'件';
-  let totalB=0,totalP=0,riskN=0;
-  const alerts=[];
-  projects.forEach(p=>{
-    const c=calcProfit(p);
-    totalB+=p.budget;totalP+=c.profit;
-    if(c.risk==='critical'){riskN++;alerts.push('<div class="alert a-c">🚨 <b>'+p.name+'</b>: 赤字確定予測 '+fmt(c.profit)+' (粗利率'+c.rate.toFixed(1)+'%)</div>');}
-    else if(c.risk==='warning'){alerts.push('<div class="alert a-w">⚠️ <b>'+p.name+'</b>: 利益率低下 '+c.rate.toFixed(1)+'%</div>');}
-    const w3=check3WeekRisk(p);
-    if(w3)alerts.push('<div class="alert a-w">⏰ <b>'+p.name+'</b>: 3週間先に赤字転落予測 (予測損失'+fmt(w3.projectedLoss)+')</div>');
-  });
-  document.getElementById('k2').textContent=fmt(totalB);
-  document.getElementById('k3').textContent=fmt(totalP);
-  document.getElementById('k4').textContent=riskN+'件';
-  document.getElementById('al').innerHTML=alerts.join('');
-  if(projects.length===0){document.getElementById('pl').innerHTML='<p class="empty">工事がまだ登録されていません<br>「工事管理」タブから登録してください</p>';return;}
-  document.getElementById('pl').innerHTML='<h3 style="margin-top:20px">進行中の工事</h3>'+projects.map(p=>{
-    const c=calcProfit(p);
-    return '<div class="card"><h4>'+p.name+'</h4><p style="font-size:12px;color:#666">'+p.client+' / 予算'+fmt(p.budget)+' / 工期'+p.days+'日</p><p style="margin-top:8px">進捗: <b>'+c.lastProgress+'%</b> | 予測粗利: <b style="color:'+(c.profit<0?'#c0392b':'#0f5132')+'">'+fmt(c.profit)+'</b> ('+c.rate.toFixed(1)+'%)</p><p style="font-size:11px;color:#888;margin-top:4px">日報'+c.reportCount+'件 / AI信頼度'+c.confidence+'%</p></div>';
-  }).join('');
-}
-function renderPjList(){
-  const el=document.getElementById('pjList');
-  if(projects.length===0){el.innerHTML='';return;}
-  el.innerHTML='<h3>登録済み工事</h3>'+projects.map(p=>'<div class="card"><h4>'+p.name+'</h4><p style="font-size:12px;color:#666">'+p.client+' / '+fmt(p.budget)+' / '+p.days+'日</p><button class="del" onclick="delProj('+p.id+')">この工事を削除</button></div>').join('');
-}
-window.delProj=function(id){
-  if(!confirm('この工事と関連日報を削除しますか?'))return;
-  projects=projects.filter(p=>p.id!==id);
-  reports=reports.filter(r=>r.pid!==id);
-  save();updateSel();renderPjList();renderDash();
-};
-function renderAna(){
-  if(projects.length===0){document.getElementById('anaC').innerHTML='<p class="empty">工事を登録してください</p>';return;}
-  document.getElementById('anaC').innerHTML=projects.map(p=>{
-    const c=calcProfit(p);
-    const trend=calc7DayTrend(p);
-    const w3=check3WeekRisk(p);
-    let trendHtml='';
-    if(trend.length>0){
-      const max=Math.max(...trend.map(t=>Math.abs(t.profit)),1);
-      trendHtml='<h4 style="margin-top:14px">📈 7日間粗利トレンド</h4><div class="trend">'+trend.map(t=>{
-        const h=Math.max(Math.abs(t.profit/max)*100,5);
-        const color=t.profit<0?'#c0392b':'#0f5132';
-        return '<div class="bar" style="height:'+h+'%;background:'+color+'" title="'+t.date+': '+fmt(t.profit)+'"><div class="bar-l">'+t.date.slice(5)+'</div></div>';
-      }).join('')+'</div>';
-    }
-    let warn3w='';
-    if(w3)warn3w='<div class="warn-3w">⏰ <b>3週間先リスク警告</b><br>このまま追加費用が発生し続けると、約21日後に赤字転落予測。<br>予測損失: <b>'+fmt(w3.projectedLoss)+'</b></div>';
-    return '<div class="card"><h4>'+p.name+'</h4><table>'+
-      '<tr><td>予算</td><td>'+fmt(p.budget)+'</td></tr>'+
-      '<tr><td>標準原価(予算×80%)</td><td>'+fmt(c.baseCost)+'</td></tr>'+
-      '<tr><td>追加発生費用(実績)</td><td>'+fmt(c.extraCost)+'</td></tr>'+
-      '<tr><td>追加費用予測(残工期分)</td><td>'+fmt(c.projectedExtra)+'</td></tr>'+
-      '<tr><td>予測総原価</td><td>'+fmt(c.cost)+'</td></tr>'+
-      '<tr><td><b>予測粗利</b></td><td style="color:'+(c.profit<0?'#c0392b':'#0f5132')+'">'+fmt(c.profit)+'</td></tr>'+
-      '<tr><td>粗利率</td><td>'+c.rate.toFixed(1)+'%</td></tr>'+
-      '<tr><td>AI信頼度</td><td>'+c.confidence+'%</td></tr>'+
-      '<tr><td>リスク判定</td><td>'+(c.risk==='critical'?'🚨 赤字':c.risk==='warning'?'⚠️ 注意':'✅ 安全')+'</td></tr>'+
-      '</table>'+warn3w+trendHtml+
-      '<div class="reason"><b>🤖 AI分析の根拠:</b><br>'+
-      '・日報入力数: '+c.reportCount+'件(多いほど精度向上)<br>'+
-      '・1日あたり平均追加費用: '+fmt(c.avgDailyExtra)+'<br>'+
-      '・残り工期: '+c.daysRemaining+'日<br>'+
-      '・残工期での追加費用予測 = 平均追加費用 × 残日数 = '+fmt(c.projectedExtra)+'<br>'+
-      '・標準原価率は建設業平均の80%を採用<br>'+
-      '・判定基準: 粗利<0=赤字 / 粗利率<10%=注意 / それ以上=安全'+
-      '</div></div>';
-  }).join('');
-}
-document.getElementById('csvB').addEventListener('click',function(){
-  if(projects.length===0){alert('データがありません');return;}
-  let csv='工事名,クライアント,予算(万円),工期(日),予測総原価(万円),予測粗利(万円),粗利率(%),リスク,日報数,AI信頼度(%)\n';
-  projects.forEach(p=>{
-    const c=calcProfit(p);
-    csv+='"'+p.name+'","'+p.client+'",'+p.budget+','+p.days+','+Math.round(c.cost)+','+Math.round(c.profit)+','+c.rate.toFixed(1)+','+c.risk+','+c.reportCount+','+c.confidence+'\n';
-  });
-  const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download='greenops_'+new Date().toISOString().slice(0,10)+'.csv';
-  document.body.appendChild(a);a.click();document.body.removeChild(a);
-  alert('✅ CSVをダウンロードしました');
-});
-document.getElementById('ctcB').addEventListener('click',function(){
-  const subject=encodeURIComponent('GreenOps 連携サービスについて');
-  const body=encodeURIComponent('GreenOpsの連携サービスについて問い合わせます。\n\n【希望する連携】\n□ freee連携\n□ マネーフォワード連携\n□ ANDPAD連携\n\n【お客様情報】\n会社名: \nお名前: \nご質問: \n');
-  window.location.href='mailto:support@greenops.jp?subject='+subject+'&body='+body;
-});
-document.getElementById('rstB').addEventListener('click',function(){
-  if(!confirm('本当に全データを削除して解約しますか?\nこの操作は取り消せません。'))return;
-  projects=[];reports=[];
-  try{localStorage.removeItem('go_p');localStorage.removeItem('go_r');}catch(e){}
-  updateSel();renderDash();renderPjList();
-  alert('✅ 全データを削除しました');
-});
-load();
-document.getElementById('rd').value=new Date().toISOString().split('T')[0];
-document.getElementById('ps').value=new Date().toISOString().split('T')[0];
-updateSel();renderDash();renderPjList();
+function loadData(){try{const p=localStorage.getItem('go_projects');const r=localStorage.getItem('go_reports');if(p)projects=JSON.parse(p);if(r)reports=JSON.parse(r);}catch(e){console.error(e)}}
+function saveData(){try{localStorage.setItem('go_projects',JSON.stringify(projects));localStorage.setItem('go_reports',JSON.stringify(reports));}catch(e){console.error(e)}}
+const fmt=n=>'¥'+Math.round(n).toLocaleString();
+const fmtM=n=>'¥'+Math.round(n).toLocaleString()+'万';
+const today=()=>new Date().toISOString().split('T')[0];
+document.querySelectorAll('.navbtn').forEach(btn=>{btn.addEventListener('click',()=>{const tab=btn.dataset.tab;document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.navbtn').forEach(b=>b.classList.remove('active'));document.getElementById(tab).classList.add('active');btn.classList.add('active');if(tab==='dash')renderDashboard();if(tab==='proj')renderProjMgr();if(tab==='ana')renderAnalysis();if(tab==='rep')updateProjectSelect();});});
+document.getElementById('i_prog').addEventListener('input',e=>{document.getElementById('i_progv').textContent=e.target.value+'%';});
+function addProject(){const name=document.getElementById('i_name').value.trim();const client=document.getElementById('i_client').value.trim();const budget=parseFloat(document.getElementById('i_budget').value);const days=parseInt(document.getElementById('i_days').value);const start=document.getElementById('i_start').value;if(!name||!client||!budget||!days||!start){alert('⚠️ 全ての必須項目を入力してください');return;}if(budget<=0||days<=0){alert('⚠️ 予算と工期は1以上を入力してください');return;}projects.push({id:Date.now(),name,client,budget,days,start,createdAt:new Date().toISOString()});saveData();['i_name','i_client','i_budget','i_days'].forEach(id=>document.getElementById(id).value='');document.getElementById('i_start').value=today();updateProjectSelect();renderProjMgr();alert('✅ 工事「'+name+'」を登録しました');}
+function deleteProject(id){if(!confirm('この工事と関連する日報を全て削除します。よろしいですか?'))return;projects=projects.filter(p=>p.id!==id);reports=reports.filter(r=>r.pid!==id);saveData();updateProjectSelect();renderProjMgr();renderDashboard();alert('✅ 削除しました');}
+function updateProjectSelect(){const sel=document.getElementById('i_pid');if(projects.length===0){sel.innerHTML='<option value="">-- 先に工事を登録してください --</option>';}else{sel.innerHTML='<option value="">-- 工事を選択 --</option>'+projects.map(p=>`<option value="${p.id}">${p.name} (${p.client})</option>`).join('');}}
+function renderProjMgr(){const div=document.getElementById('projMgr');if(projects.length===0){div.innerHTML='<div class="empty">登録された工事はありません</div>';return;}div.innerHTML=projects.map(p=>{const c=calcProfit(p);const rs=reports.filter(r=>r.pid===p.id);return `<div class="proj-card"><h3>${escapeHTML(p.name)}</h3><div class="proj-meta">${escapeHTML(p.client)} / 開始 ${p.start} / 工期 ${p.days}日 / 日報 ${rs.length}件</div><div class="proj-stats"><div class="stat"><span class="stat-v">${fmtM(p.budget)}</span>予算</div><div class="stat"><span class="stat-v">${fmtM(c.profit)}</span>予測粗利</div><div class="stat"><span class="stat-v">${c.rate.toFixed(1)}%</span>粗利率</div><div class="stat"><span class="pill pill-${c.risk[0]}">${riskLabel(c.risk)}</span></div></div><button class="btn btn-out btn-sm" style="margin-top:12px" onclick="deleteProject(${p.id})">この工事を削除</button></div>`;}).join('');}
+function addReport(){const pid=parseInt(document.getElementById('i_pid').value);const date=document.getElementById('i_date').value;const prog=parseInt(document.getElementById('i_prog').value);const work=parseInt(document.getElementById('i_work').value);const cost=parseFloat(document.getElementById('i_cost').value)||0;if(!pid||!date||isNaN(work)){alert('⚠️ 工事・日付・作業人数は必須です');return;}reports.push({id:Date.now(),pid,date,progress:prog,workers:work,cost,weather:document.getElementById('i_wx').value,memo:document.getElementById('i_memo').value});saveData();document.getElementById('i_cost').value='';document.getElementById('i_memo').value='';document.getElementById('i_work').value='';alert('✅ 日報を保存しました');}
+function calcProfit(p){const rs=reports.filter(r=>r.pid===p.id).sort((a,b)=>a.date.localeCompare(b.date));if(rs.length===0){return{profit:p.budget*0.2,rate:20,risk:'safe',cost:p.budget*0.8,confidence:5,reportCount:0,avgDailyCost:0,progress:0};}const totalAddCost=rs.reduce((s,r)=>s+r.cost,0);const avgDailyCost=totalAddCost/rs.length;const baseCost=p.budget*0.7;const projectedCost=baseCost+(avgDailyCost*p.days);const profit=p.budget-projectedCost;const rate=(profit/p.budget)*100;let risk='safe';if(profit<0)risk='critical';else if(rate<10)risk='warning';return{profit,rate,risk,cost:projectedCost,confidence:Math.min(95,rs.length*15),reportCount:rs.length,avgDailyCost,progress:rs[rs.length-1].progress,reports:rs};}
+function riskLabel(r){return r==='critical'?'🚨 赤字':r==='warning'?'⚠️ 注意':'✅ 安全';}
+function forecast3Weeks(p,c){if(c.reportCount<2)return null;const elapsed=c.reportCount;const remaining=p.days-elapsed;if(remaining<=21)return null;const futureCost=c.avgDailyCost*21;const profitIn3w=c.profit-futureCost*0.3;return{daysAhead:21,projectedProfit:profitIn3w,willGoNegative:profitIn3w<0&&c.profit>0,severity:profitIn3w<0?'critical':profitIn3w<p.budget*0.05?'warning':'safe'};}
+function renderDashboard(){document.getElementById('kp1').textContent=projects.length;let totalB=0,totalP=0,riskN=0;const alerts=[];projects.forEach(p=>{const c=calcProfit(p);totalB+=p.budget;totalP+=c.profit;if(c.risk==='critical'){riskN++;alerts.push(`<div class="alert alert-c">🚨 ${escapeHTML(p.name)}: 赤字予測 ${fmtM(c.profit)} (粗利率 ${c.rate.toFixed(1)}%)</div>`);}else if(c.risk==='warning'){riskN++;alerts.push(`<div class="alert alert-w">⚠️ ${escapeHTML(p.name)}: 利益率低下 ${c.rate.toFixed(1)}%</div>`);}const f=forecast3Weeks(p,c);if(f&&f.willGoNegative){alerts.push(`<div class="alert alert-c">⏰ ${escapeHTML(p.name)}: 3週間後に赤字転落予測 ${fmtM(f.projectedProfit)}</div>`);}});document.getElementById('kp2').textContent=fmtM(totalB);document.getElementById('kp3').textContent=fmtM(totalP);document.getElementById('kp3s').textContent='粗利率 '+(totalB>0?((totalP/totalB)*100).toFixed(1):'0')+'%';document.getElementById('kp4').textContent=riskN;document.getElementById('alertList').innerHTML=alerts.length?alerts.join(''):'<div class="alert alert-s">✅ 現在、警告はありません</div>';const list=document.getElementById('projList');if(projects.length===0){list.innerHTML='<div class="empty">工事を登録してください</div>';return;}list.innerHTML=projects.map(p=>{const c=calcProfit(p);return `<div class="proj-card"><h3>${escapeHTML(p.name)} <span class="pill pill-${c.risk[0]}">${riskLabel(c.risk)}</span></h3><div class="proj-meta">${escapeHTML(p.client)} / 進捗 ${c.progress}% / 日報 ${c.reportCount}件</div><div class="proj-stats"><div class="stat"><span class="stat-v">${fmtM(p.budget)}</span>予算</div><div class="stat"><span class="stat-v">${fmtM(c.cost)}</span>予測原価</div><div class="stat"><span class="stat-v">${fmtM(c.profit)}</span>予測粗利</div><div class="stat"><span class="stat-v">${c.confidence}%</span>信頼度</div></div></div>`;}).join('');}
+function renderAnalysis(){const div=document.getElementById('anaContent');if(projects.length===0){div.innerHTML='<div class="empty">工事を登録して日報を入力するとAI分析が表示されます</div>';return;}div.innerHTML=projects.map(p=>{const c=calcProfit(p);const f=forecast3Weeks(p,c);const last7=(c.reports||[]).slice(-7);const maxCost=Math.max(...last7.map(r=>r.cost),1);let trendHTML='';if(last7.length>0){trendHTML=`<div class="trend-chart"><strong style="font-size:13px">📊 直近${last7.length}日間の追加費用トレンド</strong><div class="trend-bar">${last7.map(r=>`<div style="height:${(r.cost/maxCost)*100}%" data-d="${r.date.slice(5)}"></div>`).join('')}</div><div style="font-size:10px;margin-top:24px;color:#666">最大: ${fmtM(maxCost)} / 平均: ${fmtM(c.avgDailyCost)}</div></div>`;}let warn3w='';if(f&&f.willGoNegative){warn3w=`<div class="warning-3w">⏰ 3週間先リスク警告<br><br>現時点では粗利 ${fmtM(c.profit)} ですが、現状ペースのままだと<strong>3週間後に ${fmtM(f.projectedProfit)} の赤字</strong>に転落する予測です。<br><br>即座にコスト削減または追加発注の見直しが必要です。</div>`;}const reasoning=`<div class="ai-reason"><strong>🤖 AI分析の根拠</strong>・日報入力数: ${c.reportCount}件 (信頼度 ${c.confidence}%)<br>・1日あたり追加費用平均: ${fmtM(c.avgDailyCost)}<br>・予測原価 = 基本原価(予算×70%=${fmtM(p.budget*0.7)}) + 追加費用(${fmtM(c.avgDailyCost)} × ${p.days}日)<br>・予測粗利 = 予算 ${fmtM(p.budget)} − 予測原価 ${fmtM(c.cost)} = <strong>${fmtM(c.profit)}</strong><br>・粗利率 = ${c.rate.toFixed(1)}% → 判定: <strong>${riskLabel(c.risk)}</strong><br>${c.risk==='critical'?'・⚠️ 赤字確定。発注の即時見直しを推奨':c.risk==='warning'?'・⚠️ 粗利率10%未満。コスト最適化を推奨':'・✅ 健全な進捗'}</div>`;return `<div class="proj-card"><h3>${escapeHTML(p.name)} <span class="pill pill-${c.risk[0]}">${riskLabel(c.risk)}</span></h3><table><tr><td>予算</td><td>${fmtM(p.budget)}</td></tr><tr><td>予測原価</td><td>${fmtM(c.cost)}</td></tr><tr><td>予測粗利</td><td>${fmtM(c.profit)}</td></tr><tr><td>粗利率</td><td>${c.rate.toFixed(1)}%</td></tr><tr><td>信頼度</td><td>${c.confidence}%</td></tr><tr><td>進捗</td><td>${c.progress}%</td></tr></table>${trendHTML}${warn3w}${reasoning}</div>`;}).join('');}
+function exportCSV(){if(projects.length===0){alert('⚠️ データがありません');return;}let csv='GreenOps レポート\n生成日時,'+new Date().toLocaleString('ja-JP')+'\n\n【工事一覧】\n工事名,クライアント,予算(万円),工期(日),開始日,予測原価(万円),予測粗利(万円),粗利率(%),リスク,信頼度(%)\n';projects.forEach(p=>{const c=calcProfit(p);csv+=`"${p.name}","${p.client}",${p.budget},${p.days},${p.start},${Math.round(c.cost)},${Math.round(c.profit)},${c.rate.toFixed(1)},${riskLabel(c.risk).replace(/[🚨⚠️✅ ]/g,'')},${c.confidence}\n`;});csv+='\n【日報一覧】\n日付,工事名,進捗(%),作業人数,追加費用(万円),天候,備考\n';reports.forEach(r=>{const p=projects.find(x=>x.id===r.pid);if(p){csv+=`${r.date},"${p.name}",${r.progress},${r.workers},${r.cost},${r.weather},"${(r.memo||'').replace(/"/g,'""')}"\n`;}});const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='greenops_'+today()+'.csv';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);alert('✅ CSVをダウンロードしました');}
+function contactInquiry(){const subject=encodeURIComponent('GreenOps 連携サービス問い合わせ');const body=encodeURIComponent('GreenOps連携サービスについて問い合わせます。\n\n【希望する連携】\n□ freee連携\n□ マネーフォワード連携\n□ ANDPAD連携\n\n【会社情報】\n会社名:\nお名前:\n電話番号:\n\n【ご質問内容】\n\n');window.location.href='mailto:support@greenops.jp?subject='+subject+'&body='+body;}
+function resetAll(){if(!confirm('本当に解約してすべてのデータを削除しますか?\nこの操作は取り消せません。'))return;if(!confirm('最終確認: 全データを完全削除します。よろしいですか?'))return;projects=[];reports=[];localStorage.removeItem('go_projects');localStorage.removeItem('go_reports');updateProjectSelect();renderDashboard();renderProjMgr();alert('✅ 全データを削除しました。ご利用ありがとうございました。');}
+const chatHistory=[];
+function toggleChat(){const w=document.getElementById('chatWin');w.classList.toggle('open');if(w.classList.contains('open')&&chatHistory.length===0){addChatMsg('ai','こんにちは!GreenOpsサポートです。\n使い方やトラブルについて何でもご質問ください。');}}
+function addChatMsg(type,text){chatHistory.push({type,text});const body=document.getElementById('chatBody');const div=document.createElement('div');div.className='msg msg-'+(type==='ai'?'ai':'u');div.textContent=text;body.appendChild(div);body.scrollTop=body.scrollHeight;}
+function sendChat(){const input=document.getElementById('chatInput');const text=input.value.trim();if(!text)return;addChatMsg('u',text);input.value='';setTimeout(()=>addChatMsg('ai',generateAIResponse(text)),500);}
+function generateAIResponse(q){if(/工事|登録|追加/.test(q))return '「工事管理」タブから新規工事を登録できます。工事名・クライアント・予算・工期・開始日が必須項目です。';if(/日報|入力/.test(q))return '「日報入力」タブから毎日の進捗を記録します。日報を貯めるほどAI予測の精度が上がります。';if(/粗利|計算|予測/.test(q))return '粗利は「予算 − (基本原価70% + 追加費用平均 × 工期)」で計算しています。日報の追加費用データから自動算出されます。';if(/赤字|リスク|警告/.test(q))return '赤字リスクは3段階(🚨赤字 / ⚠️注意 / ✅安全)で自動判定。粗利<0で赤字、粗利率<10%で注意となります。3週間先の予測も表示されます。';if(/csv|エクスポート|出力/i.test(q))return '「設定」タブの「CSVをダウンロード」から全データをExcel対応CSVで出力できます。';if(/連携|freee|andpad|マネーフォワード/i.test(q))return '「設定」タブの「連携について問い合わせる」からメールで承ります。freee/MF/ANDPAD連携を準備中です。';if(/解約|削除|やめる/.test(q))return '「設定」タブの「解約してすべて削除」からいつでも解約可能です。全データが完全削除されます。';if(/料金|価格|いくら/.test(q))return '月額9,800円(税別)、14日間無料トライアルあり。いつでも解約可能です。';if(/保存|データ/.test(q))return 'データはブラウザに自動保存されます。「設定」から手動保存もできます。';if(/ai|分析|根拠/i.test(q))return '「AI分析」タブで各工事の詳細な分析と判定根拠を確認できます。日報数が多いほど信頼度が上がります。';return 'ご質問ありがとうございます。「工事登録」「日報入力」「粗利計算」「CSV出力」「連携」「解約」などについてお答えできます。詳細はsupport@greenops.jpまで。';}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+loadData();
+document.getElementById('i_date').value=today();
+document.getElementById('i_start').value=today();
+updateProjectSelect();
+renderDashboard();
 </script>
-</body></html>
+</body>
+</html>
