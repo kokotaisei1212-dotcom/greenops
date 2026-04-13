@@ -12,13 +12,12 @@ body{padding:16px;padding-bottom:120px;font-size:14px;line-height:1.6}
 header{border:2px solid #000;padding:18px;margin-bottom:18px;background:#000;color:#fff}
 header h1{font-size:22px;font-weight:900;letter-spacing:-.5px}
 header p{font-size:12px;margin-top:4px;opacity:.85}
-nav{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap;border-bottom:2px solid #000;padding-bottom:0}
-nav button{padding:12px 16px;border:2px solid #000;background:#fff;color:#000;cursor:pointer;font-weight:700;font-size:13px;border-bottom:none;transition:all .15s}
+nav{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap;border-bottom:2px solid #000}
+nav button{padding:12px 16px;border:2px solid #000;background:#fff;color:#000;cursor:pointer;font-weight:700;font-size:13px;border-bottom:none}
 nav button:hover{background:#f0f0f0}
 nav button.active{background:#000;color:#fff}
-.tab{display:none;border:2px solid #000;border-top:none;padding:24px;background:#fff;animation:fade .2s}
+.tab{display:none;border:2px solid #000;border-top:none;padding:24px;background:#fff}
 .tab.active{display:block}
-@keyframes fade{from{opacity:0}to{opacity:1}}
 h2{font-size:20px;font-weight:900;margin-bottom:18px;padding-bottom:10px;border-bottom:2px solid #000}
 h3{font-size:15px;font-weight:800;margin-bottom:10px}
 .field{margin-bottom:14px}
@@ -28,7 +27,7 @@ input:focus,select:focus,textarea:focus{outline:none;background:#f5f5f5}
 input[type="range"]{padding:0;height:30px;border:none;background:transparent}
 input[type="range"]::-webkit-slider-runnable-track{height:6px;background:#000}
 input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;background:#000;border:2px solid #000;border-radius:50%;margin-top:-9px;cursor:pointer}
-button.btn{padding:13px 22px;border:2px solid #000;background:#000;color:#fff;cursor:pointer;font-weight:800;font-size:14px;width:100%;margin-top:6px;transition:all .15s;border-radius:0}
+button.btn{padding:13px 22px;border:2px solid #000;background:#000;color:#fff;cursor:pointer;font-weight:800;font-size:14px;width:100%;margin-top:6px;border-radius:0}
 button.btn:hover{background:#fff;color:#000}
 button.btn-out{background:#fff;color:#000}
 button.btn-out:hover{background:#000;color:#fff}
@@ -53,8 +52,8 @@ button.btn-sm{padding:8px 14px;font-size:12px;width:auto}
 .range-d{text-align:center;font-size:18px;font-weight:900;margin-top:4px}
 .empty{text-align:center;padding:40px 20px;border:2px dashed #000;font-weight:700}
 .trend-chart{border:2px solid #000;padding:14px;margin-top:14px;background:#fff}
-.trend-bar{display:flex;align-items:flex-end;height:120px;gap:4px;margin-top:10px;border-bottom:2px solid #000;padding-bottom:0}
-.trend-bar div{flex:1;background:#000;position:relative;min-height:4px;transition:height .3s}
+.trend-bar{display:flex;align-items:flex-end;height:120px;gap:4px;margin-top:10px;border-bottom:2px solid #000}
+.trend-bar div{flex:1;background:#000;position:relative;min-height:4px}
 .trend-bar div::after{content:attr(data-d);position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:9px;white-space:nowrap}
 .ai-reason{background:#f5f5f5;border:2px solid #000;padding:12px;margin-top:10px;font-size:12px;line-height:1.7}
 .ai-reason strong{display:block;margin-bottom:6px;font-size:13px}
@@ -68,20 +67,23 @@ table td:last-child{text-align:right;font-weight:700}
 .pill-c{background:#000;color:#fff}
 .pill-w{background:#fff;color:#000}
 .pill-s{background:#f0f0f0;color:#000}
-#chatBtn{position:fixed;bottom:20px;right:20px;width:60px;height:60px;border-radius:50%;background:#000;color:#fff;border:3px solid #000;cursor:pointer;font-size:24px;z-index:998;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+#chatBtn{position:fixed;bottom:20px;right:20px;width:64px;height:64px;border-radius:50%;background:#000;color:#fff;border:3px solid #000;cursor:pointer;font-size:26px;z-index:998;box-shadow:0 4px 12px rgba(0,0,0,.3)}
 #chatBtn:hover{background:#fff;color:#000}
-#chatWin{position:fixed;bottom:90px;right:20px;width:340px;max-width:calc(100vw - 40px);height:480px;max-height:calc(100vh - 120px);background:#fff;border:3px solid #000;display:none;flex-direction:column;z-index:999;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+#chatBadge{position:absolute;top:-4px;right:-4px;background:#fff;color:#000;border:2px solid #000;border-radius:50%;width:22px;height:22px;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center}
+#chatWin{position:fixed;bottom:94px;right:20px;width:360px;max-width:calc(100vw - 40px);height:520px;max-height:calc(100vh - 130px);background:#fff;border:3px solid #000;display:none;flex-direction:column;z-index:999;box-shadow:0 8px 24px rgba(0,0,0,.4)}
 #chatWin.open{display:flex}
 .chat-h{background:#000;color:#fff;padding:14px;font-weight:800;display:flex;justify-content:space-between;align-items:center}
 .chat-h button{background:none;border:none;color:#fff;font-size:20px;cursor:pointer;padding:0;width:24px;height:24px}
 .chat-body{flex:1;overflow-y:auto;padding:14px;background:#f5f5f5}
-.msg{margin-bottom:10px;max-width:85%;padding:10px 12px;font-size:13px;line-height:1.5;border:2px solid #000}
+.msg{margin-bottom:10px;max-width:85%;padding:10px 12px;font-size:13px;line-height:1.5;border:2px solid #000;white-space:pre-wrap;word-wrap:break-word}
 .msg-ai{background:#fff;color:#000;margin-right:auto}
 .msg-u{background:#000;color:#fff;margin-left:auto}
+.quick-replies{display:flex;flex-wrap:wrap;gap:6px;padding:10px;background:#fff;border-top:2px solid #000}
+.quick-replies button{padding:6px 10px;background:#fff;color:#000;border:2px solid #000;font-size:11px;font-weight:700;cursor:pointer}
+.quick-replies button:hover{background:#000;color:#fff}
 .chat-in{display:flex;border-top:2px solid #000}
 .chat-in input{border:none;flex:1;padding:12px;font-size:13px}
 .chat-in button{background:#000;color:#fff;border:none;padding:0 18px;font-weight:800;cursor:pointer}
-select option:disabled{color:#999}
 </style>
 </head>
 <body>
@@ -152,9 +154,9 @@ select option:disabled{color:#999}
 <button class="btn" onclick="exportCSV()">CSVをダウンロード</button>
 </div>
 <div class="section">
-<h3>🔗 連携サービスお問い合わせ</h3>
-<p style="margin-bottom:10px;font-size:12px">freee / マネーフォワード / ANDPAD との連携をご希望の方</p>
-<button class="btn btn-out" onclick="contactInquiry()">連携について問い合わせる</button>
+<h3>🔗 連携サービス・サポート</h3>
+<p style="margin-bottom:10px;font-size:12px">freee / マネーフォワード / ANDPAD連携、その他ご質問は右下のチャットからどうぞ</p>
+<button class="btn btn-out" onclick="openChatWith('連携')">チャットで問い合わせる</button>
 </div>
 <div class="section">
 <h3>💾 データ保存</h3>
@@ -168,18 +170,18 @@ select option:disabled{color:#999}
 </div>
 </div>
 </div>
-<button id="chatBtn" onclick="toggleChat()">💬</button>
+<button id="chatBtn" onclick="toggleChat()">💬<span id="chatBadge" style="display:none">1</span></button>
 <div id="chatWin">
 <div class="chat-h"><span>💬 GreenOps サポート</span><button onclick="toggleChat()">✕</button></div>
 <div class="chat-body" id="chatBody"></div>
+<div class="quick-replies" id="quickReplies"></div>
 <div class="chat-in"><input id="chatInput" placeholder="質問を入力..." onkeypress="if(event.key==='Enter')sendChat()"><button onclick="sendChat()">送信</button></div>
 </div>
 <script>
 'use strict';
-let projects=[],reports=[];
-function loadData(){try{const p=localStorage.getItem('go_projects');const r=localStorage.getItem('go_reports');if(p)projects=JSON.parse(p);if(r)reports=JSON.parse(r);}catch(e){console.error(e)}}
-function saveData(){try{localStorage.setItem('go_projects',JSON.stringify(projects));localStorage.setItem('go_reports',JSON.stringify(reports));}catch(e){console.error(e)}}
-const fmt=n=>'¥'+Math.round(n).toLocaleString();
+let projects=[],reports=[],inquiries=[];
+function loadData(){try{const p=localStorage.getItem('go_projects');const r=localStorage.getItem('go_reports');const i=localStorage.getItem('go_inquiries');if(p)projects=JSON.parse(p);if(r)reports=JSON.parse(r);if(i)inquiries=JSON.parse(i);}catch(e){console.error(e)}}
+function saveData(){try{localStorage.setItem('go_projects',JSON.stringify(projects));localStorage.setItem('go_reports',JSON.stringify(reports));localStorage.setItem('go_inquiries',JSON.stringify(inquiries));}catch(e){console.error(e)}}
 const fmtM=n=>'¥'+Math.round(n).toLocaleString()+'万';
 const today=()=>new Date().toISOString().split('T')[0];
 document.querySelectorAll('.navbtn').forEach(btn=>{btn.addEventListener('click',()=>{const tab=btn.dataset.tab;document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.navbtn').forEach(b=>b.classList.remove('active'));document.getElementById(tab).classList.add('active');btn.classList.add('active');if(tab==='dash')renderDashboard();if(tab==='proj')renderProjMgr();if(tab==='ana')renderAnalysis();if(tab==='rep')updateProjectSelect();});});
@@ -191,17 +193,22 @@ function renderProjMgr(){const div=document.getElementById('projMgr');if(project
 function addReport(){const pid=parseInt(document.getElementById('i_pid').value);const date=document.getElementById('i_date').value;const prog=parseInt(document.getElementById('i_prog').value);const work=parseInt(document.getElementById('i_work').value);const cost=parseFloat(document.getElementById('i_cost').value)||0;if(!pid||!date||isNaN(work)){alert('⚠️ 工事・日付・作業人数は必須です');return;}reports.push({id:Date.now(),pid,date,progress:prog,workers:work,cost,weather:document.getElementById('i_wx').value,memo:document.getElementById('i_memo').value});saveData();document.getElementById('i_cost').value='';document.getElementById('i_memo').value='';document.getElementById('i_work').value='';alert('✅ 日報を保存しました');}
 function calcProfit(p){const rs=reports.filter(r=>r.pid===p.id).sort((a,b)=>a.date.localeCompare(b.date));if(rs.length===0){return{profit:p.budget*0.2,rate:20,risk:'safe',cost:p.budget*0.8,confidence:5,reportCount:0,avgDailyCost:0,progress:0};}const totalAddCost=rs.reduce((s,r)=>s+r.cost,0);const avgDailyCost=totalAddCost/rs.length;const baseCost=p.budget*0.7;const projectedCost=baseCost+(avgDailyCost*p.days);const profit=p.budget-projectedCost;const rate=(profit/p.budget)*100;let risk='safe';if(profit<0)risk='critical';else if(rate<10)risk='warning';return{profit,rate,risk,cost:projectedCost,confidence:Math.min(95,rs.length*15),reportCount:rs.length,avgDailyCost,progress:rs[rs.length-1].progress,reports:rs};}
 function riskLabel(r){return r==='critical'?'🚨 赤字':r==='warning'?'⚠️ 注意':'✅ 安全';}
-function forecast3Weeks(p,c){if(c.reportCount<2)return null;const elapsed=c.reportCount;const remaining=p.days-elapsed;if(remaining<=21)return null;const futureCost=c.avgDailyCost*21;const profitIn3w=c.profit-futureCost*0.3;return{daysAhead:21,projectedProfit:profitIn3w,willGoNegative:profitIn3w<0&&c.profit>0,severity:profitIn3w<0?'critical':profitIn3w<p.budget*0.05?'warning':'safe'};}
+function forecast3Weeks(p,c){if(c.reportCount<2)return null;const elapsed=c.reportCount;const remaining=p.days-elapsed;if(remaining<=21)return null;const futureCost=c.avgDailyCost*21;const profitIn3w=c.profit-futureCost*0.3;return{daysAhead:21,projectedProfit:profitIn3w,willGoNegative:profitIn3w<0&&c.profit>0};}
 function renderDashboard(){document.getElementById('kp1').textContent=projects.length;let totalB=0,totalP=0,riskN=0;const alerts=[];projects.forEach(p=>{const c=calcProfit(p);totalB+=p.budget;totalP+=c.profit;if(c.risk==='critical'){riskN++;alerts.push(`<div class="alert alert-c">🚨 ${escapeHTML(p.name)}: 赤字予測 ${fmtM(c.profit)} (粗利率 ${c.rate.toFixed(1)}%)</div>`);}else if(c.risk==='warning'){riskN++;alerts.push(`<div class="alert alert-w">⚠️ ${escapeHTML(p.name)}: 利益率低下 ${c.rate.toFixed(1)}%</div>`);}const f=forecast3Weeks(p,c);if(f&&f.willGoNegative){alerts.push(`<div class="alert alert-c">⏰ ${escapeHTML(p.name)}: 3週間後に赤字転落予測 ${fmtM(f.projectedProfit)}</div>`);}});document.getElementById('kp2').textContent=fmtM(totalB);document.getElementById('kp3').textContent=fmtM(totalP);document.getElementById('kp3s').textContent='粗利率 '+(totalB>0?((totalP/totalB)*100).toFixed(1):'0')+'%';document.getElementById('kp4').textContent=riskN;document.getElementById('alertList').innerHTML=alerts.length?alerts.join(''):'<div class="alert alert-s">✅ 現在、警告はありません</div>';const list=document.getElementById('projList');if(projects.length===0){list.innerHTML='<div class="empty">工事を登録してください</div>';return;}list.innerHTML=projects.map(p=>{const c=calcProfit(p);return `<div class="proj-card"><h3>${escapeHTML(p.name)} <span class="pill pill-${c.risk[0]}">${riskLabel(c.risk)}</span></h3><div class="proj-meta">${escapeHTML(p.client)} / 進捗 ${c.progress}% / 日報 ${c.reportCount}件</div><div class="proj-stats"><div class="stat"><span class="stat-v">${fmtM(p.budget)}</span>予算</div><div class="stat"><span class="stat-v">${fmtM(c.cost)}</span>予測原価</div><div class="stat"><span class="stat-v">${fmtM(c.profit)}</span>予測粗利</div><div class="stat"><span class="stat-v">${c.confidence}%</span>信頼度</div></div></div>`;}).join('');}
 function renderAnalysis(){const div=document.getElementById('anaContent');if(projects.length===0){div.innerHTML='<div class="empty">工事を登録して日報を入力するとAI分析が表示されます</div>';return;}div.innerHTML=projects.map(p=>{const c=calcProfit(p);const f=forecast3Weeks(p,c);const last7=(c.reports||[]).slice(-7);const maxCost=Math.max(...last7.map(r=>r.cost),1);let trendHTML='';if(last7.length>0){trendHTML=`<div class="trend-chart"><strong style="font-size:13px">📊 直近${last7.length}日間の追加費用トレンド</strong><div class="trend-bar">${last7.map(r=>`<div style="height:${(r.cost/maxCost)*100}%" data-d="${r.date.slice(5)}"></div>`).join('')}</div><div style="font-size:10px;margin-top:24px;color:#666">最大: ${fmtM(maxCost)} / 平均: ${fmtM(c.avgDailyCost)}</div></div>`;}let warn3w='';if(f&&f.willGoNegative){warn3w=`<div class="warning-3w">⏰ 3週間先リスク警告<br><br>現時点では粗利 ${fmtM(c.profit)} ですが、現状ペースのままだと<strong>3週間後に ${fmtM(f.projectedProfit)} の赤字</strong>に転落する予測です。<br><br>即座にコスト削減または追加発注の見直しが必要です。</div>`;}const reasoning=`<div class="ai-reason"><strong>🤖 AI分析の根拠</strong>・日報入力数: ${c.reportCount}件 (信頼度 ${c.confidence}%)<br>・1日あたり追加費用平均: ${fmtM(c.avgDailyCost)}<br>・予測原価 = 基本原価(予算×70%=${fmtM(p.budget*0.7)}) + 追加費用(${fmtM(c.avgDailyCost)} × ${p.days}日)<br>・予測粗利 = 予算 ${fmtM(p.budget)} − 予測原価 ${fmtM(c.cost)} = <strong>${fmtM(c.profit)}</strong><br>・粗利率 = ${c.rate.toFixed(1)}% → 判定: <strong>${riskLabel(c.risk)}</strong><br>${c.risk==='critical'?'・⚠️ 赤字確定。発注の即時見直しを推奨':c.risk==='warning'?'・⚠️ 粗利率10%未満。コスト最適化を推奨':'・✅ 健全な進捗'}</div>`;return `<div class="proj-card"><h3>${escapeHTML(p.name)} <span class="pill pill-${c.risk[0]}">${riskLabel(c.risk)}</span></h3><table><tr><td>予算</td><td>${fmtM(p.budget)}</td></tr><tr><td>予測原価</td><td>${fmtM(c.cost)}</td></tr><tr><td>予測粗利</td><td>${fmtM(c.profit)}</td></tr><tr><td>粗利率</td><td>${c.rate.toFixed(1)}%</td></tr><tr><td>信頼度</td><td>${c.confidence}%</td></tr><tr><td>進捗</td><td>${c.progress}%</td></tr></table>${trendHTML}${warn3w}${reasoning}</div>`;}).join('');}
 function exportCSV(){if(projects.length===0){alert('⚠️ データがありません');return;}let csv='GreenOps レポート\n生成日時,'+new Date().toLocaleString('ja-JP')+'\n\n【工事一覧】\n工事名,クライアント,予算(万円),工期(日),開始日,予測原価(万円),予測粗利(万円),粗利率(%),リスク,信頼度(%)\n';projects.forEach(p=>{const c=calcProfit(p);csv+=`"${p.name}","${p.client}",${p.budget},${p.days},${p.start},${Math.round(c.cost)},${Math.round(c.profit)},${c.rate.toFixed(1)},${riskLabel(c.risk).replace(/[🚨⚠️✅ ]/g,'')},${c.confidence}\n`;});csv+='\n【日報一覧】\n日付,工事名,進捗(%),作業人数,追加費用(万円),天候,備考\n';reports.forEach(r=>{const p=projects.find(x=>x.id===r.pid);if(p){csv+=`${r.date},"${p.name}",${r.progress},${r.workers},${r.cost},${r.weather},"${(r.memo||'').replace(/"/g,'""')}"\n`;}});const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='greenops_'+today()+'.csv';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);alert('✅ CSVをダウンロードしました');}
-function contactInquiry(){const subject=encodeURIComponent('GreenOps 連携サービス問い合わせ');const body=encodeURIComponent('GreenOps連携サービスについて問い合わせます。\n\n【希望する連携】\n□ freee連携\n□ マネーフォワード連携\n□ ANDPAD連携\n\n【会社情報】\n会社名:\nお名前:\n電話番号:\n\n【ご質問内容】\n\n');window.location.href='mailto:support@greenops.jp?subject='+subject+'&body='+body;}
-function resetAll(){if(!confirm('本当に解約してすべてのデータを削除しますか?\nこの操作は取り消せません。'))return;if(!confirm('最終確認: 全データを完全削除します。よろしいですか?'))return;projects=[];reports=[];localStorage.removeItem('go_projects');localStorage.removeItem('go_reports');updateProjectSelect();renderDashboard();renderProjMgr();alert('✅ 全データを削除しました。ご利用ありがとうございました。');}
-const chatHistory=[];
-function toggleChat(){const w=document.getElementById('chatWin');w.classList.toggle('open');if(w.classList.contains('open')&&chatHistory.length===0){addChatMsg('ai','こんにちは!GreenOpsサポートです。\n使い方やトラブルについて何でもご質問ください。');}}
-function addChatMsg(type,text){chatHistory.push({type,text});const body=document.getElementById('chatBody');const div=document.createElement('div');div.className='msg msg-'+(type==='ai'?'ai':'u');div.textContent=text;body.appendChild(div);body.scrollTop=body.scrollHeight;}
-function sendChat(){const input=document.getElementById('chatInput');const text=input.value.trim();if(!text)return;addChatMsg('u',text);input.value='';setTimeout(()=>addChatMsg('ai',generateAIResponse(text)),500);}
-function generateAIResponse(q){if(/工事|登録|追加/.test(q))return '「工事管理」タブから新規工事を登録できます。工事名・クライアント・予算・工期・開始日が必須項目です。';if(/日報|入力/.test(q))return '「日報入力」タブから毎日の進捗を記録します。日報を貯めるほどAI予測の精度が上がります。';if(/粗利|計算|予測/.test(q))return '粗利は「予算 − (基本原価70% + 追加費用平均 × 工期)」で計算しています。日報の追加費用データから自動算出されます。';if(/赤字|リスク|警告/.test(q))return '赤字リスクは3段階(🚨赤字 / ⚠️注意 / ✅安全)で自動判定。粗利<0で赤字、粗利率<10%で注意となります。3週間先の予測も表示されます。';if(/csv|エクスポート|出力/i.test(q))return '「設定」タブの「CSVをダウンロード」から全データをExcel対応CSVで出力できます。';if(/連携|freee|andpad|マネーフォワード/i.test(q))return '「設定」タブの「連携について問い合わせる」からメールで承ります。freee/MF/ANDPAD連携を準備中です。';if(/解約|削除|やめる/.test(q))return '「設定」タブの「解約してすべて削除」からいつでも解約可能です。全データが完全削除されます。';if(/料金|価格|いくら/.test(q))return '月額9,800円(税別)、14日間無料トライアルあり。いつでも解約可能です。';if(/保存|データ/.test(q))return 'データはブラウザに自動保存されます。「設定」から手動保存もできます。';if(/ai|分析|根拠/i.test(q))return '「AI分析」タブで各工事の詳細な分析と判定根拠を確認できます。日報数が多いほど信頼度が上がります。';return 'ご質問ありがとうございます。「工事登録」「日報入力」「粗利計算」「CSV出力」「連携」「解約」などについてお答えできます。詳細はsupport@greenops.jpまで。';}
+function resetAll(){if(!confirm('本当に解約してすべてのデータを削除しますか?\nこの操作は取り消せません。'))return;if(!confirm('最終確認: 全データを完全削除します。よろしいですか?'))return;projects=[];reports=[];inquiries=[];localStorage.removeItem('go_projects');localStorage.removeItem('go_reports');localStorage.removeItem('go_inquiries');updateProjectSelect();renderDashboard();renderProjMgr();alert('✅ 全データを削除しました。ご利用ありがとうございました。');}
+let chatStarted=false,chatMode='auto',inquiryDraft={};
+function toggleChat(){const w=document.getElementById('chatWin');w.classList.toggle('open');document.getElementById('chatBadge').style.display='none';if(w.classList.contains('open')&&!chatStarted){chatStarted=true;addChatMsg('ai','こんにちは!GreenOpsサポートです 👋\n\n何でもお気軽にご質問ください。下のボタンからもお選びいただけます。');showQuickReplies(['使い方を教えて','料金について','連携について問い合わせ','解約方法','AI分析の仕組み']);}}
+function openChatWith(topic){document.getElementById('chatWin').classList.add('open');if(!chatStarted){chatStarted=true;addChatMsg('ai','こんにちは!GreenOpsサポートです 👋');}if(topic==='連携'){startInquiryFlow();}}
+function addChatMsg(type,text){const body=document.getElementById('chatBody');const div=document.createElement('div');div.className='msg msg-'+(type==='ai'?'ai':'u');div.textContent=text;body.appendChild(div);body.scrollTop=body.scrollHeight;}
+function showQuickReplies(opts){const qr=document.getElementById('quickReplies');qr.innerHTML=opts.map(o=>`<button onclick="quickReply('${o.replace(/'/g,"\\'")}')">${o}</button>`).join('');}
+function clearQuickReplies(){document.getElementById('quickReplies').innerHTML='';}
+function quickReply(text){addChatMsg('u',text);clearQuickReplies();setTimeout(()=>handleChat(text),400);}
+function sendChat(){const input=document.getElementById('chatInput');const text=input.value.trim();if(!text)return;addChatMsg('u',text);input.value='';clearQuickReplies();setTimeout(()=>handleChat(text),400);}
+function handleChat(q){if(chatMode==='inquiry'){handleInquiryFlow(q);return;}const lc=q.toLowerCase();if(/連携|問い合わせ|freee|andpad|マネーフォワード|mf/i.test(q)){startInquiryFlow();return;}if(/使い方|始め方|どうやって/.test(q)){addChatMsg('ai','GreenOpsの基本的な使い方:\n\n1️⃣ 「工事管理」タブで新規工事を登録\n2️⃣ 「日報入力」タブで毎日の進捗・追加費用を記録\n3️⃣ 「ダッシュボード」で粗利予測と赤字リスクを確認\n4️⃣ 「AI分析」で計算根拠と3週間先予測を確認\n\n日報を貯めるほどAI予測の精度が上がります 📈');showQuickReplies(['料金について','AI分析の仕組み','連携について問い合わせ']);return;}if(/料金|価格|いくら|月額/.test(q)){addChatMsg('ai','💰 料金プラン\n\n月額 9,800円(税別)\n14日間無料トライアルあり\nいつでも解約可能・初期費用なし\n\nクレジットカード決済(Stripe)対応');showQuickReplies(['解約方法','連携について問い合わせ']);return;}if(/ai|分析|根拠|予測|仕組み/i.test(q)){addChatMsg('ai','🤖 AI分析の仕組み\n\n粗利予測の計算式:\n予測粗利 = 予算 −(基本原価70% + 追加費用平均 × 工期)\n\n判定基準:\n🚨 赤字: 予測粗利 < 0\n⚠️ 注意: 粗利率 < 10%\n✅ 安全: それ以外\n\n日報数が増えるほど信頼度(%)が上がり、3週間先の赤字予兆を自動検知します。');showQuickReplies(['使い方を教えて','連携について問い合わせ']);return;}if(/赤字|リスク|警告/.test(q)){addChatMsg('ai','⚠️ 赤字リスク検知について\n\n3段階で自動判定:\n🚨 赤字確定 → 発注の即時見直しを推奨\n⚠️ 注意(粗利率<10%) → コスト最適化\n✅ 安全 → 健全な進捗\n\nさらに、現状ペースで続けた場合の3週間先の粗利を予測し、赤字転落の兆候があれば事前に警告します。');showQuickReplies(['AI分析の仕組み','使い方を教えて']);return;}if(/csv|出力|エクスポート|ダウンロード/i.test(q)){addChatMsg('ai','📥 CSV出力\n「設定」タブの「CSVをダウンロード」から、全工事と日報データをExcel対応CSVで出力できます。');showQuickReplies(['使い方を教えて','料金について']);return;}if(/解約|削除|やめる|キャンセル/.test(q)){addChatMsg('ai','✅ 解約方法\n\n「設定」タブの「解約してすべて削除」ボタンから、いつでも解約可能です。\n全データが完全削除され、その後の課金も停止します。\n違約金や手数料は一切ありません。');showQuickReplies(['料金について','使い方を教えて']);return;}if(/データ|保存|消える/.test(q)){addChatMsg('ai','💾 データはお使いのブラウザに自動保存されます。\n「設定」から手動保存もできます。\nCSV出力でバックアップを取っておくことをお勧めします。');showQuickReplies(['CSV出力について','解約方法']);return;}addChatMsg('ai','ご質問ありがとうございます!\n\n以下のトピックについてお答えできます。お選びいただくか、自由にご質問ください。');showQuickReplies(['使い方を教えて','料金について','AI分析の仕組み','連携について問い合わせ','解約方法']);}
+function startInquiryFlow(){chatMode='inquiry';inquiryDraft={step:0};addChatMsg('ai','🔗 連携サービスのお問い合わせを承ります。\n\nどの連携にご興味がありますか?');showQuickReplies(['freee連携','マネーフォワード連携','ANDPAD連携','すべて']);}
+function handleInquiryFlow(text){clearQuickReplies();const d=inquiryDraft;if(d.step===0){d.service=text;d.step=1;addChatMsg('ai','ありがとうございます!「'+text+'」ですね。\n\n会社名を教えてください。');return;}if(d.step===1){d.company=text;d.step=2;addChatMsg('ai','お名前を教えてください。');return;}if(d.step===2){d.name=text;d.step=3;addChatMsg('ai','ご連絡先(メールアドレスまたは電話番号)を教えてください。');return;}if(d.step===3){d.contact=text;d.step=4;addChatMsg('ai','最後に、ご質問やご要望があればお聞かせください。\n(なければ「なし」とご入力ください)');return;}if(d.step===4){d.message=text;const inquiry={id:Date.now(),createdAt:new Date().toISOString(),...d};inquiries.push(inquiry);saveData();addChatMsg('ai','✅ お問い合わせを受け付けました!\n\n━━━━━━━━━━━━\n希望連携: '+d.service+'\n会社名: '+d.company+'\nお名前: '+d.name+'\n連絡先: '+d.contact+'\nご質問: '+d.message+'\n━━━━━━━━━━━━\n\n担当者より2営業日以内にご連絡いたします。お問い合わせありがとうございました 🙏');chatMode='auto';inquiryDraft={};showQuickReplies(['使い方を教えて','料金について','閉じる']);return;}}
 function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 loadData();
 document.getElementById('i_date').value=today();
