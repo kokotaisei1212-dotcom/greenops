@@ -1,77 +1,305 @@
 <!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GreenOps - 建設業向け原価管理SaaS</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+<html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GreenOps</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}:root{--primary:#1a1a1a;--secondary:#404040;--tertiary:#606060;--light:#e8e8e8;--lighter:#f5f5f5;--white:#fff;--text:#222;--border:#d0d0d0;--danger:#d32f2f;--warning:#f57c00;--success:#388e3c}
-html,body{width:100%;height:100%;font-family:'Segoe UI',sans-serif;background:var(--lighter);color:var(--text);overflow-x:hidden}
-.main-wrapper{display:flex;height:100vh;width:100%}
-.sidebar{width:260px;background:var(--primary);color:var(--white);padding:30px 20px;overflow-y:auto;position:fixed;height:100vh;left:0;top:0;z-index:100;border-right:1px solid var(--secondary)}.sidebar-logo{font-size:24px;font-weight:700;margin-bottom:30px;display:flex;align-items:center;gap:12px}.sidebar-nav{list-style:none}.sidebar-nav li{margin-bottom:12px}.sidebar-nav button{width:100%;padding:12px 14px;background:var(--secondary);color:var(--white);border:1px solid var(--tertiary);border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;transition:all 0.2s;text-align:left}.sidebar-nav button:hover{background:var(--tertiary)}.sidebar-nav button.active{background:var(--white);color:var(--primary)}
-.main-content{flex:1;margin-left:260px;overflow-y:auto;padding:35px;background:var(--lighter)}.header{margin-bottom:35px}.header h1{font-size:28px;color:var(--primary);font-weight:700}
-.btn{padding:11px 22px;border:1px solid var(--secondary);border-radius:6px;cursor:pointer;font-weight:600;font-size:13px;background:var(--white);color:var(--primary);transition:all 0.2s}.btn:hover{background:var(--light)}.btn-primary{background:var(--primary);color:var(--white)}.btn-primary:hover{background:var(--secondary)}.btn-danger{background:var(--danger);color:var(--white);border-color:var(--danger)}.btn-danger:hover{background:#b71c1c}
-.tab-content{display:none}.tab-content.active{display:block}
-.card{background:var(--white);border-radius:8px;padding:24px;margin-bottom:20px;border:1px solid var(--border)}.card-title{font-size:18px;font-weight:700;margin-bottom:20px;color:var(--primary)}
-.form-group{margin-bottom:18px}label{display:block;margin-bottom:6px;font-weight:600;color:var(--primary);font-size:13px}input,textarea,select{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:13px;background:var(--white);color:var(--text)}input:focus,textarea:focus,select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(26,26,26,0.05)}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:20px}.grid-item{background:var(--white);border-radius:8px;padding:18px;border:1px solid var(--border)}.grid-item:hover{border-color:var(--primary);box-shadow:0 2px 8px rgba(0,0,0,0.08)}
-.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px}.kpi-card{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:16px;text-align:center}.kpi-value{font-size:24px;font-weight:700;margin:8px 0;color:var(--primary)}.kpi-label{font-size:12px;color:var(--tertiary)}
-.alert{padding:14px 18px;margin-bottom:18px;border-radius:6px;border-left:4px solid;background:#fff3e0;border-color:var(--warning);color:#e65100}
-.status{padding:14px 18px;margin-bottom:18px;border-radius:6px;border-left:4px solid}.status.success{background:#e8f5e9;border-color:var(--success);color:#1b5e20}.status.error{background:#ffebee;border-color:var(--danger);color:#b71c1c}
-.metric-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--light);font-size:13px}.metric-row:last-child{border-bottom:none}.metric-label{color:var(--tertiary);font-weight:600}.metric-value{font-weight:700;color:var(--primary)}.metric-value.danger{color:var(--danger)}.metric-value.success{color:var(--success)}.metric-value.warning{color:var(--warning)}
-.empty-state{text-align:center;padding:40px 20px;color:var(--tertiary)}
-.ai-explanation{background:var(--lighter);border:1px solid var(--border);border-radius:6px;padding:12px;margin-top:12px;font-size:12px;line-height:1.6}
-@media(max-width:1024px){.sidebar{width:200px}.main-content{margin-left:200px}.form-row{grid-template-columns:1fr}.kpi-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:768px){.main-wrapper{flex-direction:column}.sidebar{width:100%;height:auto;position:static}.main-content{margin-left:0;padding:20px}.kpi-grid{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}}
-</style>
-</head>
-<body>
-<div class="main-wrapper">
-<div class="sidebar">
-<div class="sidebar-logo"><span>&#x1F7E2;</span><div>GreenOps</div></div>
-<ul class="sidebar-nav">
-<li><button class="nav-btn active" data-tab="dashboard">ダッシュボード</button></li>
-<li><button class="nav-btn" data-tab="projects">工事管理</button></li>
-<li><button class="nav-btn" data-tab="reports">日報入力</button></li>
-<li><button class="nav-btn" data-tab="analytics">分析</button></li>
-<li><button class="nav-btn" data-tab="settings">設定</button></li>
-</ul>
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,"Hiragino Sans",sans-serif}
+body{background:#f0f4f0;color:#1a3a1a;padding:16px}
+.c{max-width:1100px;margin:0 auto}
+header{background:linear-gradient(135deg,#0f5132,#1a7a4a);color:#fff;padding:24px;border-radius:14px;margin-bottom:20px}
+h1{font-size:26px}.sub{font-size:13px;opacity:.95;margin-top:4px}
+nav{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+nav button{padding:11px 18px;border:2px solid #0f5132;background:#fff;border-radius:10px;cursor:pointer;font-weight:700;color:#0f5132;font-size:14px}
+nav button.act{background:#0f5132;color:#fff}
+.tab{display:none;background:#fff;padding:24px;border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.tab.act{display:block}
+h2{color:#0f5132;margin-bottom:18px;border-bottom:3px solid #0f5132;padding-bottom:10px}
+h3{color:#0f5132;margin-bottom:12px;font-size:16px}
+.f{margin-bottom:14px}
+label{display:block;font-weight:700;margin-bottom:6px;font-size:13px}
+input,select,textarea{width:100%;padding:11px;border:2px solid #d0e0d0;border-radius:8px;font-size:14px;font-family:inherit}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#0f5132}
+.btn{background:#0f5132;color:#fff;padding:13px 24px;border:none;border-radius:10px;cursor:pointer;font-weight:700;font-size:15px;width:100%}
+.btn:hover{background:#0a3a22}
+.btn-d{background:#c0392b}.btn-s{background:#fff;color:#0f5132;border:2px solid #0f5132}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:24px}
+.k{background:linear-gradient(135deg,#f0f8f0,#e0f0e0);padding:18px;border-radius:12px;border-left:5px solid #0f5132}
+.k-l{font-size:11px;color:#666;font-weight:600;margin-bottom:6px}
+.k-v{font-size:24px;font-weight:800;color:#0f5132}
+.card{background:#f8fbf8;border:1px solid #d0e0d0;padding:16px;border-radius:10px;margin-bottom:12px}
+.card h4{color:#0f5132;margin-bottom:8px}
+.alert{padding:14px;border-radius:10px;margin-bottom:10px;font-weight:600;font-size:14px}
+.a-c{background:#fee;color:#c0392b;border-left:5px solid #c0392b}
+.a-w{background:#fff8e1;color:#8a6d00;border-left:5px solid #f39c12}
+.empty{text-align:center;padding:40px;color:#999}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.row{grid-template-columns:1fr}}
+.rdv{text-align:center;font-size:22px;font-weight:800;color:#0f5132;margin-top:6px}
+table{width:100%;font-size:13px;border-collapse:collapse}
+table td{padding:8px;border-bottom:1px solid #e0e8e0}
+table td:last-child{text-align:right;font-weight:700}
+.trend{display:flex;align-items:flex-end;gap:6px;height:140px;margin:14px 0;padding:10px 10px 30px;background:#fff;border-radius:8px;border:1px solid #d0e0d0}
+.bar{flex:1;border-radius:4px 4px 0 0;position:relative;min-height:8px}
+.bar-l{position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);font-size:9px;color:#666;white-space:nowrap}
+.warn-3w{background:linear-gradient(135deg,#fff3cd,#ffe69c);padding:16px;border-radius:10px;border:2px solid #f39c12;margin:14px 0}
+.reason{background:#f0f8f0;padding:12px;border-radius:8px;margin-top:10px;font-size:13px;border-left:3px solid #0f5132;line-height:1.7}
+.del{background:#fff;color:#c0392b;border:1px solid #c0392b;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;margin-top:8px}
+</style></head><body><div class="c">
+<header><h1>🟢 GreenOps</h1><div class="sub">建設業向け原価管理SaaS / 赤字工事を3週間前に止める</div></header>
+<nav>
+<button class="act" data-t="dash">📊 ダッシュボード</button>
+<button data-t="proj">🏗️ 工事管理</button>
+<button data-t="rep">📝 日報入力</button>
+<button data-t="ana">📈 AI分析</button>
+<button data-t="set">⚙️ 設定</button>
+</nav>
+<div id="dash" class="tab act">
+<h2>ダッシュボード</h2>
+<div class="kpi">
+<div class="k"><div class="k-l">進行中の工事</div><div class="k-v" id="k1">0件</div></div>
+<div class="k"><div class="k-l">合計予算</div><div class="k-v" id="k2">¥0万</div></div>
+<div class="k"><div class="k-l">予測粗利合計</div><div class="k-v" id="k3">¥0万</div></div>
+<div class="k"><div class="k-l">赤字リスク</div><div class="k-v" id="k4">0件</div></div>
 </div>
-<div class="main-content">
-<div id="dashboard" class="tab-content active"><div class="header"><h1>ダッシュボード</h1></div><div id="riskAlert" class="alert" style="display:none"></div><div class="kpi-grid" id="kpiGrid"></div><div class="card"><div class="card-title">進行中の工事</div><div id="projectsGrid" class="grid"></div><div id="emptyProjects" class="empty-state" style="display:none">工事がまだ登録されていません</div></div></div>
-<div id="projects" class="tab-content"><div class="header"><h1>工事管理</h1></div><div class="card"><div class="card-title">新規工事登録</div><form id="projectForm"><div class="form-row"><div class="form-group"><label>工事名 *</label><input type="text" id="projectName" required></div><div class="form-group"><label>クライアント名 *</label><input type="text" id="clientName" required></div></div><div class="form-row"><div class="form-group"><label>予算（万円）*</label><input type="number" id="budget" min="1" required></div><div class="form-group"><label>工期（日数）*</label><input type="number" id="duration" min="1" required></div></div><div class="form-row"><div class="form-group"><label>開始日 *</label><input type="date" id="startDate" required></div><div class="form-group"><label>連絡先メール</label><input type="email" id="contactEmail"></div></div><button type="submit" class="btn btn-primary">工事を登録</button></form><div id="projectStatus"></div></div><div id="projectsList"></div></div>
-<div id="reports" class="tab-content"><div class="header"><h1>日報入力</h1></div><div class="card"><div class="card-title">本日の日報登録</div><form id="reportForm"><div class="form-row"><div class="form-group"><label>工事を選択 *</label><select id="projectSelect" required><option value="">-- 工事を選択 --</option></select></div><div class="form-group"><label>日付 *</label><input type="date" id="reportDate" required></div></div><div class="form-row"><div class="form-group"><label>進捗率（%）*</label><input type="range" id="progressRange" min="0" max="100" value="0"><div style="text-align:center;font-weight:700;margin-top:8px"><span id="progressValue">0</span>%</div></div><div class="form-group"><label>作業人数 *</label><input type="number" id="workerCount" min="0" required></div></div><div class="form-row"><div class="form-group"><label>天候</label><select id="weather"><option value="sunny">晴れ</option><option value="cloudy">曇り</option><option value="rainy">雨</option><option value="snow">雪</option></select></div><div class="form-group"><label>追加費用（万円）</label><input type="number" id="additionalCost" min="0" value="0"></div></div><div class="form-group"><label>備考</label><textarea id="notes" style="min-height:70px"></textarea></div><button type="submit" class="btn btn-primary">日報を保存</button></form><div id="reportStatus"></div></div></div>
-<div id="analytics" class="tab-content"><div class="header"><h1>粗利分析</h1></div><div class="card"><div class="card-title">7日間のトレンド</div><div style="height:300px;position:relative"><canvas id="trendChart"></canvas></div></div><div class="card"><div class="card-title">着地予測と粗利分析</div><div id="analyticsContent"></div></div></div>
-<div id="settings" class="tab-content"><div class="header"><h1>設定</h1></div><div class="card"><div class="card-title">CSVレポート出力</div><button class="btn btn-primary" onclick="exportCSV()">ダウンロード</button><div id="exportStatus"></div></div><div class="card"><div class="card-title">解約</div><p style="margin-bottom:16px">全データが削除されます。</p><button class="btn btn-danger" onclick="cancelAccount()">アカウント削除</button></div></div>
+<div id="al"></div><div id="pl"></div>
+</div>
+<div id="proj" class="tab">
+<h2>工事管理(無制限登録可能)</h2>
+<div class="f"><label>工事名 *</label><input id="pn" placeholder="例: 〇〇邸新築工事"></div>
+<div class="f"><label>クライアント名 *</label><input id="pc" placeholder="例: 山田建設"></div>
+<div class="row">
+<div class="f"><label>予算(万円)*</label><input type="number" id="pb" placeholder="5000"></div>
+<div class="f"><label>工期(日数)*</label><input type="number" id="pd" placeholder="100"></div>
+</div>
+<div class="f"><label>開始日 *</label><input type="date" id="ps"></div>
+<button class="btn" id="addP">＋ 工事を登録</button>
+<div id="pjList" style="margin-top:24px"></div>
+</div>
+<div id="rep" class="tab">
+<h2>日報入力</h2>
+<div class="f"><label>工事を選択 *</label><select id="rp"><option value="">-- 先に工事を登録 --</option></select></div>
+<div class="f"><label>日付 *</label><input type="date" id="rd"></div>
+<div class="f"><label>進捗率(%) *</label><input type="range" id="rpr" min="0" max="100" value="0"><div class="rdv" id="rprv">0%</div></div>
+<div class="row">
+<div class="f"><label>作業人数 *</label><input type="number" id="rw" placeholder="10"></div>
+<div class="f"><label>追加費用(万円)</label><input type="number" id="rc" placeholder="0"></div>
+</div>
+<div class="f"><label>天候</label><select id="rwt"><option>晴れ</option><option>曇り</option><option>雨</option><option>雪</option></select></div>
+<div class="f"><label>備考</label><textarea id="rm" rows="3"></textarea></div>
+<button class="btn" id="addR">日報を保存</button>
+</div>
+<div id="ana" class="tab">
+<h2>AI粗利分析</h2>
+<div id="anaC"><p class="empty">工事を登録して日報を入力するとAI分析が表示されます</p></div>
+</div>
+<div id="set" class="tab">
+<h2>設定</h2>
+<div style="margin-bottom:24px">
+<h3>📥 CSVレポート出力</h3>
+<p style="font-size:13px;color:#666;margin-bottom:10px">全工事の粗利分析をCSVで出力</p>
+<button class="btn" id="csvB">CSVをダウンロード</button>
+</div>
+<div style="margin-bottom:24px">
+<h3>🔗 連携サービス問い合わせ</h3>
+<p style="font-size:13px;color:#666;margin-bottom:10px">freee / マネーフォワード / ANDPAD 連携</p>
+<button class="btn btn-s" id="ctcB">連携について問い合わせる</button>
+</div>
+<div>
+<h3 style="color:#c0392b">⚠️ いつでも解約可能</h3>
+<p style="font-size:13px;color:#666;margin-bottom:10px">全データを完全に削除します</p>
+<button class="btn btn-d" id="rstB">全データを削除して解約</button>
+</div>
 </div>
 </div>
 <script>
-var projects=JSON.parse(localStorage.getItem('greenops_projects')||'[]');
-var reports=JSON.parse(localStorage.getItem('greenops_reports')||'[]');
-var trendChart=null;
-function saveData(){localStorage.setItem('greenops_projects',JSON.stringify(projects));localStorage.setItem('greenops_reports',JSON.stringify(reports))}
-document.addEventListener('DOMContentLoaded',function(){setupEventListeners();setTodayDate();loadDashboard()});
-function setupEventListeners(){document.querySelectorAll('.nav-btn').forEach(function(btn){btn.addEventListener('click',function(e){document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active')});e.target.classList.add('active');switchTab(e.target.dataset.tab)})});document.getElementById('projectForm').addEventListener('submit',registerProject);document.getElementById('reportForm').addEventListener('submit',registerReport);document.getElementById('progressRange').addEventListener('input',function(e){document.getElementById('progressValue').textContent=e.target.value})}
-function switchTab(t){document.querySelectorAll('.tab-content').forEach(function(tab){tab.classList.remove('active')});document.getElementById(t).classList.add('active');if(t==='dashboard')loadDashboard();if(t==='projects')loadProjects();if(t==='analytics')loadAnalytics()}
-function setTodayDate(){var t=new Date().toISOString().split('T')[0];document.getElementById('reportDate').value=t;document.getElementById('startDate').value=t}
-function calculateMargin(p,r){var wf={sunny:1.0,cloudy:0.95,rainy:0.85,snow:0.75};var w=wf[r.weather]||1.0;var b=p.budget*(r.progress/100);var t=b*w+(r.additionalCost||0);var g=p.budget-t;var rate=(g/p.budget)*100;return{totalCost:t.toFixed(2),grossProfit:g.toFixed(2),grossMarginRate:rate.toFixed(1),formula:p.budget+'\u4e07\u00d7'+r.progress+'%\u00d7'+w+'+'+(r.additionalCost||0)+'\u4e07='+t.toFixed(2)+'\u4e07',marginFormula:'('+p.budget+'\u4e07-'+t.toFixed(2)+'\u4e07)/'+p.budget+'\u4e07='+rate.toFixed(1)+'%'}}
-function predictLandingDate(pid){var p=projects.find(function(x){return x.id===pid});if(!p)return null;var pr=reports.filter(function(r){return r.projectId===pid}).sort(function(a,b){return new Date(a.reportDate)-new Date(b.reportDate)});if(pr.length<2)return null;var l=pr[pr.length-1];var de=Math.floor((new Date(l.reportDate)-new Date(p.startDate))/(864e5));if(de===0||l.progress===0)return null;var ppd=l.progress/de;var rd=Math.ceil((100-l.progress)/ppd);var cd=new Date(p.startDate);cd.setDate(cd.getDate()+de+rd);return{completionDate:cd.toISOString().split('T')[0],daysRemaining:rd,isOnTime:de+rd<=p.duration}}
-function predict3WeekRisk(){var risks=[];projects.forEach(function(p){var pr=reports.filter(function(r){return r.projectId===p.id});if(!pr.length)return;var l=pr[pr.length-1];var pm=calculateMargin(p,{progress:Math.min(100,l.progress+21*1.5),weather:l.weather,additionalCost:l.additionalCost||0});if(parseFloat(pm.grossMarginRate)<0)risks.push({projectName:p.projectName,currentRate:l.grossMarginRate,predictedRate:pm.grossMarginRate})});return risks}
-function getKPI(){var tp=projects.length,ap=0,tb=0,am=0,dp=0;projects.forEach(function(p){tb+=p.budget;var pr=reports.filter(function(r){return r.projectId===p.id});if(pr.length){ap++;var l=pr[pr.length-1];var m=calculateMargin(p,l);am+=parseFloat(m.grossMarginRate);if(parseFloat(m.grossMarginRate)<0)dp++}});return{totalProjects:tp,activeProjects:ap,totalBudget:tb,averageMargin:ap>0?(am/ap).toFixed(1):0,deficitProjects:dp}}
-function get7DayTrend(){var t=[];for(var i=6;i>=0;i--){var d=new Date();d.setDate(d.getDate()-i);var ds=d.toISOString().split('T')[0];var dr=reports.filter(function(r){return r.reportDate===ds});var avg=0;if(dr.length)avg=dr.map(function(r){return parseFloat(r.grossMarginRate||0)}).reduce(function(a,b){return a+b})/dr.length;t.push({date:ds,dayOfMonth:ds.split('-')[2],averageMargin:avg.toFixed(1)})}return t}
-function registerProject(e){e.preventDefault();projects.push({id:Date.now().toString(),projectName:document.getElementById('projectName').value,clientName:document.getElementById('clientName').value,budget:Number(document.getElementById('budget').value),duration:Number(document.getElementById('duration').value),startDate:document.getElementById('startDate').value,contactEmail:document.getElementById('contactEmail').value,createdAt:new Date().toISOString()});saveData();showStatus('projectStatus','\u5de5\u4e8b\u3092\u767b\u9332\u3057\u307e\u3057\u305f','success');document.getElementById('projectForm').reset();setTodayDate();setTimeout(function(){document.getElementById('projectStatus').innerHTML='';loadProjects()},1500)}
-function registerReport(e){e.preventDefault();var pid=document.getElementById('projectSelect').value;if(!pid){showStatus('reportStatus','\u5de5\u4e8b\u3092\u9078\u629e\u3057\u3066\u304f\u3060\u3055\u3044','error');return}var p=projects.find(function(x){return x.id===pid});var prog=Number(document.getElementById('progressRange').value);var rd={projectId:pid,reportDate:document.getElementById('reportDate').value,progress:prog,workerCount:Number(document.getElementById('workerCount').value),weather:document.getElementById('weather').value,additionalCost:Number(document.getElementById('additionalCost').value),notes:document.getElementById('notes').value};var m=calculateMargin(p,rd);reports.push({id:Date.now().toString(),...rd,calculatedCost:m.totalCost,grossMargin:m.grossProfit,grossMarginRate:m.grossMarginRate,formula:m.formula,marginFormula:m.marginFormula,createdAt:new Date().toISOString()});saveData();showStatus('reportStatus','\u65e5\u5831\u3092\u4fdd\u5b58: \u7c97\u5229\u7387'+m.grossMarginRate+'%','success');document.getElementById('reportForm').reset();setTodayDate();setTimeout(function(){document.getElementById('reportStatus').innerHTML='';loadDashboard()},1500)}
-function loadDashboard(){var kpi=getKPI();var risks=predict3WeekRisk();document.getElementById('kpiGrid').innerHTML='<div class="kpi-card"><div class="kpi-value">'+kpi.totalProjects+'</div><div class="kpi-label">\u7ba1\u7406\u5de5\u4e8b\u6570</div></div><div class="kpi-card"><div class="kpi-value">'+kpi.activeProjects+'</div><div class="kpi-label">\u9032\u884c\u4e2d</div></div><div class="kpi-card"><div class="kpi-value">'+kpi.totalBudget+'\u4e07</div><div class="kpi-label">\u7dcf\u4e88\u7b97</div></div><div class="kpi-card"><div class="kpi-value" style="color:'+(kpi.averageMargin<0?'var(--danger)':'var(--success)')+'">'+kpi.averageMargin+'%</div><div class="kpi-label">\u5e73\u5747\u7c97\u5229\u7387</div></div><div class="kpi-card"><div class="kpi-value" style="color:var(--danger)">'+kpi.deficitProjects+'</div><div class="kpi-label">\u8d64\u5b57\u30ea\u30b9\u30af</div></div>';
-if(risks.length>0){document.getElementById('riskAlert').innerHTML='<strong>\u26a0\ufe0f 3\u9031\u9593\u5148\u30ea\u30b9\u30af\u8b66\u544a</strong><br>'+risks.map(function(r){return r.projectName+': '+r.currentRate+'% \u2192 '+r.predictedRate+'%'}).join('<br>');document.getElementById('riskAlert').style.display='block'}else{document.getElementById('riskAlert').style.display='none'}
-if(projects.length===0){document.getElementById('projectsGrid').innerHTML='';document.getElementById('emptyProjects').style.display='block';return}document.getElementById('emptyProjects').style.display='none';
-var html='';projects.forEach(function(p){var pr=reports.filter(function(r){return r.projectId===p.id});var l=pr[pr.length-1];var prog=0,mr='N/A',rc='';if(l){prog=l.progress;var m=calculateMargin(p,l);mr=m.grossMarginRate;rc=parseFloat(mr)<0?'danger':parseFloat(mr)<5?'warning':'success'}var pred=predictLandingDate(p.id);html+='<div class="grid-item"><div style="font-weight:700;color:var(--primary);margin-bottom:8px">'+p.projectName+'</div><div style="font-size:12px;color:var(--tertiary);margin-bottom:12px">'+p.clientName+'</div><div class="metric-row"><span class="metric-label">\u4e88\u7b97</span><span>'+p.budget+'\u4e07</span></div><div class="metric-row"><span class="metric-label">\u7c97\u5229\u7387</span><span class="metric-value '+rc+'">'+(mr==='N/A'?mr:mr+'%')+'</span></div>'+(pred?'<div class="metric-row"><span class="metric-label">\u7740\u5730\u4e88\u6e2c</span><span>'+pred.completionDate+'</span></div>':'')+'</div>'});document.getElementById('projectsGrid').innerHTML=html}
-function loadProjects(){var html='',opts='<option value="">-- \u5de5\u4e8b\u3092\u9078\u629e --</option>';projects.forEach(function(p){opts+='<option value="'+p.id+'">'+p.projectName+'</option>';var pr=reports.filter(function(r){return r.projectId===p.id});var l=pr[pr.length-1];var mi='';if(l){var m=calculateMargin(p,l);mi='<div class="metric-row"><span class="metric-label">\u7c97\u5229\u7387</span><span class="metric-value" style="color:'+(parseFloat(m.grossMarginRate)<0?'var(--danger)':'var(--success)')+'">'+m.grossMarginRate+'%</span></div>'}html+='<div class="card"><div class="card-title">'+p.projectName+'</div><div class="metric-row"><span class="metric-label">\u30af\u30e9\u30a4\u30a2\u30f3\u30c8</span><span>'+p.clientName+'</span></div><div class="metric-row"><span class="metric-label">\u4e88\u7b97</span><span>'+p.budget+'\u4e07</span></div><div class="metric-row"><span class="metric-label">\u5de5\u671f</span><span>'+p.duration+'\u65e5</span></div>'+mi+'</div>'});document.getElementById('projectsList').innerHTML=html;document.getElementById('projectSelect').innerHTML=opts}
-function loadAnalytics(){var trend=get7DayTrend();var ctx=document.getElementById('trendChart').getContext('2d');if(trendChart)trendChart.destroy();trendChart=new Chart(ctx,{type:'line',data:{labels:trend.map(function(d){return d.dayOfMonth+'\u65e5'}),datasets:[{label:'\u7c97\u5229\u7387(%)',data:trend.map(function(d){return d.averageMargin}),borderColor:'#1a1a1a',backgroundColor:'rgba(26,26,26,0.05)',tension:0.4,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}});
-var html='';projects.forEach(function(p){var pr=reports.filter(function(r){return r.projectId===p.id});var l=pr[pr.length-1];if(!l)return;var m=calculateMargin(p,l);var rc=parseFloat(m.grossMarginRate)<0?'danger':'success';var pred=predictLandingDate(p.id);html+='<div class="card"><div class="card-title">'+p.projectName+'</div><div class="metric-row"><span class="metric-label">\u4e88\u7b97</span><span>'+p.budget+'\u4e07</span></div><div class="metric-row"><span class="metric-label">\u898b\u8fbc\u539f\u4fa1</span><span>'+m.totalCost+'\u4e07</span></div><div class="metric-row"><span class="metric-label">\u898b\u8fbc\u7c97\u5229</span><span>'+m.grossProfit+'\u4e07</span></div><div class="metric-row"><span class="metric-label">\u7c97\u5229\u7387</span><span class="metric-value '+rc+'" style="font-size:16px">'+m.grossMarginRate+'%</span></div><div class="ai-explanation"><strong>\u8a08\u7b97\u5f0f:</strong><br>'+m.marginFormula+'</div>'+(pred?'<div class="metric-row" style="margin-top:12px;border-top:1px solid var(--border);padding-top:12px"><span class="metric-label">\u7740\u5730\u4e88\u6e2c</span><span>'+pred.completionDate+'</span></div>':'')+'</div>'});document.getElementById('analyticsContent').innerHTML=html||'<div class="empty-state">\u5206\u6790\u30c7\u30fc\u30bf\u304c\u3042\u308a\u307e\u305b\u3093</div>'}
-function exportCSV(){var d=[];projects.forEach(function(p){reports.filter(function(r){return r.projectId===p.id}).forEach(function(r){d.push([p.projectName,p.clientName,p.budget,r.reportDate,r.progress,r.workerCount,r.weather,r.additionalCost,r.calculatedCost,r.grossMarginRate])})});if(!d.length){showStatus('exportStatus','\u30c7\u30fc\u30bf\u304c\u3042\u308a\u307e\u305b\u3093','error');return}var csv='\u5de5\u4e8b\u540d,\u30af\u30e9\u30a4\u30a2\u30f3\u30c8,\u4e88\u7b97,\u65e5\u4ed8,\u9032\u6357,\u4eba\u6570,\u5929\u5019,\u8ffd\u52a0\u8cbb\u7528,\u898b\u8fbc\u539f\u4fa1,\u7c97\u5229\u7387\n'+d.map(function(r){return r.map(function(v){return'"'+v+'"'}).join(',')}).join('\n');var blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='greenops-'+new Date().toISOString().split('T')[0]+'.csv';a.click();showStatus('exportStatus','CSV\u3092\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9\u3057\u307e\u3057\u305f','success')}
-function cancelAccount(){if(!confirm('\u672c\u5f53\u306b\u524a\u9664\u3057\u307e\u3059\u304b\uff1f'))return;projects.length=0;reports.length=0;saveData();alert('\u30a2\u30ab\u30a6\u30f3\u30c8\u304c\u524a\u9664\u3055\u308c\u307e\u3057\u305f');location.reload()}
-function showStatus(id,msg,type){document.getElementById(id).innerHTML='<div class="status '+type+'">'+msg+'</div>';setTimeout(function(){document.getElementById(id).innerHTML=''},4000)}
+let projects=[],reports=[];
+document.querySelectorAll('nav button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('act'));
+    document.querySelectorAll('nav button').forEach(x=>x.classList.remove('act'));
+    document.getElementById(b.dataset.t).classList.add('act');
+    b.classList.add('act');
+    if(b.dataset.t==='dash')renderDash();
+    if(b.dataset.t==='ana')renderAna();
+    if(b.dataset.t==='proj')renderPjList();
+  });
+});
+document.getElementById('rpr').addEventListener('input',function(){document.getElementById('rprv').textContent=this.value+'%';});
+function fmt(n){return '¥'+Math.round(n).toLocaleString()+'万'}
+function save(){try{localStorage.setItem('go_p',JSON.stringify(projects));localStorage.setItem('go_r',JSON.stringify(reports));}catch(e){}}
+function load(){try{projects=JSON.parse(localStorage.getItem('go_p')||'[]');reports=JSON.parse(localStorage.getItem('go_r')||'[]');}catch(e){}}
+function updateSel(){
+  const s=document.getElementById('rp');
+  s.innerHTML='<option value="">-- 工事を選択 --</option>';
+  projects.forEach(p=>s.innerHTML+='<option value="'+p.id+'">'+p.name+'</option>');
+}
+function calcProfit(p){
+  const rs=reports.filter(r=>r.pid===p.id).sort((a,b)=>a.date.localeCompare(b.date));
+  const baseCost=p.budget*0.8;
+  const extraCost=rs.reduce((s,r)=>s+(r.cost||0),0);
+  const lastProgress=rs.length?rs[rs.length-1].progress:0;
+  const daysElapsed=rs.length;
+  const daysRemaining=Math.max(p.days-daysElapsed,0);
+  const avgDailyExtra=rs.length?extraCost/rs.length:0;
+  const projectedExtra=avgDailyExtra*daysRemaining;
+  const totalCost=baseCost+extraCost+projectedExtra;
+  const profit=p.budget-totalCost;
+  const rate=(profit/p.budget)*100;
+  let risk='safe';
+  if(profit<0)risk='critical';
+  else if(rate<10)risk='warning';
+  const confidence=Math.min(rs.length*10+30,95);
+  return{profit,rate,risk,cost:totalCost,baseCost,extraCost,projectedExtra,confidence,reportCount:rs.length,daysRemaining,lastProgress,avgDailyExtra};
+}
+function calc7DayTrend(p){
+  const rs=reports.filter(r=>r.pid===p.id).sort((a,b)=>a.date.localeCompare(b.date));
+  if(rs.length===0)return[];
+  const trend=[];
+  for(let i=1;i<=Math.min(rs.length,7);i++){
+    const sub=rs.slice(0,i);
+    const extra=sub.reduce((s,r)=>s+(r.cost||0),0);
+    const avgDaily=extra/i;
+    const remaining=Math.max(p.days-i,0);
+    const projExtra=avgDaily*remaining;
+    const total=p.budget*0.8+extra+projExtra;
+    trend.push({date:sub[i-1].date,profit:p.budget-total});
+  }
+  return trend;
+}
+function check3WeekRisk(p){
+  const rs=reports.filter(r=>r.pid===p.id);
+  if(rs.length<2)return null;
+  const recent=rs.slice(-Math.min(rs.length,5)).map(r=>r.cost||0);
+  const recentAvg=recent.reduce((a,b)=>a+b,0)/recent.length;
+  const projected21=recentAvg*21;
+  const c=calcProfit(p);
+  const futureProfit=c.profit-projected21;
+  if(futureProfit<0&&c.profit>=0)return{projectedLoss:futureProfit};
+  return null;
+}
+document.getElementById('addP').addEventListener('click',function(){
+  const n=document.getElementById('pn').value.trim();
+  const c=document.getElementById('pc').value.trim();
+  const b=parseFloat(document.getElementById('pb').value);
+  const d=parseInt(document.getElementById('pd').value);
+  const s=document.getElementById('ps').value;
+  if(!n||!c||!b||!d||!s){alert('全項目を入力してください');return;}
+  projects.push({id:Date.now(),name:n,client:c,budget:b,days:d,start:s});
+  save();
+  ['pn','pc','pb','pd'].forEach(x=>document.getElementById(x).value='');
+  updateSel();renderPjList();
+  alert('✅ 工事を登録しました: '+n);
+});
+document.getElementById('addR').addEventListener('click',function(){
+  const pid=document.getElementById('rp').value;
+  const d=document.getElementById('rd').value;
+  const pr=parseInt(document.getElementById('rpr').value);
+  const w=parseInt(document.getElementById('rw').value);
+  const c=parseFloat(document.getElementById('rc').value)||0;
+  if(!pid||!d||!w){alert('工事・日付・人数は必須です');return;}
+  reports.push({pid:parseInt(pid),date:d,progress:pr,workers:w,cost:c,weather:document.getElementById('rwt').value,memo:document.getElementById('rm').value});
+  save();
+  document.getElementById('rc').value='';document.getElementById('rm').value='';
+  alert('✅ 日報を保存しました');
+});
+function renderDash(){
+  document.getElementById('k1').textContent=projects.length+'件';
+  let totalB=0,totalP=0,riskN=0;
+  const alerts=[];
+  projects.forEach(p=>{
+    const c=calcProfit(p);
+    totalB+=p.budget;totalP+=c.profit;
+    if(c.risk==='critical'){riskN++;alerts.push('<div class="alert a-c">🚨 <b>'+p.name+'</b>: 赤字確定予測 '+fmt(c.profit)+' (粗利率'+c.rate.toFixed(1)+'%)</div>');}
+    else if(c.risk==='warning'){alerts.push('<div class="alert a-w">⚠️ <b>'+p.name+'</b>: 利益率低下 '+c.rate.toFixed(1)+'%</div>');}
+    const w3=check3WeekRisk(p);
+    if(w3)alerts.push('<div class="alert a-w">⏰ <b>'+p.name+'</b>: 3週間先に赤字転落予測 (予測損失'+fmt(w3.projectedLoss)+')</div>');
+  });
+  document.getElementById('k2').textContent=fmt(totalB);
+  document.getElementById('k3').textContent=fmt(totalP);
+  document.getElementById('k4').textContent=riskN+'件';
+  document.getElementById('al').innerHTML=alerts.join('');
+  if(projects.length===0){document.getElementById('pl').innerHTML='<p class="empty">工事がまだ登録されていません<br>「工事管理」タブから登録してください</p>';return;}
+  document.getElementById('pl').innerHTML='<h3 style="margin-top:20px">進行中の工事</h3>'+projects.map(p=>{
+    const c=calcProfit(p);
+    return '<div class="card"><h4>'+p.name+'</h4><p style="font-size:12px;color:#666">'+p.client+' / 予算'+fmt(p.budget)+' / 工期'+p.days+'日</p><p style="margin-top:8px">進捗: <b>'+c.lastProgress+'%</b> | 予測粗利: <b style="color:'+(c.profit<0?'#c0392b':'#0f5132')+'">'+fmt(c.profit)+'</b> ('+c.rate.toFixed(1)+'%)</p><p style="font-size:11px;color:#888;margin-top:4px">日報'+c.reportCount+'件 / AI信頼度'+c.confidence+'%</p></div>';
+  }).join('');
+}
+function renderPjList(){
+  const el=document.getElementById('pjList');
+  if(projects.length===0){el.innerHTML='';return;}
+  el.innerHTML='<h3>登録済み工事</h3>'+projects.map(p=>'<div class="card"><h4>'+p.name+'</h4><p style="font-size:12px;color:#666">'+p.client+' / '+fmt(p.budget)+' / '+p.days+'日</p><button class="del" onclick="delProj('+p.id+')">この工事を削除</button></div>').join('');
+}
+window.delProj=function(id){
+  if(!confirm('この工事と関連日報を削除しますか?'))return;
+  projects=projects.filter(p=>p.id!==id);
+  reports=reports.filter(r=>r.pid!==id);
+  save();updateSel();renderPjList();renderDash();
+};
+function renderAna(){
+  if(projects.length===0){document.getElementById('anaC').innerHTML='<p class="empty">工事を登録してください</p>';return;}
+  document.getElementById('anaC').innerHTML=projects.map(p=>{
+    const c=calcProfit(p);
+    const trend=calc7DayTrend(p);
+    const w3=check3WeekRisk(p);
+    let trendHtml='';
+    if(trend.length>0){
+      const max=Math.max(...trend.map(t=>Math.abs(t.profit)),1);
+      trendHtml='<h4 style="margin-top:14px">📈 7日間粗利トレンド</h4><div class="trend">'+trend.map(t=>{
+        const h=Math.max(Math.abs(t.profit/max)*100,5);
+        const color=t.profit<0?'#c0392b':'#0f5132';
+        return '<div class="bar" style="height:'+h+'%;background:'+color+'" title="'+t.date+': '+fmt(t.profit)+'"><div class="bar-l">'+t.date.slice(5)+'</div></div>';
+      }).join('')+'</div>';
+    }
+    let warn3w='';
+    if(w3)warn3w='<div class="warn-3w">⏰ <b>3週間先リスク警告</b><br>このまま追加費用が発生し続けると、約21日後に赤字転落予測。<br>予測損失: <b>'+fmt(w3.projectedLoss)+'</b></div>';
+    return '<div class="card"><h4>'+p.name+'</h4><table>'+
+      '<tr><td>予算</td><td>'+fmt(p.budget)+'</td></tr>'+
+      '<tr><td>標準原価(予算×80%)</td><td>'+fmt(c.baseCost)+'</td></tr>'+
+      '<tr><td>追加発生費用(実績)</td><td>'+fmt(c.extraCost)+'</td></tr>'+
+      '<tr><td>追加費用予測(残工期分)</td><td>'+fmt(c.projectedExtra)+'</td></tr>'+
+      '<tr><td>予測総原価</td><td>'+fmt(c.cost)+'</td></tr>'+
+      '<tr><td><b>予測粗利</b></td><td style="color:'+(c.profit<0?'#c0392b':'#0f5132')+'">'+fmt(c.profit)+'</td></tr>'+
+      '<tr><td>粗利率</td><td>'+c.rate.toFixed(1)+'%</td></tr>'+
+      '<tr><td>AI信頼度</td><td>'+c.confidence+'%</td></tr>'+
+      '<tr><td>リスク判定</td><td>'+(c.risk==='critical'?'🚨 赤字':c.risk==='warning'?'⚠️ 注意':'✅ 安全')+'</td></tr>'+
+      '</table>'+warn3w+trendHtml+
+      '<div class="reason"><b>🤖 AI分析の根拠:</b><br>'+
+      '・日報入力数: '+c.reportCount+'件(多いほど精度向上)<br>'+
+      '・1日あたり平均追加費用: '+fmt(c.avgDailyExtra)+'<br>'+
+      '・残り工期: '+c.daysRemaining+'日<br>'+
+      '・残工期での追加費用予測 = 平均追加費用 × 残日数 = '+fmt(c.projectedExtra)+'<br>'+
+      '・標準原価率は建設業平均の80%を採用<br>'+
+      '・判定基準: 粗利<0=赤字 / 粗利率<10%=注意 / それ以上=安全'+
+      '</div></div>';
+  }).join('');
+}
+document.getElementById('csvB').addEventListener('click',function(){
+  if(projects.length===0){alert('データがありません');return;}
+  let csv='工事名,クライアント,予算(万円),工期(日),予測総原価(万円),予測粗利(万円),粗利率(%),リスク,日報数,AI信頼度(%)\n';
+  projects.forEach(p=>{
+    const c=calcProfit(p);
+    csv+='"'+p.name+'","'+p.client+'",'+p.budget+','+p.days+','+Math.round(c.cost)+','+Math.round(c.profit)+','+c.rate.toFixed(1)+','+c.risk+','+c.reportCount+','+c.confidence+'\n';
+  });
+  const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='greenops_'+new Date().toISOString().slice(0,10)+'.csv';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  alert('✅ CSVをダウンロードしました');
+});
+document.getElementById('ctcB').addEventListener('click',function(){
+  const subject=encodeURIComponent('GreenOps 連携サービスについて');
+  const body=encodeURIComponent('GreenOpsの連携サービスについて問い合わせます。\n\n【希望する連携】\n□ freee連携\n□ マネーフォワード連携\n□ ANDPAD連携\n\n【お客様情報】\n会社名: \nお名前: \nご質問: \n');
+  window.location.href='mailto:support@greenops.jp?subject='+subject+'&body='+body;
+});
+document.getElementById('rstB').addEventListener('click',function(){
+  if(!confirm('本当に全データを削除して解約しますか?\nこの操作は取り消せません。'))return;
+  projects=[];reports=[];
+  try{localStorage.removeItem('go_p');localStorage.removeItem('go_r');}catch(e){}
+  updateSel();renderDash();renderPjList();
+  alert('✅ 全データを削除しました');
+});
+load();
+document.getElementById('rd').value=new Date().toISOString().split('T')[0];
+document.getElementById('ps').value=new Date().toISOString().split('T')[0];
+updateSel();renderDash();renderPjList();
 </script>
-</body>
-</html>
+</body></html>
